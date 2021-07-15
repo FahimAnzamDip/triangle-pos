@@ -1,0 +1,8 @@
+// CoreUI
+@import '~@coreui/coreui/scss/coreui';
+
+//Extra Overrides
+.btn:not([class*=ghost]):not([class*=link]):not([class*=outline]):not([class*=transparent]) {
+    border: 0;
+    box-shadow: 0 1px 1px 0 rgb(60 75 100 / 14%), 0 2px 1px -1px rgb(60 75 100 / 12%), 0 1px 3px 0 rgb(60 75 100 / 20%);
+}
