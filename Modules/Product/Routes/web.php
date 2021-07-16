@@ -6,8 +6,10 @@
 |--------------------------------------------------------------------------
 */
 
-//Product
-Route::resource('products', 'ProductController');
+Route::group(['middleware' => 'auth'], function () {
+    //Product
+    Route::resource('products', 'ProductController');
+    //Product Category
+    Route::resource('product-categories', 'CategoriesController')->except('create', 'show');
+});
 
-//Product Category
-Route::resource('product-categories', 'CategoriesController')->except('create', 'show');

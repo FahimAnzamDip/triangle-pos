@@ -34,4 +34,7 @@
             @endforeach
         </table>
     </body>
+    <script>
+        window.print();
+    </script>
 </html>

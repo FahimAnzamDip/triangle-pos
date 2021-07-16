@@ -7,14 +7,6 @@
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
 @endsection
 
-@push('page_css')
-    <style>
-        .filepond--credits {
-            display: none;
-        }
-    </style>
-@endpush
-
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -29,6 +21,7 @@
             @csrf
             <div class="row">
                 <div class="col-lg-12">
+                    @include('utils.alerts')
                     <div class="form-group">
                         <button class="btn btn-primary">Create Product <i class="bi bi-check"></i></button>
                     </div>
@@ -66,7 +59,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="barcode_symbology">Barcode Symbology <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="barcode_symbology" id="barcode_symbology" required>
+                                        <select class="form-control" name="product_barcode_symbology" id="barcode_symbology" required>
                                             <option value="" selected disabled>Select Symbology</option>
                                             <option value="C128">Code 128</option>
                                             <option value="C39">Code 39</option>
@@ -102,8 +95,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="stock_alert">Alert Quantity <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="stock_alert" required value="{{ old('stock_alert') }}" min="0">
+                                        <label for="product_stock_alert">Alert Quantity <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ old('stock_alert') }}" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -112,16 +105,16 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_order_tax">Tax (%)</label>
-                                        <input type="number" class="form-control" name="product_order_tax" required value="{{ old('product_order_tax') }}" min="1">
+                                        <input type="number" class="form-control" name="product_order_tax" value="{{ old('product_order_tax') }}" min="1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_tax_type">Tax type</label>
-                                        <select class="form-control" name="product_tax_type" id="product_tax_type" required>
+                                        <select class="form-control" name="product_tax_type" id="product_tax_type">
                                             <option value="" selected disabled>Select Tax Type</option>
-                                            <option value="0">Exclusive</option>
-                                            <option value="1">Inclusive</option>
+                                            <option value="1">Exclusive</option>
+                                            <option value="2">Inclusive</option>
                                         </select>
                                     </div>
                                 </div>
@@ -135,7 +128,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="image">Product Image <span class="text-danger">*</span></label>
-                                <input id="image" type="file" name="product_image" required data-max-file-size="500KB">
+                                <input id="image" type="file" name="image" required data-max-file-size="500KB">
                             </div>
                         </div>
                     </div>

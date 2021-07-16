@@ -34,7 +34,7 @@ class ProductCategoriesDataTable extends DataTable
      */
     public function query(Category $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->withCount('products');
     }
 
     /**
@@ -69,6 +69,8 @@ class ProductCategoriesDataTable extends DataTable
             Column::make('category_code')
                 ->addClass('text-center'),
             Column::make('category_name')
+                ->addClass('text-center'),
+            Column::make('products_count')
                 ->addClass('text-center'),
             Column::computed('action')
                 ->exportable(false)

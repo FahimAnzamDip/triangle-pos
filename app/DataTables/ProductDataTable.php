@@ -20,17 +20,15 @@ class ProductDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query)->with('category')
             ->addColumn('action', function ($data) {
-                return view('product::categories.partials.actions', compact('data'));
+                return view('product::products.partials.actions', compact('data'));
             })
             ->addColumn('product_image', function ($data) {
-                $url = asset('storage/product_images/' . $data->product_image);
-                return '<img src='.$url.' border="0" width="40" class="img-rounded" align="center" />';
+                $url = $data->getFirstMediaUrl();
+                return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center" />';
             })
-            ->addColumn('category_name', function ($data) {
-                return $data->category->category_name;
-            });
+            ->rawColumns(['product_image']);
     }
 
 
@@ -42,7 +40,7 @@ class ProductDataTable extends DataTable
      */
     public function query(Product $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('category');
     }
 
     /**
@@ -76,36 +74,39 @@ class ProductDataTable extends DataTable
         return [
             Column::computed('product_image')
                 ->title('Image')
-                ->addClass('text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
             Column::make('product_name')
                 ->title('Name')
-                ->addClass('text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
             Column::make('product_code')
                 ->title('Code')
-                ->addClass('text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
             Column::make('product_price')
                 ->title('Price')
-                ->addClass('text-center'),
-
-            Column::make('product_unit')
-                ->title('Unit')
-                ->addClass('text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
             Column::make('product_quantity')
                 ->title('Quantity')
-                ->addClass('text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
-            Column::computed('category_name')
+            Column::make('category.category_name')
                 ->title('Category')
-                ->addClass('text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->addClass('text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle'),
         ];
     }
 

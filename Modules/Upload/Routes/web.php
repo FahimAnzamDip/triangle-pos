@@ -11,4 +11,8 @@
 |
 */
 
-Route::post('/filepond/upload', 'UploadController@filepondUpload')->name('filepond.upload');
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/filepond/upload', 'UploadController@filepondUpload')->name('filepond.upload');
+});
+
+

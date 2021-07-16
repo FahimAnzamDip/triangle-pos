@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
+            $table->string('product_image')->nullable();
             $table->string('product_name');
             $table->string('product_code')->unique()->nullable();
             $table->string('product_barcode_symbology')->nullable();
@@ -24,7 +25,7 @@ class CreateProductsTable extends Migration
             $table->integer('product_price');
             $table->integer('product_stock_alert');
             $table->integer('product_order_tax')->nullable();
-            $table->boolean('product_tax_type')->nullable();
+            $table->tinyInteger('product_tax_type')->nullable();
             $table->text('product_note')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->restrictOnDelete();
             $table->timestamps();
