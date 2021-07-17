@@ -1,4 +1,9 @@
 <?php
+$dom = "
+            B<'row'<'col-md-6'l><'col-md-6'f>> .
+            'tr' .
+            <'row'<'col-md-5'i><'col-md-7'p>>
+        ";
 
 return [
     /*
@@ -57,7 +62,9 @@ return [
      * Default html builder parameters.
      */
     'parameters'    => [
-        'dom'     => 'Bfltrip',
+        'dom'     => "<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
+                                'tr' .
+                                <'row'<'col-md-5'i><'col-md-7 mt-2'p>>",
         'order'   => [[0, 'desc']],
         'buttons' => [
             'excel',
@@ -84,6 +91,6 @@ return [
         /*
          * Default DOM to generate when not set.
          */
-        'dom' => 'Bfrtip',
+        'dom'     => 'Bfrtip',
     ],
 ];
