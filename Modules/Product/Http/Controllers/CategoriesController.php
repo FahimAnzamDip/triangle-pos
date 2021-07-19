@@ -5,26 +5,23 @@ namespace Modules\Product\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Gate;
 use Modules\Product\Entities\Category;
 use App\DataTables\ProductCategoriesDataTable;
 
 class CategoriesController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
     public function index(ProductCategoriesDataTable $dataTable) {
+        abort_if(Gate::denies('access_product_categories'), 403);
+
         return $dataTable->render('product::categories.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
+
     public function store(Request $request) {
+        abort_if(Gate::denies('access_product_categories'), 403);
+
         $request->validate([
             'category_code' => 'required|unique:categories,category_code',
             'category_name' => 'required'
@@ -40,24 +37,19 @@ class CategoriesController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function edit($id) {
+        abort_if(Gate::denies('access_product_categories'), 403);
+
         $category = Category::findOrFail($id);
 
         return view('product::categories.edit', compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
+
     public function update(Request $request, $id) {
+        abort_if(Gate::denies('access_product_categories'), 403);
+
         $request->validate([
             'category_code' => 'required|unique:categories,category_code,' . $id,
             'category_name' => 'required'
@@ -73,12 +65,10 @@ class CategoriesController extends Controller
         return redirect()->route('product-categories.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function destroy($id) {
+        abort_if(Gate::denies('access_product_categories'), 403);
+
         $category = Category::findOrFail($id);
 
         if ($category->products->isNotEmpty()) {

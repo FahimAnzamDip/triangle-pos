@@ -12,7 +12,10 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
+
     Route::post('/filepond/upload', 'UploadController@filepondUpload')->name('filepond.upload');
+    Route::delete('/filepond/delete', 'UploadController@filepondDelete')->name('filepond.delete');
+
 });
 
 

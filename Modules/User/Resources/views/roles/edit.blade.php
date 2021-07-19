@@ -22,6 +22,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                @include('utils.alerts')
                 <form action="{{ route('roles.update', $role->id) }}" method="POST">
                     @csrf
                     @method('patch')

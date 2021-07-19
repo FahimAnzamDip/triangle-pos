@@ -13,6 +13,10 @@ class UploadController extends Controller
 {
 
     public function filepondUpload(Request $request) {
+        if (!$request->ajax()) {
+            return back();
+        }
+
         $request->validate([
             'image' => 'required|image|mimes:png,jpeg,jpg'
         ]);
@@ -35,5 +39,18 @@ class UploadController extends Controller
         }
 
         return false;
+    }
+
+    public function filepondDelete(Request $request) {
+        if (!$request->ajax()) {
+            return back();
+        }
+
+        $upload = Upload::where('folder', $request->getContent())->first();
+
+        Storage::deleteDirectory('public/temp/' . $upload->folder);
+        $upload->delete();
+
+        return response(null);
     }
 }

@@ -42,7 +42,7 @@ class RolesDataTable extends DataTable
     {
         return $model->newQuery()->with(['permissions' => function($query) {
             $query->select('name')->get();
-        }]);
+        }])->where('name', '!=', 'Super Admin');
     }
 
     /**

@@ -21,12 +21,12 @@
            aria-haspopup="true" aria-expanded="false">
             <span class="mr-2 font-weight-bold">{{ auth()->user()->name }}</span>
             <div class="c-avatar">
-                <img class="c-avatar-img border border-primary" src="https://www.gravatar.com/avatar/00000000000000000000000000000000" alt="">
+                <img class="c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right pt-0">
             <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{ route('profile.edit') }}">
                 <i class="mfe-2  bi bi-person" style="font-size: 1.2rem;"></i> Profile
             </a>
             <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

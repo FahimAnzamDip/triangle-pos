@@ -11,18 +11,19 @@
 
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" crossorigin="anonymous">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-          integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-          crossorigin="anonymous"/>
-
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
 <body class="c-app flex-row align-items-center">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if(Session::has('account_deactivated'))
+                <div class="alert alert-danger" role="alert">
+                    {{ Session::get('account_deactivated') }}
+                </div>
+            @endif
             <div class="card-group">
                 <div class="card p-4">
                     <div class="card-body">
@@ -33,7 +34,7 @@
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                      <i class="cil-user"></i>
+                                      <i class="bi bi-person"></i>
                                     </span>
                                 </div>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
@@ -46,7 +47,7 @@
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                      <i class="cil-lock-locked"></i>
+                                      <i class="bi bi-lock"></i>
                                     </span>
                                 </div>
                                 <input type="password"

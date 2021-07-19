@@ -6,33 +6,28 @@ use App\DataTables\RolesDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
     public function index(RolesDataTable $dataTable) {
+        abort_if(Gate::denies('access_user_management'), 403);
+
         return $dataTable->render('user::roles.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
+
     public function create() {
+        abort_if(Gate::denies('access_user_management'), 403);
+
         return view('user::roles.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
+
     public function store(Request $request) {
+        abort_if(Gate::denies('access_user_management'), 403);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'permissions' => 'required|array'
@@ -49,22 +44,17 @@ class RolesController extends Controller
         return redirect()->route('roles.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function edit(Role $role) {
+        abort_if(Gate::denies('access_user_management'), 403);
+
         return view('user::roles.edit', compact('role'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
+
     public function update(Request $request, Role $role) {
+        abort_if(Gate::denies('access_user_management'), 403);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'permissions' => 'required|array'
@@ -81,12 +71,10 @@ class RolesController extends Controller
         return redirect()->route('roles.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function destroy(Role $role) {
+        abort_if(Gate::denies('access_user_management'), 403);
+
         $role->delete();
 
         toast('Role Deleted!', 'success');

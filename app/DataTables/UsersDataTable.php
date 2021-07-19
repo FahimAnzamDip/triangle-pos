@@ -21,9 +21,27 @@ class UsersDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->addColumn('role', function ($data) {
+                return view('user::users.partials.roles', [
+                    'roles' => $data->getRoleNames()
+                ]);
+            })
             ->addColumn('action', function ($data) {
                 return view('user::users.partials.actions', compact('data'));
-            });
+            })
+            ->addColumn('status', function ($data) {
+                if ($data->is_active == 1) {
+                    $html = '<span class="badge badge-success">Active</span>';
+                } else {
+                    $html = '<span class="badge badge-warning">Deactivated</span>';
+                }
+                return $html;
+            })
+            ->addColumn('image', function ($data) {
+                $url = $data->getFirstMediaUrl('avatars');
+                return '<img src="'.$url.'" style="width:50px;height:50px;" class="img-thumbnail rounded-circle"/>';
+            })
+            ->rawColumns(['image', 'status']);
     }
 
     /**
@@ -34,7 +52,11 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()
+            ->with(['roles' => function ($query) {
+                $query->select('name')->get();
+            }])
+            ->where('id', '!=', auth()->id());
     }
 
     /**
@@ -72,13 +94,25 @@ class UsersDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::computed('image')
+                ->className('text-center align-middle'),
+
+            Column::make('name')
+                ->className('text-center align-middle'),
+
+            Column::make('email')
+                ->className('text-center align-middle'),
+
+            Column::computed('role')
+                ->className('text-center align-middle'),
+
+            Column::computed('status')
+                ->className('text-center align-middle'),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->addClass('text-center'),
+                ->className('text-center align-middle'),
         ];
     }
 

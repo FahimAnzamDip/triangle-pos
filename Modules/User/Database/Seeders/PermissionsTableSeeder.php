@@ -27,6 +27,7 @@ class PermissionsTableSeeder extends Seeder
             'edit_products',
             'delete_products',
             'access_product_categories',
+            'access_user_management',
         ];
 
         foreach ($permissions as $permission) {
@@ -35,7 +36,6 @@ class PermissionsTableSeeder extends Seeder
             ]);
         }
 
-        //Assign all the permissions to Admin role
         $role = Role::create([
             'name' => 'Admin'
         ]);
