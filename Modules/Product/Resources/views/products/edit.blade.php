@@ -3,8 +3,7 @@
 @section('title', 'Edit Product')
 
 @section('third_party_stylesheets')
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+    @include('includes.filepond-css')
 @endsection
 
 @section('breadcrumb')
@@ -75,13 +74,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_cost">Cost <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="product_cost" required value="{{ $product->product_cost }}">
+                                        <input type="number" class="form-control" min="0" name="product_cost" required value="{{ $product->product_cost }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_price">Price <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="product_price" required value="{{ $product->product_price }}">
+                                        <input type="number" class="form-control" min="0" name="product_price" required value="{{ $product->product_price }}">
                                     </div>
                                 </div>
                             </div>
@@ -139,32 +138,7 @@
     </div>
 @endsection
 
-@section('third_party_scripts')
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-@endsection
-
 @push('page_scripts')
-    <script>
-        FilePond.registerPlugin(
-            FilePondPluginImagePreview,
-            FilePondPluginFileValidateSize,
-            FilePondPluginFileValidateType
-        );
-        const fileElement = document.querySelector('input[id="image"]');
-        const pond = FilePond.create( fileElement, {
-            acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
-        } );
-        FilePond.setOptions({
-            server: {
-                url: "{{ route('filepond.upload') }}",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                }
-            }
-        });
-    </script>
+    @include('includes.filepond-js')
 @endpush
 

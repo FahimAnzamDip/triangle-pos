@@ -14,6 +14,7 @@
 
     @stack('page_css')
 
+    @livewireStyles
     <style>
         div.dataTables_wrapper div.dataTables_length select {
             width: 65px;
@@ -51,5 +52,7 @@
 @yield('third_party_scripts')
 
 @stack('page_scripts')
+
+@livewireScripts
 </body>
 </html>

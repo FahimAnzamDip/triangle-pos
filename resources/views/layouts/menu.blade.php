@@ -29,6 +29,13 @@
                 <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> All Products
             </a>
         </li>
+        @can('print_barcodes')
+           <li class="c-sidebar-nav-item">
+               <a class="c-sidebar-nav-link {{ request()->routeIs('barcode.print') ? 'c-active' : '' }}" href="{{ route('barcode.print') }}">
+                   <i class="c-sidebar-nav-icon bi bi-printer" style="line-height: 1;"></i> Print Barcode
+               </a>
+           </li>
+        @endcan
     </ul>
 </li>
 @endcan
