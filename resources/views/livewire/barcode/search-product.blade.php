@@ -8,15 +8,19 @@
                             <i class="bi bi-search"></i>
                         </div>
                     </div>
-                    <input wire:keydown.escape="resetQuery" wire:model.debounce.500ms="query" type="text" class="form-control" placeholder="Type product name or code...." wire:key.="">
+                    <input wire:keydown.escape="resetQuery" wire:model.debounce.500ms="query" type="text" class="form-control" placeholder="Type product name or code....">
                 </div>
             </div>
         </div>
     </div>
 
-    <div wire:loading class="card position-absolute mt-1" style="z-index: 1;left: 0;right: 0;">
+    <div wire:loading wire:target="query" class="card position-absolute mt-1" style="z-index: 1;left: 0;right: 0;">
         <div class="card-body">
-            <strong class="text-primary">Searching.......</strong>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
     </div>
 

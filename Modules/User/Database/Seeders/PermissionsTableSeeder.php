@@ -27,7 +27,7 @@ class PermissionsTableSeeder extends Seeder
             'edit_products',
             'delete_products',
             'access_product_categories',
-            'access_user_management',
+            'print_barcodes',
         ];
 
         foreach ($permissions as $permission) {

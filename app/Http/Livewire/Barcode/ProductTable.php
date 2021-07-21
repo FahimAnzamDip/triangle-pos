@@ -34,9 +34,18 @@ class ProductTable extends Component
         $this->barcodes = [];
 
         for ($i = 1; $i <= $quantity; $i++) {
-            $barcode = DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology,2 , 60);
+            $barcode = DNS1DFacade::getBarCodeSVG($product->product_code, $product->product_barcode_symbology,2 , 60, 'black', false);
             array_push($this->barcodes, $barcode);
         }
+    }
+
+    public function getPdf() {
+        $pdf = \PDF::loadView('product::barcode.print', [
+            'barcodes' => $this->barcodes,
+            'price' => $this->product->product_price,
+            'name' => $this->product->product_name,
+        ]);
+        return $pdf->stream('barcodes-'. $this->product->product_code .'.pdf');
     }
 
     public function updatedQuantity() {

@@ -16,7 +16,8 @@
                             <td class="align-middle">{{ $product->product_name }}</td>
                             <td class="align-middle">{{ $product->product_code }}</td>
                             <td class="align-middle text-center" style="width: 200px;">
-                                <input wire:model="quantity" class="form-control" type="number" min="1" value="{{ $quantity }}">
+                                <input wire:model="quantity" class="form-control" type="number" min="1"
+                                       value="{{ $quantity }}">
                             </td>
                         @else
                             <td colspan="3" class="text-center">
@@ -28,20 +29,38 @@
                 </table>
             </div>
             <div class="mt-3">
-                <button {{ empty($product) ? 'disabled' : '' }} wire:click="generateBarcodes({{ $product }}, {{ $quantity }})" type="button" class="btn btn-primary"><i class="bi bi-upc-scan"></i> Generate Barcodes
+                <button
+                    wire:click="generateBarcodes({{ $product }}, {{ $quantity }})"
+                    type="button" class="btn btn-primary"><i class="bi bi-upc-scan"></i> Generate Barcodes
                 </button>
             </div>
         </div>
     </div>
 
     @if(!empty($barcodes))
+        <div class="text-right mb-3">
+            <button wire:click="getPdf" wire:loading.attr="disabled" type="button" class="btn btn-primary">
+                <span wire:loading wire:target="getPdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <i wire:loading.remove wire:target="getPdf" class="bi bi-file-earmark-pdf"></i> Download PDF
+            </button>
+        </div>
         <div class="card">
-            <div class="card-body d-flex flex-wrap justify-content-center align-items-center pt-5">
-                @foreach($barcodes as $barcode)
-                    <div class="mr-5 mb-5">
-                        {!! $barcode !!}
-                    </div>
-                @endforeach
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    @foreach($barcodes as $barcode)
+                        <div class="col-lg-3 col-md-4 col-6" style="border: 1px solid #ffffff;border-style: dashed;background-color: #48FCFE;">
+                            <p class="mt-3 mb-1" style="font-size: 15px;color: #000;">
+                                {{ $product->product_name }}
+                            </p>
+                            <div>
+                                {!! $barcode !!}
+                            </div>
+                            <p style="font-size: 15px;color: #000;">
+                                Price:: {{ number_format($product->product_price) }}
+                            </p>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     @endif
