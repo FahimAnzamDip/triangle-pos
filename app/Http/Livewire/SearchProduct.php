@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Barcode;
+namespace App\Http\Livewire;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -18,7 +18,7 @@ class SearchProduct extends Component
     }
 
     public function render() {
-        return view('livewire.barcode.search-product');
+        return view('livewire.search-product');
     }
 
     public function updatedQuery() {

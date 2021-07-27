@@ -2,14 +2,14 @@
 
 namespace App\DataTables;
 
-use Modules\Product\Entities\Product;
+use Modules\Adjustment\Entities\Adjustment;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductDataTable extends DataTable
+class AdjustmentsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -20,27 +20,21 @@ class ProductDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)->with('category')
+            ->eloquent($query)
             ->addColumn('action', function ($data) {
-                return view('product::products.partials.actions', compact('data'));
-            })
-            ->addColumn('product_image', function ($data) {
-                $url = $data->getFirstMediaUrl();
-                return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center" />';
-            })
-            ->rawColumns(['product_image']);
+                return view('adjustment::partials.actions', compact('data'));
+            });
     }
-
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Modules\Product\Entities\Product $model
+     * @param \Modules\Adjustment\Entities\Adjustment $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Product $model)
+    public function query(Adjustment $model)
     {
-        return $model->newQuery()->with('category');
+        return $model->newQuery()->withCount('adjustedProducts');
     }
 
     /**
@@ -51,12 +45,12 @@ class ProductDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('product-table')
+                    ->setTableId('adjustments-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
-                                'tr' .
-                                <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
+                                        'tr' .
+                                        <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
                     ->orderBy(0)
                     ->buttons(
                         Button::make('excel')
@@ -78,28 +72,14 @@ class ProductDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('product_image')
-                ->title('Image')
+            Column::make('date')
                 ->className('text-center align-middle'),
 
-            Column::make('product_name')
-                ->title('Name')
+            Column::make('reference')
                 ->className('text-center align-middle'),
 
-            Column::make('product_code')
-                ->title('Code')
-                ->className('text-center align-middle'),
-
-            Column::make('product_price')
-                ->title('Price')
-                ->className('text-center align-middle'),
-
-            Column::make('product_quantity')
-                ->title('Quantity')
-                ->className('text-center align-middle'),
-
-            Column::make('category.category_name')
-                ->title('Category')
+            Column::make('adjusted_products_count')
+                ->title('Products')
                 ->className('text-center align-middle'),
 
             Column::computed('action')
@@ -116,6 +96,6 @@ class ProductDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Product_' . date('YmdHis');
+        return 'Adjustments_' . date('YmdHis');
     }
 }

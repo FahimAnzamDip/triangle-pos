@@ -8,5 +8,12 @@
 }
 
 table {
-    width: 100% !important;
+    width: 990px !important;
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    table {
+        width: 100% !important;
+    }
 }

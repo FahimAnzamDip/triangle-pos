@@ -1,0 +1,13 @@
+{
+    "name": "Adjustment",
+    "alias": "adjustment",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Adjustment\\Providers\\AdjustmentServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
