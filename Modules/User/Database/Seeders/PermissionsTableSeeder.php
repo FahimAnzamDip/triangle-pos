@@ -33,6 +33,10 @@ class PermissionsTableSeeder extends Seeder
             'show_adjustments',
             'edit_adjustments',
             'delete_adjustments',
+            'access_expenses',
+            'create_expenses',
+            'edit_expenses',
+            'delete_expenses',
         ];
 
         foreach ($permissions as $permission) {

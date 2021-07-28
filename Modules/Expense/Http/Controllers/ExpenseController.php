@@ -6,6 +6,7 @@ use App\DataTables\ExpensesDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Gate;
 use Modules\Expense\Entities\Expense;
 use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Exp;
 
@@ -13,16 +14,22 @@ class ExpenseController extends Controller
 {
 
     public function index(ExpensesDataTable $dataTable) {
+        abort_if(Gate::denies('access_expenses'), 403);
+
         return $dataTable->render('expense::expenses.index');
     }
 
 
     public function create() {
+        abort_if(Gate::denies('create_expenses'), 403);
+
         return view('expense::expenses.create');
     }
 
 
     public function store(Request $request) {
+        abort_if(Gate::denies('create_expenses'), 403);
+
         $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255|unique:expenses,reference',
@@ -46,11 +53,15 @@ class ExpenseController extends Controller
 
 
     public function edit(Expense $expense) {
+        abort_if(Gate::denies('edit_expenses'), 403);
+
         return view('expense::expenses.edit', compact('expense'));
     }
 
 
     public function update(Request $request, Expense $expense) {
+        abort_if(Gate::denies('edit_expenses'), 403);
+
         $request->validate([
             'date' => 'required|date',
             'reference' => 'required|string|max:255|unique:expenses,reference,' . $expense->id,
@@ -74,6 +85,8 @@ class ExpenseController extends Controller
 
 
     public function destroy(Expense $expense) {
+        abort_if(Gate::denies('delete_expenses'), 403);
+
         $expense->delete();
 
         toast('Expense Deleted!', 'warning');

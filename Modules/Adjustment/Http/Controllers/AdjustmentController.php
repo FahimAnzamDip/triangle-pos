@@ -33,7 +33,7 @@ class AdjustmentController extends Controller
         abort_if(Gate::denies('create_adjustments'), 403);
 
         $request->validate([
-            'reference'   => 'required|string|max:255',
+            'reference'   => 'required|string|max:255|unique:adjustments,reference',
             'date'        => 'required|date',
             'note'        => 'nullable|string|max:1000',
             'product_ids' => 'required',
@@ -94,7 +94,7 @@ class AdjustmentController extends Controller
         abort_if(Gate::denies('edit_adjustments'), 403);
 
         $request->validate([
-            'reference'   => 'required|string|max:255',
+            'reference'   => 'required|string|max:255|unique:adjustments,reference,' . $adjustment->id,
             'date'        => 'required|date',
             'note'        => 'nullable|string|max:1000',
             'product_ids' => 'required',
