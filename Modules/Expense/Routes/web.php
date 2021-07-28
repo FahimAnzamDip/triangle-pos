@@ -11,6 +11,11 @@
 |
 */
 
-Route::prefix('expense')->group(function() {
-    Route::get('/', 'ExpenseController@index');
+Route::group(['middleware' => 'auth'], function () {
+
+    //Expense Category
+    Route::resource('expense-categories', 'ExpenseCategoriesController')->except('show', 'create');
+    //Expense
+    Route::resource('expenses', 'ExpenseController')->except('show');
+
 });

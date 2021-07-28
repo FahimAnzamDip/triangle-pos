@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Product Categories')
+@section('title', 'Expense Categories')
 
 @section('third_party_stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
@@ -9,7 +9,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Products</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('expenses.index') }}">Expenses</a></li>
         <li class="breadcrumb-item active">Categories</li>
     </ol>
 @endsection
@@ -47,16 +47,16 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('product-categories.store') }}" method="POST">
+                <form action="{{ route('expense-categories.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="category_code">Category Code <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" name="category_code" required>
-                        </div>
-                        <div class="form-group">
                             <label for="category_name">Category Name <span class="text-danger">*</span></label>
                             <input class="form-control" type="text" name="category_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category_description">Description</label>
+                            <textarea class="form-control" name="category_description" id="category_description" rows="5"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

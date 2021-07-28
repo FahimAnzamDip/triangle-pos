@@ -13,7 +13,7 @@ class Adjustment extends Model
     protected $guarded = [];
 
     public function getDateAttribute($value) {
-        return Carbon::parse($value)->format('M d, Y');
+        return Carbon::parse($value)->format('d M, Y');
     }
 
     public function adjustedProducts() {

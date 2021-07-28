@@ -2,37 +2,37 @@
 
 namespace App\DataTables;
 
-use Modules\Adjustment\Entities\Adjustment;
+use Modules\Expense\Entities\Expense;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AdjustmentsDataTable extends DataTable
+class ExpensesDataTable extends DataTable
 {
 
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($data) {
-                return view('adjustment::partials.actions', compact('data'));
+                return view('expense::expenses.partials.actions', compact('data'));
             });
     }
 
-    public function query(Adjustment $model) {
-        return $model->newQuery()->withCount('adjustedProducts');
+    public function query(Expense $model) {
+        return $model->newQuery()->with('category');
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('adjustments-table')
+            ->setTableId('expenses-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
-                                        'tr' .
-                                        <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(0)
+                                'tr' .
+                                <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
+            ->orderBy(1)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -53,8 +53,14 @@ class AdjustmentsDataTable extends DataTable
             Column::make('reference')
                 ->className('text-center align-middle'),
 
-            Column::make('adjusted_products_count')
-                ->title('Products')
+            Column::make('category.category_name')
+                ->title('Category')
+                ->className('text-center align-middle'),
+
+            Column::make('amount')
+                ->className('text-center align-middle'),
+
+            Column::make('details')
                 ->className('text-center align-middle'),
 
             Column::computed('action')
@@ -65,6 +71,6 @@ class AdjustmentsDataTable extends DataTable
     }
 
     protected function filename() {
-        return 'Adjustments_' . date('YmdHis');
+        return 'Expenses_' . date('YmdHis');
     }
 }

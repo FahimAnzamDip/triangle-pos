@@ -11,12 +11,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class ProductDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param mixed $query Results from query() method.
-     * @return \Yajra\DataTables\DataTableAbstract
-     */
+
     public function dataTable($query)
     {
         return datatables()
@@ -31,23 +26,11 @@ class ProductDataTable extends DataTable
             ->rawColumns(['product_image']);
     }
 
-
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \Modules\Product\Entities\Product $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function query(Product $model)
     {
         return $model->newQuery()->with('category');
     }
 
-    /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
-     */
     public function html()
     {
         return $this->builder()
@@ -70,11 +53,6 @@ class ProductDataTable extends DataTable
                     );
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns()
     {
         return [
