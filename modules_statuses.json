@@ -2,5 +2,6 @@
     "Product": true,
     "Upload": true,
     "User": true,
-    "Adjustment": true
+    "Adjustment": true,
+    "Expense": true
 }

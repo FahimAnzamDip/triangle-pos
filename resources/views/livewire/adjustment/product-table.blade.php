@@ -42,11 +42,13 @@
                             @if(isset($product['type']))
                                 @if($product['type'] == 'add')
                                     <select name="types[]" class="form-control">
-                                        <option value="add">(+) Addition</option>
+                                        <option value="add" selected>(+) Addition</option>
+                                        <option value="sub">(-) Subtraction</option>
                                     </select>
                                 @elseif($product['type'] == 'sub')
                                     <select name="types[]" class="form-control">
-                                        <option value="sub">(-) Subtraction</option>
+                                        <option value="sub" selected>(-) Subtraction</option>
+                                        <option value="add">(+) Addition</option>
                                     </select>
                                 @endif
                             @else
