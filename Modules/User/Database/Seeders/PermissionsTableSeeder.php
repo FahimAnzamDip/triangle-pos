@@ -17,26 +17,39 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'access_roles_permissions',
-            'create_roles_permissions',
-            'edit_roles_permissions',
-            'delete_roles_permissions',
+            //Products
             'access_products',
             'create_products',
             'show_products',
             'edit_products',
             'delete_products',
+            //Product Categories
             'access_product_categories',
+            //Barcode Printing
             'print_barcodes',
+            //Adjustments
             'access_adjustments',
             'create_adjustments',
             'show_adjustments',
             'edit_adjustments',
             'delete_adjustments',
+            //Expenses
             'access_expenses',
             'create_expenses',
             'edit_expenses',
             'delete_expenses',
+            //Customers
+            'access_customers',
+            'create_customers',
+            'show_customers',
+            'edit_customers',
+            'delete_customers',
+            //Suppliers
+            'access_suppliers',
+            'create_suppliers',
+            'show_suppliers',
+            'edit_suppliers',
+            'delete_suppliers',
         ];
 
         foreach ($permissions as $permission) {
