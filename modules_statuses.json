@@ -3,5 +3,6 @@
     "Upload": true,
     "User": true,
     "Adjustment": true,
-    "Expense": true
+    "Expense": true,
+    "People": true
 }
