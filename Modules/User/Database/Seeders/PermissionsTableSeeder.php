@@ -38,6 +38,8 @@ class PermissionsTableSeeder extends Seeder
             'create_expenses',
             'edit_expenses',
             'delete_expenses',
+            //Expense Categories
+            'access_expense_categories',
             //Customers
             'access_customers',
             'create_customers',
@@ -50,6 +52,11 @@ class PermissionsTableSeeder extends Seeder
             'show_suppliers',
             'edit_suppliers',
             'delete_suppliers',
+            //Currencies
+            'access_currencies',
+            'create_currencies',
+            'edit_currencies',
+            'delete_currencies',
         ];
 
         foreach ($permissions as $permission) {

@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <form action="{{ route('expenses.store') }}" method="POST">
+        <form id="expense-form" action="{{ route('expenses.store') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-lg-12">
@@ -54,7 +54,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="amount">Amount <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="amount" required>
+                                        <input id="amount" type="text" class="form-control" name="amount" required>
                                     </div>
                                 </div>
                             </div>
@@ -70,4 +70,27 @@
         </form>
     </div>
 @endsection
+
+@push('page_scripts')
+    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#amount').maskMoney({
+                prefix:'$',
+                thousands:',',
+                decimal:'.',
+            });
+            $('#amount').maskMoney({
+                prefix:'$',
+                thousands:',',
+                decimal:'.',
+            });
+
+            $('#expense-form').submit(function () {
+                var amount = $('#amount').maskMoney('unmasked')[0];
+                $('#amount').val(amount);
+            });
+        });
+    </script>
+@endpush
 

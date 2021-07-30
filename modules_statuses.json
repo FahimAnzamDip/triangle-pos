@@ -4,5 +4,6 @@
     "User": true,
     "Adjustment": true,
     "Expense": true,
-    "People": true
+    "People": true,
+    "Currency": true
 }

@@ -16,7 +16,7 @@
 
 @section('content')
     <div class="container-fluid mb-4">
-        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+        <form id="product-form" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('patch')
             <div class="row">
@@ -74,13 +74,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_cost">Cost <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" min="0" name="product_cost" required value="{{ $product->product_cost }}">
+                                        <input id="product_cost" type="text" class="form-control" min="0" name="product_cost" required value="{{ $product->product_cost }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_price">Price <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" min="0" name="product_price" required value="{{ $product->product_price }}">
+                                        <input id="product_price" type="text" class="form-control" min="0" name="product_price" required value="{{ $product->product_price }}">
                                     </div>
                                 </div>
                             </div>
@@ -140,5 +140,30 @@
 
 @push('page_scripts')
     @include('includes.filepond-js')
+    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#product_cost').maskMoney({
+                prefix:'$',
+                thousands:',',
+                decimal:'.',
+            });
+            $('#product_price').maskMoney({
+                prefix:'$',
+                thousands:',',
+                decimal:'.',
+            });
+
+            $('#product_cost').maskMoney('mask');
+            $('#product_price').maskMoney('mask');
+
+            $('#product-form').submit(function () {
+                var product_cost = $('#product_cost').maskMoney('unmasked')[0];
+                var product_price = $('#product_price').maskMoney('unmasked')[0];
+                $('#product_cost').val(product_cost);
+                $('#product_price').val(product_price);
+            });
+        });
+    </script>
 @endpush
 

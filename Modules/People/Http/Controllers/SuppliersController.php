@@ -31,7 +31,7 @@ class SuppliersController extends Controller
 
         $request->validate([
             'supplier_name'  => 'required|string|max:255',
-            'supplier_phone' => 'required|numeric',
+            'supplier_phone' => 'required|max:255',
             'supplier_email' => 'required|email|max:255',
             'city'           => 'required|string|max:255',
             'country'        => 'required|string|max:255',
@@ -72,7 +72,7 @@ class SuppliersController extends Controller
 
         $request->validate([
             'supplier_name'  => 'required|string|max:255',
-            'supplier_phone' => 'required|numeric',
+            'supplier_phone' => 'required|max:255',
             'supplier_email' => 'required|email|max:255',
             'city'           => 'required|string|max:255',
             'country'        => 'required|string|max:255',

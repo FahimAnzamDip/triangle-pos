@@ -11,4 +11,7 @@ class Supplier extends Model
 
     protected $guarded = [];
 
+    protected static function newFactory() {
+        return \Modules\People\Database\factories\SupplierFactory::new();
+    }
 }

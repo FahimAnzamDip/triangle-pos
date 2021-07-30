@@ -16,7 +16,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="product-form" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-lg-12">
@@ -74,13 +74,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_cost">Cost <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" min="0" name="product_cost" required value="{{ old('product_cost') }}">
+                                        <input id="product_cost" type="text" class="form-control" name="product_cost" required value="{{ old('product_cost') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_price">Price <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" min="0" name="product_price" required value="{{ old('product_price') }}">
+                                        <input id="product_price" type="text" class="form-control" name="product_price" required value="{{ old('product_price') }}">
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_stock_alert">Alert Quantity <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ old('stock_alert') }}" min="0">
+                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ old('product_stock_alert') }}" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -139,5 +139,27 @@
 
 @push('page_scripts')
     @include('includes.filepond-js')
+    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#product_cost').maskMoney({
+                prefix:'$',
+                thousands:',',
+                decimal:'.',
+            });
+            $('#product_price').maskMoney({
+                prefix:'$',
+                thousands:',',
+                decimal:'.',
+            });
+
+            $('#product-form').submit(function () {
+                var product_cost = $('#product_cost').maskMoney('unmasked')[0];
+                var product_price = $('#product_price').maskMoney('unmasked')[0];
+                $('#product_cost').val(product_cost);
+                $('#product_price').val(product_price);
+            });
+        });
+    </script>
 @endpush
 

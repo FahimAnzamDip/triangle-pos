@@ -34,7 +34,7 @@ class ExpenseController extends Controller
             'date' => 'required|date',
             'reference' => 'required|string|max:255|unique:expenses,reference',
             'category_id' => 'required',
-            'amount' => 'required|integer',
+            'amount' => 'required|numeric|max:2147483647',
             'details' => 'nullable|string|max:1000'
         ]);
 
@@ -66,7 +66,7 @@ class ExpenseController extends Controller
             'date' => 'required|date',
             'reference' => 'required|string|max:255|unique:expenses,reference,' . $expense->id,
             'category_id' => 'required',
-            'amount' => 'required|integer',
+            'amount' => 'required|numeric|max:2147483647',
             'details' => 'nullable|string|max:1000'
         ]);
 

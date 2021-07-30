@@ -19,4 +19,12 @@ class Expense extends Model
     public function getDateAttribute($value) {
         return Carbon::parse($value)->format('d M, Y');
     }
+
+    public function setAmountAttribute($value) {
+        $this->attributes['amount'] = ($value * 100);
+    }
+
+    public function getAmountAttribute($value) {
+        return ($value / 100);
+    }
 }
