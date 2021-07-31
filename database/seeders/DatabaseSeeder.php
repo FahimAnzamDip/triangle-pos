@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Setting\Database\Seeders\SettingDatabaseSeeder;
 use Modules\User\Database\Seeders\PermissionsTableSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,5 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(PermissionsTableSeeder::class);
         $this->call(SuperUserSeeder::class);
+        $this->call(SettingDatabaseSeeder::class);
     }
 }

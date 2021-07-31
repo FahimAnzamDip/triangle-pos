@@ -56,7 +56,7 @@
                                 {!! $barcode !!}
                             </div>
                             <p style="font-size: 15px;color: #000;">
-                                Price:: {{ number_format($product->product_price) }}
+                                Price:: {{ format_currency($product->product_price) }}
                             </p>
                         </div>
                     @endforeach

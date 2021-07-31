@@ -15,6 +15,9 @@ class ExpensesDataTable extends DataTable
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
+            ->addColumn('amount', function ($data) {
+                return format_currency($data->amount);
+            })
             ->addColumn('action', function ($data) {
                 return view('expense::expenses.partials.actions', compact('data'));
             });
@@ -57,7 +60,7 @@ class ExpensesDataTable extends DataTable
                 ->title('Category')
                 ->className('text-center align-middle'),
 
-            Column::make('amount')
+            Column::computed('amount')
                 ->className('text-center align-middle'),
 
             Column::make('details')

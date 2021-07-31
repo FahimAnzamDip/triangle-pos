@@ -140,11 +140,12 @@
     </li>
 @endcan
 
-@can('access_currencies')
+@can('access_currencies|access_settings')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('currencies*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-gear" style="line-height: 1;"></i> Settings
         </a>
+        @can('access_currencies')
         <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('currencies*') ? 'c-active' : '' }}" href="{{ route('currencies.index') }}">
@@ -152,5 +153,15 @@
                 </a>
             </li>
         </ul>
+        @endcan
+        @can('access_settings')
+        <ul class="c-sidebar-nav-dropdown-items">
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link {{ request()->routeIs('settings*') ? 'c-active' : '' }}" href="{{ route('settings.index') }}">
+                    <i class="c-sidebar-nav-icon bi bi-sliders" style="line-height: 1;"></i> System Settings
+                </a>
+            </li>
+        </ul>
+        @endcan
     </li>
 @endcan

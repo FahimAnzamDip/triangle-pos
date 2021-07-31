@@ -57,6 +57,8 @@ class PermissionsTableSeeder extends Seeder
             'create_currencies',
             'edit_currencies',
             'delete_currencies',
+            //Settings
+            'access_settings'
         ];
 
         foreach ($permissions as $permission) {
