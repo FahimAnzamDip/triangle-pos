@@ -76,14 +76,9 @@
     <script>
         $(document).ready(function () {
             $('#amount').maskMoney({
-                prefix:'$',
-                thousands:',',
-                decimal:'.',
-            });
-            $('#amount').maskMoney({
-                prefix:'$',
-                thousands:',',
-                decimal:'.',
+                prefix:'{{ settings()->currency->symbol }}',
+                thousands:'{{ settings()->currency->thousand_separator }}',
+                decimal:'{{ settings()->currency->decimal_separator }}',
             });
 
             $('#amount').maskMoney('mask');

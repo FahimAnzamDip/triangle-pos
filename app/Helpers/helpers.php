@@ -7,11 +7,15 @@ if (!function_exists('settings')) {
 }
 
 if (!function_exists('format_currency')) {
-    function format_currency($value) {
+    function format_currency($value, $format = true) {
+        if (!$format) {
+            return $value;
+        }
+
         if (settings()->default_currency_position == 'prefix') {
-            $formatted_value = settings()->currency->symbol . number_format($value, 2, settings()->currency->decimal_separator, settings()->currency->thousand_separator);
+            $formatted_value = settings()->currency->symbol . number_format((float) $value, 2, settings()->currency->decimal_separator, settings()->currency->thousand_separator);
         } else {
-            $formatted_value = number_format($value, 2, settings()->currency->decimal_separator, settings()->currency->thousand_separator) . settings()->currency->symbol;
+            $formatted_value = number_format((float) $value, 2, settings()->currency->decimal_separator, settings()->currency->thousand_separator) . settings()->currency->symbol;
         }
 
         return $formatted_value;

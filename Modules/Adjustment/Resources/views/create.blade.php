@@ -2,10 +2,6 @@
 
 @section('title', 'Create Adjustment')
 
-@push('page_css')
-    @livewireStyles
-@endpush
-
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>

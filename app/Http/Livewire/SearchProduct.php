@@ -24,7 +24,7 @@ class SearchProduct extends Component
     public function updatedQuery() {
         $this->searchResults = Product::where('product_name', 'like', '%' . $this->query . '%')
             ->orWhere('product_code', 'like', '%' . $this->query . '%')
-            ->get();
+            ->take(6)->get();
     }
 
     public function resetQuery() {

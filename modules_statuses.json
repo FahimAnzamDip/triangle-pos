@@ -6,5 +6,6 @@
     "Expense": true,
     "People": true,
     "Currency": true,
-    "Setting": true
+    "Setting": true,
+    "Sale": true
 }
