@@ -76,6 +76,7 @@ class SaleController extends Controller
                     'unit_price' => $cart_item->options->unit_price * 100,
                     'sub_total' => $cart_item->options->sub_total * 100,
                     'product_discount_amount' => $cart_item->options->product_discount * 100,
+                    'product_discount_type' => $cart_item->options->product_discount_type,
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                 ]);
 
@@ -121,6 +122,7 @@ class SaleController extends Controller
                 'weight'  => 1,
                 'options' => [
                     'product_discount' => $sale_detail->product_discount_amount,
+                    'product_discount_type' => $sale_detail->product_discount_type,
                     'sub_total'   => $sale_detail->sub_total,
                     'code'        => $sale_detail->product_code,
                     'stock'       => Product::findOrFail($sale_detail->product_id)->product_quantity,
@@ -185,6 +187,7 @@ class SaleController extends Controller
                     'unit_price' => $cart_item->options->unit_price * 100,
                     'sub_total' => $cart_item->options->sub_total * 100,
                     'product_discount_amount' => $cart_item->options->product_discount * 100,
+                    'product_discount_type' => $cart_item->options->product_discount_type,
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                 ]);
 
@@ -207,5 +210,11 @@ class SaleController extends Controller
 
     public function destroy(Sale $sale) {
         abort_if(Gate::denies('delete_sales'), 403);
+
+        $sale->delete();
+
+        toast('Sale Deleted!', 'warning');
+
+        return redirect()->route('sales.index');
     }
 }

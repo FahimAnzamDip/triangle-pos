@@ -55,7 +55,7 @@
                                 </div>
                             </div>
 
-                            <livewire:product-cart :cartInstance="'sale'" :sale="$sale"/>
+                            <livewire:product-cart :cartInstance="'sale'" :data="$sale"/>
 
                             <div class="form-row">
                                 <div class="col-lg-4">

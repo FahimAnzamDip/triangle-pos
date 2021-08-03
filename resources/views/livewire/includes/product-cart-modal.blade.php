@@ -1,5 +1,5 @@
 <!-- Button trigger Discount Modal -->
-<span role="button" class="badge badge-warning pointer-event" data-toggle="modal" data-target="#discountModal{{ $cart_item->id }}">
+<span wire:click="$emitSelf('discountModalRefresh', '{{ $cart_item->id }}', '{{ $cart_item->rowId }}')" role="button" class="badge badge-warning pointer-event" data-toggle="modal" data-target="#discountModal{{ $cart_item->id }}">
     <i class="bi bi-pencil-square text-white"></i>
 </span>
 <!-- Discount Modal -->
@@ -20,15 +20,31 @@
             </div>
             <form wire:submit.prevent="setProductDiscount('{{ $cart_item->rowId }}', '{{ $cart_item->id }}')" method="POST">
                 <div class="modal-body">
+                    @if (session()->has('discount_message' . $cart_item->id))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <div class="alert-body">
+                                <span>{{ session('discount_message' . $cart_item->id) }}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label>Discount Type <span class="text-danger">*</span></label>
-                        <select wire:model.defer="discount_type.{{ $cart_item->id }}" class="form-control" required>
-                            <option {{ $discount_type[$cart_item->id] == 'fixed' ? 'selected' : '' }} value="fixed">Fixed</option>
+                        <select wire:model="discount_type.{{ $cart_item->id }}" class="form-control" required>
+                            <option value="fixed">Fixed</option>
+                            <option value="percentage">Percentage</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Discount <span class="text-danger">*</span></label>
-                        <input wire:model.defer="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}" step="0.01">
+                        @if($discount_type[$cart_item->id] == 'percentage')
+                            <label>Discount(%) <span class="text-danger">*</span></label>
+                            <input wire:model.defer="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}" min="0" max="100">
+                        @elseif($discount_type[$cart_item->id] == 'fixed')
+                            <label>Discount <span class="text-danger">*</span></label>
+                            <input wire:model.defer="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}" step="0.01">
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">

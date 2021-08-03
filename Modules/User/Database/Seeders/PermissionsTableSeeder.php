@@ -52,6 +52,12 @@ class PermissionsTableSeeder extends Seeder
             'show_suppliers',
             'edit_suppliers',
             'delete_suppliers',
+            //Sales
+            'access_sales',
+            'create_sales',
+            'show_sales',
+            'edit_sales',
+            'delete_sales',
             //Currencies
             'access_currencies',
             'create_currencies',

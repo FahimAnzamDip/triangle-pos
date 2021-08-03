@@ -95,7 +95,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_stock_alert">Alert Quantity <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ old('product_stock_alert') }}" min="0">
+                                        <input type="number" class="form-control" name="product_stock_alert" required value="{{ old('product_stock_alert') }}" min="0" max="100">
                                     </div>
                                 </div>
                             </div>
