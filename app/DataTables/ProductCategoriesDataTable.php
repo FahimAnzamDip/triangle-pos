@@ -32,7 +32,7 @@ class ProductCategoriesDataTable extends DataTable
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(0, 'asc')
+            ->orderBy(4)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -49,14 +49,20 @@ class ProductCategoriesDataTable extends DataTable
         return [
             Column::make('category_code')
                 ->addClass('text-center'),
+
             Column::make('category_name')
                 ->addClass('text-center'),
+
             Column::make('products_count')
                 ->addClass('text-center'),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),
+
+            Column::make('created_at')
+                ->visible(false)
         ];
     }
 

@@ -32,7 +32,7 @@ class ExpenseCategoriesDataTable extends DataTable
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(0, 'asc')
+            ->orderBy(4)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -60,6 +60,9 @@ class ExpenseCategoriesDataTable extends DataTable
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),
+
+            Column::make('created_at')
+                ->visible(false)
         ];
     }
 
