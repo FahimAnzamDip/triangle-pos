@@ -100,7 +100,9 @@ class SaleController extends Controller
     public function show(Sale $sale) {
         abort_if(Gate::denies('show_sales'), 403);
 
-        return view('sale::show', compact('sale'));
+        $customer = Customer::findOrFail($sale->customer_id);
+
+        return view('sale::show', compact('sale', 'customer'));
     }
 
 

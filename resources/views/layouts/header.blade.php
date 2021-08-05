@@ -16,6 +16,19 @@
         </a>
     </li>
 
+    <li class="c-header-nav-item dropdown d-md-down-none mx-2">
+        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-bell" style="font-size: 20px;"></i>
+            <span class="badge badge-pill badge-danger">0</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
+            <div class="dropdown-header bg-light"><strong>You have 0 notification!</strong></div>
+            <a class="dropdown-item" href="#">
+                No Notification...
+            </a>
+        </div>
+    </li>
+
     <li class="c-header-nav-item dropdown">
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
            aria-haspopup="true" aria-expanded="false">

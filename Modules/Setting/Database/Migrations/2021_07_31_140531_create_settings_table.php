@@ -22,7 +22,7 @@ class CreateSettingsTable extends Migration
             $table->integer('default_currency_id');
             $table->string('default_currency_position');
             $table->string('notification_email');
-            $table->string('footer_text');
+            $table->text('footer_text');
             $table->text('company_address');
             $table->timestamps();
         });

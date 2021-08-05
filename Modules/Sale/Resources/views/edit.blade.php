@@ -83,10 +83,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="form-group">
-                                            <label for="paid_amount">Amount Received <span class="text-danger">*</span></label>
-                                            <input id="paid_amount" type="text" class="form-control" name="paid_amount" required value="{{ $sale->paid_amount }}" min="0" max="{{ $sale->total_amount }}">
+                                    <div class="form-group">
+                                        <label for="paid_amount">Amount Received <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input id="paid_amount" type="text" class="form-control" name="paid_amount" required value="{{ $sale->paid_amount }}">
+                                            <div class="input-group-append">
+                                                <button id="getTotalAmount" class="btn btn-primary" type="button">
+                                                    <i class="bi bi-check-square"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +127,10 @@
             });
 
             $('#paid_amount').maskMoney('mask');
-            $('#paid_amount').maskMoney('mask');
+
+            $('#getTotalAmount').click(function () {
+                $('#paid_amount').maskMoney('mask', {{ \Gloudemans\Shoppingcart\Facades\Cart::instance('sale')->total() }});
+            });
 
             $('#sale-form').submit(function () {
                 var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];

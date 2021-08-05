@@ -13,7 +13,7 @@
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead class="thead-dark">
-                <tr class="align-middle">
+                <tr>
                     <th class="align-middle">Product</th>
                     <th class="align-middle">Net Unit Price</th>
                     <th class="align-middle">Stock</th>

@@ -81,7 +81,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="footer_text">Footer Text <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="footer_text" value="{!! $settings->footer_text !!}">
+                                        <textarea rows="1" name="footer_text" class="form-control">{!! $settings->footer_text !!}</textarea>
                                     </div>
                                 </div>
                             </div>

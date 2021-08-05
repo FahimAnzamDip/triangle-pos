@@ -83,10 +83,15 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="from-group">
-                                        <div class="form-group">
-                                            <label for="paid_amount">Amount Received <span class="text-danger">*</span></label>
+                                    <div class="form-group">
+                                        <label for="paid_amount">Amount Received <span class="text-danger">*</span></label>
+                                        <div class="input-group">
                                             <input id="paid_amount" type="text" class="form-control" name="paid_amount" required>
+                                            <div class="input-group-append">
+                                                <button id="getTotalAmount" class="btn btn-primary" type="button">
+                                                    <i class="bi bi-check-square"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -119,6 +124,10 @@
                 thousands:'{{ settings()->currency->thousand_separator }}',
                 decimal:'{{ settings()->currency->decimal_separator }}',
                 allowZero: true,
+            });
+
+            $('#getTotalAmount').click(function () {
+                $('#paid_amount').maskMoney('mask', {{ Cart::instance('sale')->total() }});
             });
 
             $('#sale-form').submit(function () {
