@@ -124,6 +124,11 @@
                             </table>
                         </div>
                     </div>
+                    <div class="row" style="margin-top: 25px;">
+                        <div class="col-xs-12">
+                            <p style="font-style: italic;text-align: center">Computer generated invoice. {{ settings()->company_name }} &copy; {{ date('Y') }}.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

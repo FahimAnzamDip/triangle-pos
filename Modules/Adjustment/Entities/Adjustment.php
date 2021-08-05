@@ -20,4 +20,8 @@ class Adjustment extends Model
         return $this->hasMany(AdjustedProduct::class, 'adjustment_id', 'id');
     }
 
+    public function getReferenceAttribute($value) {
+        return strtoupper($value) . '_' . str_pad($this->attributes['id'], 6, '0', STR_PAD_LEFT );
+    }
+
 }

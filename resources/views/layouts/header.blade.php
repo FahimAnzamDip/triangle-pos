@@ -22,9 +22,9 @@
             <span class="badge badge-pill badge-danger">0</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0">
-            <div class="dropdown-header bg-light"><strong>You have 0 notification!</strong></div>
+            <div class="dropdown-header bg-light"><strong>You have 0 notification.</strong></div>
             <a class="dropdown-item" href="#">
-                No Notification...
+                <i class="bi bi-app-indicator mr-2 text-danger"></i> No notification available.
             </a>
         </div>
     </li>
