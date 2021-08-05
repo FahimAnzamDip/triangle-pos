@@ -32,7 +32,7 @@ class ExpenseController extends Controller
 
         $request->validate([
             'date' => 'required|date',
-            'reference' => 'required|string|max:255|unique:expenses,reference',
+            'reference' => 'required|string|max:255',
             'category_id' => 'required',
             'amount' => 'required|numeric|max:2147483647',
             'details' => 'nullable|string|max:1000'
@@ -64,7 +64,7 @@ class ExpenseController extends Controller
 
         $request->validate([
             'date' => 'required|date',
-            'reference' => 'required|string|max:255|unique:expenses,reference,' . $expense->id,
+            'reference' => 'required|string|max:255',
             'category_id' => 'required',
             'amount' => 'required|numeric|max:2147483647',
             'details' => 'nullable|string|max:1000'

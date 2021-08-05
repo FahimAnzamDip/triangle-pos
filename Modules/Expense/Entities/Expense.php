@@ -27,4 +27,8 @@ class Expense extends Model
     public function getAmountAttribute($value) {
         return ($value / 100);
     }
+
+    public function getReferenceAttribute($value) {
+        return strtoupper($value) . '_' . str_pad($this->attributes['id'], 6, '0', STR_PAD_LEFT );
+    }
 }
