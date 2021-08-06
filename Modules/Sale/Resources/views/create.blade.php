@@ -30,7 +30,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="reference">Reference <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="reference" required>
+                                        <input type="text" class="form-control" name="reference" required readonly value="SL">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">

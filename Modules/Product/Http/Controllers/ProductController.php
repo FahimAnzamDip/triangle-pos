@@ -9,8 +9,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Modules\Product\Entities\Product;
-use Modules\Product\Http\Requests\ProductCreateRequest;
-use Modules\Product\Http\Requests\ProductUpdateRequest;
+use Modules\Product\Http\Requests\StoreProductRequest;
+use Modules\Product\Http\Requests\UpdateProductRequest;
 use Modules\Upload\Entities\Upload;
 
 class ProductController extends Controller
@@ -30,7 +30,7 @@ class ProductController extends Controller
     }
 
 
-    public function store(ProductCreateRequest $request) {
+    public function store(StoreProductRequest $request) {
         $product = Product::create($request->except('image'));
 
         if ($request->has('image')) {
@@ -64,7 +64,7 @@ class ProductController extends Controller
     }
 
 
-    public function update(ProductUpdateRequest $request, Product $product) {
+    public function update(UpdateProductRequest $request, Product $product) {
         $product->update($request->except('image'));
 
         if ($request->has('image')) {

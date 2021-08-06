@@ -16,7 +16,7 @@ class StoreSaleRequest extends FormRequest
     {
         return [
             'customer_id' => 'required|numeric',
-            'reference' => 'required|string|max:255|unique:sales,reference',
+            'reference' => 'required|string|max:255',
             'tax_percentage' => 'required|integer|min:0|max:100',
             'discount_percentage' => 'required|integer|min:0|max:100',
             'shipping_amount' => 'required|numeric',

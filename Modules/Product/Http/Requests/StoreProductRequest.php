@@ -5,7 +5,7 @@ namespace Modules\Product\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class ProductCreateRequest extends FormRequest
+class StoreProductRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

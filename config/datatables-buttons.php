@@ -1,9 +1,4 @@
 <?php
-$dom = "
-            B<'row'<'col-md-6'l><'col-md-6'f>> .
-            'tr' .
-            <'row'<'col-md-5'i><'col-md-7'p>>
-        ";
 
 return [
     /*
@@ -81,16 +76,18 @@ return [
         /*
          * Default columns to generate when not set.
          */
-        'columns' => 'id,add your columns,created_at,updated_at',
+        'columns' => 'id,db columns,created_at',
 
         /*
          * Default buttons to generate when not set.
          */
-        'buttons' => 'create,export,print,reset,reload',
+        'buttons' => 'excel,print,reset,reload',
 
         /*
          * Default DOM to generate when not set.
          */
-        'dom'     => 'Bfrtip',
+        'dom'     => "<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
+                                'tr' .
+                                <'row'<'col-md-5'i><'col-md-7 mt-2'p>>",
     ],
 ];

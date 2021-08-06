@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
-class ProductUpdateRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
