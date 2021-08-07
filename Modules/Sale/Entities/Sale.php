@@ -15,6 +15,10 @@ class Sale extends Model
         return $this->hasMany(SaleDetails::class, 'sale_id', 'id');
     }
 
+    public function salePayments() {
+        return $this->hasMany(SalePayment::class, 'sale_id', 'id');
+    }
+
     public function getReferenceAttribute($value) {
         return strtoupper($value) . '_' . str_pad($this->attributes['id'], 6, '0', STR_PAD_LEFT);
     }

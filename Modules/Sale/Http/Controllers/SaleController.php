@@ -13,6 +13,7 @@ use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
+use Modules\Sale\Entities\SalePayment;
 use Modules\Sale\Http\Requests\StoreSaleRequest;
 use Modules\Sale\Http\Requests\UpdateSaleRequest;
 
@@ -89,6 +90,14 @@ class SaleController extends Controller
             }
 
             Cart::instance('sale')->destroy();
+
+            SalePayment::create([
+                'date' => $request->date,
+                'reference' => 'INV/'.$sale->reference,
+                'amount' => $sale->paid_amount,
+                'sale_id' => $sale->id,
+                'payment_method' => $request->payment_method
+            ]);
         });
 
         toast('Sale Created!', 'success');

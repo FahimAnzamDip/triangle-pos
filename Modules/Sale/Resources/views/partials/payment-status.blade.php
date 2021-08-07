@@ -1,5 +1,5 @@
 @if ($data->payment_status == 'Partial')
-    <span class="badge badge-info">
+    <span class="badge badge-warning">
         {{ $data->payment_status }}
     </span>
 @elseif ($data->payment_status == 'Paid')

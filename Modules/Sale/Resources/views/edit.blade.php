@@ -30,7 +30,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="reference">Reference <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="reference" required value="{{ $sale->reference }}" readonly   >
+                                        <input type="text" class="form-control" name="reference" required value="SL" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -72,27 +72,14 @@
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="payment_method" id="payment_method" required>
-                                                <option {{ $sale->payment_method == 'Cash' ? 'selected' : '' }} value="Cash">Cash</option>
-                                                <option {{ $sale->payment_method == 'Credit Card' ? 'selected' : '' }} value="Credit Card">Credit Card</option>
-                                                <option {{ $sale->payment_method == 'Bank Transfer' ? 'selected' : '' }} value="Bank Transfer">Bank Transfer</option>
-                                                <option {{ $sale->payment_method == 'Cheque' ? 'selected' : '' }} value="Cheque">Cheque</option>
-                                                <option {{ $sale->payment_method == 'Other' ? 'selected' : '' }} value="Other">Other</option>
-                                            </select>
+                                            <input type="text" class="form-control" name="payment_method" required value="{{ $sale->payment_method }}" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="paid_amount">Amount Received <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <input id="paid_amount" type="text" class="form-control" name="paid_amount" required value="{{ $sale->paid_amount }}">
-                                            <div class="input-group-append">
-                                                <button id="getTotalAmount" class="btn btn-primary" type="button">
-                                                    <i class="bi bi-check-square"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <input id="paid_amount" type="text" class="form-control" name="paid_amount" required value="{{ $sale->paid_amount }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -127,10 +114,6 @@
             });
 
             $('#paid_amount').maskMoney('mask');
-
-            $('#getTotalAmount').click(function () {
-                $('#paid_amount').maskMoney('mask', {{ \Gloudemans\Shoppingcart\Facades\Cart::instance('sale')->total() }});
-            });
 
             $('#sale-form').submit(function () {
                 var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];

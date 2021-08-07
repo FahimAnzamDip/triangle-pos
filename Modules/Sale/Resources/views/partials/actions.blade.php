@@ -1,8 +1,20 @@
 <div class="btn-group dropleft">
-    <button type="button" class="btn btn-outline-primary dropdown rounded" data-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-wrench"></i>
+    <button type="button" class="btn btn-ghost-primary dropdown rounded" data-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-three-dots-vertical"></i>
     </button>
     <div class="dropdown-menu">
+        @can('access_sale_payments')
+            <a href="{{ route('sale-payments.index', $data->id) }}" class="dropdown-item">
+                <i class="bi bi-cash-coin mr-2 text-warning" style="line-height: 1;"></i> Show Payments
+            </a>
+        @endcan
+        @can('access_sale_payments')
+            @if($data->due_amount > 0)
+            <a href="{{ route('sale-payments.create', $data->id) }}" class="dropdown-item">
+                <i class="bi bi-plus-circle-dotted mr-2 text-success" style="line-height: 1;"></i> Add Payment
+            </a>
+            @endif
+        @endcan
         @can('edit_sales')
             <a href="{{ route('sales.edit', $data->id) }}" class="dropdown-item">
                 <i class="bi bi-pencil mr-2 text-primary" style="line-height: 1;"></i> Edit
