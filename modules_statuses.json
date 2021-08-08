@@ -10,5 +10,6 @@
     "Sale": true,
     "Purchase": true,
     "SaleReturn": true,
-    "SalesReturn": true
+    "SalesReturn": true,
+    "PurchasesReturn": true
 }

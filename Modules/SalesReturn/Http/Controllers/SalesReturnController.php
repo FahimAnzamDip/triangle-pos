@@ -117,7 +117,7 @@ class SalesReturnController extends Controller
 
 
     public function edit(SaleReturn $sale_return) {
-        abort_if(Gate::denies('edit_sales'), 403);
+        abort_if(Gate::denies('edit_sale_returns'), 403);
 
         $sale_return_details = $sale_return->saleReturnDetails;
 

@@ -60,6 +60,14 @@ class PermissionsTableSeeder extends Seeder
             'delete_sales',
             //Sale Payments
             'access_sale_payments',
+            //Sale Returns
+            'access_sale_returns',
+            'create_sale_returns',
+            'show_sale_returns',
+            'edit_sale_returns',
+            'delete_sale_returns',
+            //Sale Return Payments
+            'access_sale_return_payments',
             //Purchases
             'access_purchases',
             'create_purchases',
@@ -68,6 +76,14 @@ class PermissionsTableSeeder extends Seeder
             'delete_purchases',
             //Purchase Payments
             'access_purchase_payments',
+            //Sale Returns
+            'access_purchase_returns',
+            'create_purchase_returns',
+            'show_purchase_returns',
+            'edit_purchase_returns',
+            'delete_purchase_returns',
+            //Sale Return Payments
+            'access_purchase_return_payments',
             //Currencies
             'access_currencies',
             'create_currencies',

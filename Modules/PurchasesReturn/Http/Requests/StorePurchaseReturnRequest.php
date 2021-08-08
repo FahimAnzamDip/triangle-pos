@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\SalesReturn\Http\Requests;
+namespace Modules\PurchasesReturn\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class StoreSaleReturnRequest extends FormRequest
+class StorePurchaseReturnRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,7 +15,7 @@ class StoreSaleReturnRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_id' => 'required|numeric',
+            'supplier_id' => 'required|numeric',
             'reference' => 'required|string|max:255',
             'tax_percentage' => 'required|integer|min:0|max:100',
             'discount_percentage' => 'required|integer|min:0|max:100',
@@ -35,6 +35,6 @@ class StoreSaleReturnRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('create_sale_returns');
+        return Gate::allows('create_purchase_returns');
     }
 }
