@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Sale\Http\Controllers;
+namespace Modules\SalesReturn\Http\Controllers;
 
-use App\DataTables\SalesDataTable;
+use App\DataTables\SaleReturnsDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -11,32 +11,32 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
-use Modules\Sale\Entities\Sale;
-use Modules\Sale\Entities\SaleDetails;
-use Modules\Sale\Entities\SalePayment;
-use Modules\Sale\Http\Requests\StoreSaleRequest;
-use Modules\Sale\Http\Requests\UpdateSaleRequest;
+use Modules\SalesReturn\Entities\SaleReturn;
+use Modules\SalesReturn\Entities\SaleReturnDetail;
+use Modules\SalesReturn\Entities\SaleReturnPayment;
+use Modules\SalesReturn\Http\Requests\StoreSaleReturnRequest;
+use Modules\SalesReturn\Http\Requests\UpdateSaleReturnRequest;
 
-class SaleController extends Controller
+class SalesReturnController extends Controller
 {
 
-    public function index(SalesDataTable $dataTable) {
-        abort_if(Gate::denies('access_sales'), 403);
+    public function index(SaleReturnsDataTable $dataTable) {
+        abort_if(Gate::denies('access_sale_returns'), 403);
 
-        return $dataTable->render('sale::index');
+        return $dataTable->render('salesreturn::index');
     }
 
 
     public function create() {
-        abort_if(Gate::denies('create_sales'), 403);
+        abort_if(Gate::denies('create_sale_returns'), 403);
 
-        Cart::instance('sale')->destroy();
+        Cart::instance('sale_return')->destroy();
 
-        return view('sale::create');
+        return view('salesreturn::create');
     }
 
 
-    public function store(StoreSaleRequest $request) {
+    public function store(StoreSaleReturnRequest $request) {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
 
@@ -48,7 +48,7 @@ class SaleController extends Controller
                 $payment_status = 'Paid';
             }
 
-            $sale = Sale::create([
+            $sale_return = SaleReturn::create([
                 'date' => $request->date,
                 'reference' => $request->reference,
                 'customer_id' => $request->customer_id,
@@ -63,13 +63,13 @@ class SaleController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('sale')->tax() * 100,
-                'discount_amount' => Cart::instance('sale')->discount() * 100,
+                'tax_amount' => Cart::instance('sale_return')->tax() * 100,
+                'discount_amount' => Cart::instance('sale_return')->discount() * 100,
             ]);
 
-            foreach (Cart::instance('sale')->content() as $cart_item) {
-                SaleDetails::create([
-                    'sale_id' => $sale->id,
+            foreach (Cart::instance('sale_return')->content() as $cart_item) {
+                SaleReturnDetail::create([
+                    'sale_return_id' => $sale_return->id,
                     'product_id' => $cart_item->id,
                     'product_name' => $cart_item->name,
                     'product_code' => $cart_item->options->code,
@@ -82,76 +82,76 @@ class SaleController extends Controller
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                 ]);
 
-                if ($request->status == 'Shipped' || $request->status == 'Completed') {
+                if ($request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty
+                        'product_quantity' => $product->product_quantity + $cart_item->qty
                     ]);
                 }
             }
 
-            Cart::instance('sale')->destroy();
+            Cart::instance('sale_return')->destroy();
 
-            SalePayment::create([
+            SaleReturnPayment::create([
                 'date' => $request->date,
-                'reference' => 'INV/'.$sale->reference,
-                'amount' => $sale->paid_amount,
-                'sale_id' => $sale->id,
+                'reference' => 'INV/'.$sale_return->reference,
+                'amount' => $sale_return->paid_amount,
+                'sale_return_id' => $sale_return->id,
                 'payment_method' => $request->payment_method
             ]);
         });
 
-        toast('Sale Created!', 'success');
+        toast('Sale Return Created!', 'success');
 
-        return redirect()->route('sales.index');
+        return redirect()->route('sale-returns.index');
     }
 
 
-    public function show(Sale $sale) {
-        abort_if(Gate::denies('show_sales'), 403);
+    public function show(SaleReturn $sale_return) {
+        abort_if(Gate::denies('show_sale_returns'), 403);
 
-        $customer = Customer::findOrFail($sale->customer_id);
+        $customer = Customer::findOrFail($sale_return->customer_id);
 
-        return view('sale::show', compact('sale', 'customer'));
+        return view('salesreturn::show', compact('sale_return', 'customer'));
     }
 
 
-    public function edit(Sale $sale) {
+    public function edit(SaleReturn $sale_return) {
         abort_if(Gate::denies('edit_sales'), 403);
 
-        $sale_details = $sale->saleDetails;
+        $sale_return_details = $sale_return->saleReturnDetails;
 
-        Cart::instance('sale')->destroy();
+        Cart::instance('sale_return')->destroy();
 
-        $cart = Cart::instance('sale');
+        $cart = Cart::instance('sale_return');
 
-        foreach ($sale_details as $sale_detail) {
+        foreach ($sale_return_details as $sale_return_detail) {
             $cart->add([
-                'id'      => $sale_detail->product_id,
-                'name'    => $sale_detail->product_name,
-                'qty'     => $sale_detail->quantity,
-                'price'   => $sale_detail->price,
+                'id'      => $sale_return_detail->product_id,
+                'name'    => $sale_return_detail->product_name,
+                'qty'     => $sale_return_detail->quantity,
+                'price'   => $sale_return_detail->price,
                 'weight'  => 1,
                 'options' => [
-                    'product_discount' => $sale_detail->product_discount_amount,
-                    'product_discount_type' => $sale_detail->product_discount_type,
-                    'sub_total'   => $sale_detail->sub_total,
-                    'code'        => $sale_detail->product_code,
-                    'stock'       => Product::findOrFail($sale_detail->product_id)->product_quantity,
-                    'product_tax' => $sale_detail->product_tax_amount,
-                    'unit_price'  => $sale_detail->unit_price
+                    'product_discount' => $sale_return_detail->product_discount_amount,
+                    'product_discount_type' => $sale_return_detail->product_discount_type,
+                    'sub_total'   => $sale_return_detail->sub_total,
+                    'code'        => $sale_return_detail->product_code,
+                    'stock'       => Product::findOrFail($sale_return_detail->product_id)->product_quantity,
+                    'product_tax' => $sale_return_detail->product_tax_amount,
+                    'unit_price'  => $sale_return_detail->unit_price
                 ]
             ]);
         }
 
-        return view('sale::edit', compact('sale'));
+        return view('salesreturn::edit', compact('sale_return'));
     }
 
 
-    public function update(UpdateSaleRequest $request, Sale $sale) {
-        DB::transaction(function () use ($request, $sale) {
-
+    public function update(UpdateSaleReturnRequest $request, SaleReturn $sale_return) {
+        DB::transaction(function () use ($request, $sale_return) {
             $due_amount = $request->total_amount - $request->paid_amount;
+
             if ($due_amount == $request->total_amount) {
                 $payment_status = 'Unpaid';
             } elseif ($due_amount > 0) {
@@ -160,17 +160,17 @@ class SaleController extends Controller
                 $payment_status = 'Paid';
             }
 
-            foreach ($sale->saleDetails as $sale_detail) {
-                if ($sale->status == 'Shipped' || $sale->status == 'Completed') {
-                    $product = Product::findOrFail($sale_detail->product_id);
+            foreach ($sale_return->saleReturnDetails as $sale_return_detail) {
+                if ($sale_return->status == 'Completed') {
+                    $product = Product::findOrFail($sale_return_detail->product_id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity + $sale_detail->quantity
+                        'product_quantity' => $product->product_quantity - $sale_return_detail->quantity
                     ]);
                 }
-                $sale_detail->delete();
+                $sale_return_detail->delete();
             }
 
-            $sale->update([
+            $sale_return->update([
                 'date' => $request->date,
                 'reference' => $request->reference,
                 'customer_id' => $request->customer_id,
@@ -185,13 +185,13 @@ class SaleController extends Controller
                 'payment_status' => $payment_status,
                 'payment_method' => $request->payment_method,
                 'note' => $request->note,
-                'tax_amount' => Cart::instance('sale')->tax() * 100,
-                'discount_amount' => Cart::instance('sale')->discount() * 100,
+                'tax_amount' => Cart::instance('sale_return')->tax() * 100,
+                'discount_amount' => Cart::instance('sale_return')->discount() * 100,
             ]);
 
-            foreach (Cart::instance('sale')->content() as $cart_item) {
-                SaleDetails::create([
-                    'sale_id' => $sale->id,
+            foreach (Cart::instance('sale_return')->content() as $cart_item) {
+                SaleReturnDetail::create([
+                    'sale_return_id' => $sale_return->id,
                     'product_id' => $cart_item->id,
                     'product_name' => $cart_item->name,
                     'product_code' => $cart_item->options->code,
@@ -204,30 +204,30 @@ class SaleController extends Controller
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                 ]);
 
-                if ($request->status == 'Shipped' || $request->status == 'Completed') {
+                if ($request->status == 'Completed') {
                     $product = Product::findOrFail($cart_item->id);
                     $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty
+                        'product_quantity' => $product->product_quantity + $cart_item->qty
                     ]);
                 }
             }
 
-            Cart::instance('sale')->destroy();
+            Cart::instance('sale_return')->destroy();
         });
 
-        toast('Sale Updated!', 'info');
+        toast('Sale Return Updated!', 'info');
 
-        return redirect()->route('sales.index');
+        return redirect()->route('sale-returns.index');
     }
 
 
-    public function destroy(Sale $sale) {
-        abort_if(Gate::denies('delete_sales'), 403);
+    public function destroy(SaleReturn $sale_return) {
+        abort_if(Gate::denies('delete_sale_returns'), 403);
 
-        $sale->delete();
+        $sale_return->delete();
 
-        toast('Sale Deleted!', 'warning');
+        toast('Sale Return Deleted!', 'warning');
 
-        return redirect()->route('sales.index');
+        return redirect()->route('sale-returns.index');
     }
 }

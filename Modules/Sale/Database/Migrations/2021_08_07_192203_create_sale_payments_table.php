@@ -21,7 +21,7 @@ class CreateSalePaymentsTable extends Migration
             $table->string('reference');
             $table->string('payment_method');
             $table->text('note')->nullable();
-            $table->foreign('sale_id')->references('id')->on('sale_payments')->cascadeOnDelete();
+            $table->foreign('sale_id')->references('id')->on('sales')->cascadeOnDelete();
             $table->timestamps();
         });
     }

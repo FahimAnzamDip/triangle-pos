@@ -8,5 +8,7 @@
     "Currency": true,
     "Setting": true,
     "Sale": true,
-    "Purchase": true
+    "Purchase": true,
+    "SaleReturn": true,
+    "SalesReturn": true
 }

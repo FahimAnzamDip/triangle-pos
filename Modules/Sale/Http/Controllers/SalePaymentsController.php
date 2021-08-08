@@ -57,6 +57,7 @@ class SalePaymentsController extends Controller
             $sale = Sale::findOrFail($request->sale_id);
 
             $due_amount = $sale->due_amount - $request->amount;
+
             if ($due_amount == $sale->total_amount) {
                 $payment_status = 'Unpaid';
             } elseif ($due_amount > 0) {
