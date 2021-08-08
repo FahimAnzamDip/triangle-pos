@@ -7,5 +7,6 @@
     "People": true,
     "Currency": true,
     "Setting": true,
-    "Sale": true
+    "Sale": true,
+    "Purchase": true
 }

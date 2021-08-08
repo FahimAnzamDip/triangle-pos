@@ -85,11 +85,11 @@
                 <table class="table table-striped">
                     <tr>
                         <th>Order Tax ({{ $global_tax }}%)</th>
-                        <td>(+) {{ format_currency(Cart::instance('sale')->tax()) }}</td>
+                        <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
                     </tr>
                     <tr>
                         <th>Discount ({{ $global_discount }}%)</th>
-                        <td>(-) {{ format_currency(Cart::instance('sale')->discount()) }}</td>
+                        <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
                     </tr>
                     <tr>
                         <th>Shipping</th>
@@ -99,7 +99,7 @@
                     <tr>
                         <th>Grand Total</th>
                         @php
-                            $total_with_shipping = Cart::instance('sale')->total() + (float) $shipping
+                            $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
                         @endphp
                         <th>
                             (=) {{ format_currency($total_with_shipping) }}
