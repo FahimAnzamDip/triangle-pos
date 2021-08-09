@@ -31,6 +31,10 @@ class ProductTable extends Component
     }
 
     public function generateBarcodes(Product $product, $quantity) {
+        if ($quantity > 100) {
+            return session()->flash('message', 'Max quantity is 100 per barcode generation!');
+        }
+
         $this->barcodes = [];
 
         for ($i = 1; $i <= $quantity; $i++) {

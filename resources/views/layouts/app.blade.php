@@ -25,36 +25,42 @@
 </head>
 
 <body class="c-app">
-@include('layouts.sidebar')
+    @include('layouts.sidebar')
 
-<div class="c-wrapper">
-    <header class="c-header c-header-light c-header-fixed">
-        @include('layouts.header')
-        <div class="c-subheader justify-content-between px-3">
-            @yield('breadcrumb')
+    <div class="c-wrapper">
+        <header class="c-header c-header-light c-header-fixed">
+            @include('layouts.header')
+            <div class="c-subheader justify-content-between px-3">
+                @yield('breadcrumb')
+            </div>
+        </header>
+
+        <div class="c-body">
+            <main class="c-main">
+                @yield('content')
+            </main>
         </div>
-    </header>
 
-    <div class="c-body">
-        <main class="c-main">
-            @yield('content')
-        </main>
+        @include('layouts.footer')
     </div>
 
-    @include('layouts.footer')
-</div>
+    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.js"></script>
+    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 
-<script src="{{ mix('js/app.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.js"></script>
-<script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 
-@include('sweetalert::alert')
+    @include('sweetalert::alert')
 
-@yield('third_party_scripts')
+    @yield('third_party_scripts')
 
-@livewireScripts
+    @livewireScripts
 
-@stack('page_scripts')
+    @stack('page_scripts')
 
 </body>
 </html>

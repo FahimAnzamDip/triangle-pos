@@ -10,13 +10,13 @@
 
 </ul>
 <ul class="c-header-nav ml-auto mr-4">
-    <li class="c-header-nav-item mx-2 mr-3">
+    <li class="c-header-nav-item mr-3">
         <a class="btn btn-primary btn-pill" href="#">
             <i class="bi bi-cart mr-1"></i> POS System
         </a>
     </li>
 
-    <li class="c-header-nav-item dropdown d-md-down-none mx-2">
+    <li class="c-header-nav-item dropdown d-md-down-none mr-2">
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="bi bi-bell" style="font-size: 20px;"></i>
             <span class="badge badge-pill badge-danger">0</span>
@@ -32,9 +32,12 @@
     <li class="c-header-nav-item dropdown">
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
            aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 font-weight-bold">{{ auth()->user()->name }}</span>
-            <div class="c-avatar">
+            <div class="c-avatar mr-2">
                 <img class="c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}" alt="Profile Image">
+            </div>
+            <div class="d-flex flex-column">
+                <span class="font-weight-bold">{{ auth()->user()->name }}</span>
+                <span class="font-italic">Online <i class="bi bi-circle-fill text-success" style="font-size: 11px;"></i></span>
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right pt-0">

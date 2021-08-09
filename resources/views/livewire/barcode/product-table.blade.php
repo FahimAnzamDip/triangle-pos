@@ -1,4 +1,14 @@
 <div>
+    @if (session()->has('message'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="alert-body">
+                <span>{{ session('message') }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        </div>
+    @endif
     <div class="card">
         <div class="card-body">
             <div class="table-responsive-md">
@@ -7,7 +17,9 @@
                     <tr class="align-middle">
                         <th class="align-middle">Product Name</th>
                         <th class="align-middle">Code</th>
-                        <th class="align-middle">Quantity</th>
+                        <th class="align-middle">
+                            Quantity <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Quantity: 100"></i>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -16,8 +28,7 @@
                             <td class="align-middle">{{ $product->product_name }}</td>
                             <td class="align-middle">{{ $product->product_code }}</td>
                             <td class="align-middle text-center" style="width: 200px;">
-                                <input wire:model="quantity" class="form-control" type="number" min="1"
-                                       value="{{ $quantity }}">
+                                <input wire:model="quantity" class="form-control" type="number" min="1" max="100" value="{{ $quantity }}">
                             </td>
                         @else
                             <td colspan="3" class="text-center">
@@ -29,10 +40,17 @@
                 </table>
             </div>
             <div class="mt-3">
-                <button
-                    wire:click="generateBarcodes({{ $product }}, {{ $quantity }})"
-                    type="button" class="btn btn-primary"><i class="bi bi-upc-scan"></i> Generate Barcodes
+                <button wire:click="generateBarcodes({{ $product }}, {{ $quantity }})" type="button" class="btn btn-primary">
+                    <i class="bi bi-upc-scan"></i> Generate Barcodes
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <div wire:loading wire:target="generateBarcodes" class="w-100">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
         </div>
     </div>

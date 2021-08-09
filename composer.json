@@ -24,6 +24,7 @@
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.6",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
@@ -69,7 +70,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "8.0"
+            "php": "7.4"
         }
     },
     "minimum-stability": "dev",

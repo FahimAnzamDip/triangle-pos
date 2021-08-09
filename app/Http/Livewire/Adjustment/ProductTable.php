@@ -44,7 +44,7 @@ class ProductTable extends Component
                 }
                 break;
             default:
-                return session()->flash('message', 'Something went wrong!');;
+                return session()->flash('message', 'Something went wrong!');
         }
 
         array_push($this->products, $product);

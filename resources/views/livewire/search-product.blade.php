@@ -14,8 +14,8 @@
         </div>
     </div>
 
-    <div wire:loading wire:target="query" class="card position-absolute mt-1" style="z-index: 1;left: 0;right: 0;">
-        <div class="card-body">
+    <div wire:loading wire:target="query" class="card position-absolute mt-1 border-0" style="z-index: 1;left: 0;right: 0;">
+        <div class="card-body shadow">
             <div class="d-flex justify-content-center">
                 <div class="spinner-border text-primary" role="status">
                     <span class="sr-only">Loading...</span>
@@ -27,8 +27,8 @@
     @if(!empty($query))
         <div wire:click="resetQuery" class="position-fixed w-100 h-100" style="left: 0; top: 0; right: 0; bottom: 0;z-index: 1;"></div>
         @if($searchResults->isNotEmpty())
-            <div class="card position-absolute mt-1" style="z-index: 2;left: 0;right: 0;">
-                <div class="card-body">
+            <div class="card position-absolute mt-1" style="z-index: 2;left: 0;right: 0;border: 0;">
+                <div class="card-body shadow">
                     <ul class="list-group list-group-flush">
                         @foreach($searchResults as $result)
                             <li class="list-group-item list-group-item-action">
@@ -41,10 +41,10 @@
                 </div>
             </div>
         @else
-            <div class="card position-absolute mt-1" style="z-index: 1;left: 0;right: 0;">
-                <div class="card-body">
+            <div class="card position-absolute mt-1 border-0" style="z-index: 1;left: 0;right: 0;">
+                <div class="card-body shadow">
                     <div class="alert alert-warning mb-0">
-                        No Results....
+                        No Product Found....
                     </div>
                 </div>
             </div>
