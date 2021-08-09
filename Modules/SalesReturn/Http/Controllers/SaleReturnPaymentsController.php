@@ -24,7 +24,7 @@ class SaleReturnPaymentsController extends Controller
 
 
     public function create($sale_return_id) {
-        abort_if(Gate::denies('access_sale_payments'), 403);
+        abort_if(Gate::denies('access_sale_return_payments'), 403);
 
         $sale_return = SaleReturn::findOrFail($sale_return_id);
 
@@ -33,7 +33,7 @@ class SaleReturnPaymentsController extends Controller
 
 
     public function store(Request $request) {
-        abort_if(Gate::denies('access_sale_payments'), 403);
+        abort_if(Gate::denies('access_sale_return_payments'), 403);
 
         $request->validate([
             'date' => 'required|date',
