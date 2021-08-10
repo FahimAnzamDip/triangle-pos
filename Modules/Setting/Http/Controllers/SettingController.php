@@ -45,6 +45,8 @@ class SettingController extends Controller
             'footer_text' => $request->footer_text
         ]);
 
+        cache()->forget('settings');
+
         toast('Settings Updated!', 'info');
 
         return redirect()->route('settings.index');

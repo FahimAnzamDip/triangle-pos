@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mb-4">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-lg-3">
                 <div class="card border-0">
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-lg-7">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header">
@@ -82,10 +82,25 @@
             <div class="col-lg-5">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header">
-                        {{ now()->format('F, Y') }}
+                        Overview of {{ now()->format('F, Y') }}
+                    </div>
+                    <div class="card-body d-flex justify-content-center">
+                        <div class="chart-container" style="position: relative; height:auto; width:280px">
+                            <canvas id="currentMonthChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header">
+                        Monthly Cash Flow (Payment Sent & Received)
                     </div>
                     <div class="card-body">
-                        <canvas id="currentMonthChart"></canvas>
+                        <canvas id="paymentChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -100,70 +115,5 @@
 @endsection
 
 @push('page_scripts')
-    <script>
-        $(document).ready(function () {
-            let chart1 = document.getElementById('salesPurchasesChart');
-            $.get('{{ route('sales-purchases.chart') }}', function (response) {
-                let salesPurchasesChart = new Chart(chart1, {
-                    type: 'bar',
-                    data: {
-                        labels: response.sales.original.days,
-                        datasets: [{
-                            label: 'Sales',
-                            data: response.sales.original.data,
-                            backgroundColor: [
-                                '#6366F1',
-                            ],
-                            borderColor: [
-                                '#6366F1',
-                            ],
-                            borderWidth: 1
-                        },
-                            {
-                                label: 'Purchases',
-                                data: response.purchases.original.data,
-                                backgroundColor: [
-                                    '#A5B4FC',
-                                ],
-                                borderColor: [
-                                    '#A5B4FC',
-                                ],
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            });
-
-            let chart2 = document.getElementById('currentMonthChart');
-            $.get('{{ route('current-month.chart') }}', function (response) {
-                let currentMonthChart = new Chart(chart2, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Sales', 'Purchases', 'Expenses'],
-                        datasets: [{
-                            data: [response.sales, response.purchases, response.expenses],
-                            backgroundColor: [
-                                '#F59E0B',
-                                '#0284C7',
-                                '#EF4444',
-                            ],
-                            hoverBackgroundColor: [
-                                '#F59E0B',
-                                '#0284C7',
-                                '#EF4444',
-                            ],
-                        }]
-                    },
-                });
-            });
-        });
-    </script>
+    <script src="{{ mix('js/chart-config.js') }}"></script>
 @endpush
