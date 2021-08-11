@@ -7,6 +7,28 @@
     box-shadow: 0 1px 1px 0 rgb(60 75 100 / 14%), 0 2px 1px -1px rgb(60 75 100 / 12%), 0 1px 3px 0 rgb(60 75 100 / 20%);
 }
 
+.dropzone {
+    border: 2px dashed #3B82F6;
+    border-radius: 5px;
+    background: #DBEAFE;
+}
+.dz-preview {
+    background: #EFF6FF !important;
+    border-radius: 20px;
+}
+.dz-remove {
+    color: #333;
+}
+.dropzone i.bi.bi-cloud-arrow-up {
+    font-size: 5rem;
+    color: #60A5FA;
+}
+.dropzone .dz-message {
+    color: rgba(0,0,0,.54);
+    font-weight: 500;
+    font-size: initial;
+}
+
 table {
     width: 990px !important;
 }

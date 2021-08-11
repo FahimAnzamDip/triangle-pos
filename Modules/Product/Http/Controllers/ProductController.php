@@ -31,16 +31,11 @@ class ProductController extends Controller
 
 
     public function store(StoreProductRequest $request) {
-        $product = Product::create($request->except('image'));
+        $product = Product::create($request->except('document'));
 
-        if ($request->has('image')) {
-            $tempFile = Upload::where('folder', $request->image)->first();
-
-            if ($tempFile) {
-                $product->addMedia(Storage::path('public/temp/' . $request->image . '/' . $tempFile->filename))->toMediaCollection();
-
-                Storage::deleteDirectory('public/temp/' . $request->image);
-                $tempFile->delete();
+        if ($request->has('document')) {
+            foreach ($request->input('document', []) as $file) {
+                $product->addMedia(storage_path('temp/dropzone/' . $file))->toMediaCollection('images');
             }
         }
 
@@ -65,20 +60,23 @@ class ProductController extends Controller
 
 
     public function update(UpdateProductRequest $request, Product $product) {
-        $product->update($request->except('image'));
+        $product->update($request->except('document'));
 
-        if ($request->has('image')) {
-            $tempFile = Upload::where('folder', $request->image)->first();
-
-            if ($product->getFirstMedia()) {
-                $product->getFirstMedia()->delete();
+        if ($request->has('document')) {
+            if (count($product->getMedia('images')) > 0) {
+                foreach ($product->getMedia('images') as $media) {
+                    if (!in_array($media->file_name, $request->input('document', []))) {
+                        $media->delete();
+                    }
+                }
             }
 
-            if ($tempFile) {
-                $product->addMedia(Storage::path('public/temp/' . $request->image . '/' . $tempFile->filename))->toMediaCollection();
+            $media = $product->getMedia('images')->pluck('file_name')->toArray();
 
-                Storage::deleteDirectory('public/temp/' . $request->image);
-                $tempFile->delete();
+            foreach ($request->input('document', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $product->addMedia(storage_path('temp/dropzone/' . $file))->toMediaCollection('images');
+                }
             }
         }
 

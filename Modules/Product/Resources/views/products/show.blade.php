@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-8">
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -77,10 +77,14 @@
                 </div>
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <img src="{{ $product->getFirstMediaUrl() }}" alt="Product Image" class="img-fluid img-thumbnail">
+                        @forelse($product->getMedia('images') as $media)
+                            <img src="{{ $media->getUrl() }}" alt="Product Image" class="img-fluid img-thumbnail mb-2">
+                        @empty
+                            <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Product Image" class="img-fluid img-thumbnail mb-2">
+                        @endforelse
                     </div>
                 </div>
             </div>

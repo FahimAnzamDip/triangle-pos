@@ -5,6 +5,8 @@
     <title>@yield('title') || {{ config('app.name') }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
+    <!-- Dropezone CSS -->
+    <link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" crossorigin="anonymous">
     <!-- Bootstrap Icons -->

@@ -24,7 +24,7 @@ class UploadController extends Controller
 
             $file = Image::make($uploaded_file)->encode($uploaded_file->getClientOriginalExtension());
 
-            Storage::put('public/temp/' . $folder . '/' . $filename, $file);
+            Storage::put('temp/' . $folder . '/' . $filename, $file);
 
             Upload::create([
                 'folder'   => $folder,
@@ -37,12 +37,33 @@ class UploadController extends Controller
         return false;
     }
 
+
     public function filepondDelete(Request $request) {
         $upload = Upload::where('folder', $request->getContent())->first();
 
-        Storage::deleteDirectory('public/temp/' . $upload->folder);
+        Storage::deleteDirectory('temp/' . $upload->folder);
         $upload->delete();
 
         return response(null);
+    }
+
+
+    public function dropzoneUpload(Request $request) {
+        $path = storage_path('temp/dropzone');
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $file = $request->file('file');
+
+        $name = now()->timestamp . '.' . trim($file->getClientOriginalExtension());
+
+        $file->move($path, $name);
+
+        return response()->json([
+            'name'          => $name,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
     }
 }
