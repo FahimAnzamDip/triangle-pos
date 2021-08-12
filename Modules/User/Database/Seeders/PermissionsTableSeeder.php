@@ -17,6 +17,8 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
+            //User Mangement
+            'access_user_management',
             //Products
             'access_products',
             'create_products',
@@ -58,6 +60,8 @@ class PermissionsTableSeeder extends Seeder
             'show_sales',
             'edit_sales',
             'delete_sales',
+            //POS Sale
+            'create_pos_sales',
             //Sale Payments
             'access_sale_payments',
             //Sale Returns
@@ -76,13 +80,13 @@ class PermissionsTableSeeder extends Seeder
             'delete_purchases',
             //Purchase Payments
             'access_purchase_payments',
-            //Sale Returns
+            //Purchase Returns
             'access_purchase_returns',
             'create_purchase_returns',
             'show_purchase_returns',
             'edit_purchase_returns',
             'delete_purchase_returns',
-            //Sale Return Payments
+            //Purchase Return Payments
             'access_purchase_return_payments',
             //Currencies
             'access_currencies',
@@ -104,5 +108,6 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         $role->givePermissionTo($permissions);
+        $role->revokePermissionTo('access_user_management');
     }
 }

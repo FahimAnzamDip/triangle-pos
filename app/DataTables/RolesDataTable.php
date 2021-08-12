@@ -20,7 +20,7 @@ class RolesDataTable extends DataTable
             })
             ->addColumn('permissions', function ($data) {
                 return view('user::roles.partials.permissions', [
-                    'permissions' => $data->getPermissionNames()
+                    'data' => $data
                 ]);
             });
 
@@ -28,7 +28,7 @@ class RolesDataTable extends DataTable
 
     public function query(Role $model) {
         return $model->newQuery()->with(['permissions' => function ($query) {
-            $query->select('name')->get();
+            $query->select('name')->take(10)->get();
         }])->where('name', '!=', 'Super Admin');
     }
 
