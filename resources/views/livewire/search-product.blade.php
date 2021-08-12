@@ -1,5 +1,5 @@
 <div class="position-relative">
-    <div class="card mb-0">
+    <div class="card mb-0 border-0 shadow-sm">
         <div class="card-body">
             <div class="form-group mb-0">
                 <div class="input-group">

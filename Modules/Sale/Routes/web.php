@@ -13,6 +13,10 @@
 
 Route::group(['middleware' => 'auth'], function () {
 
+    //POS
+    Route::get('/app/pos', 'PosController@index')->name('app.pos.index');
+    Route::post('/app/pos', 'PosController@store')->name('app.pos.store');
+
     //Generate PDF
     Route::get('/sales/pdf/{id}', function ($id) {
         $sale = \Modules\Sale\Entities\Sale::findOrFail($id);

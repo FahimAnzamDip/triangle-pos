@@ -17,15 +17,20 @@
 
 <body class="c-app flex-row align-items-center">
 <div class="container">
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-center">
+            <img width="200" src="{{ asset('images/logo-dark.png') }}" alt="Logo">
+        </div>
+    </div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="{{ Route::has('register') ? 'col-md-8' : 'col-md-5' }}">
             @if(Session::has('account_deactivated'))
                 <div class="alert alert-danger" role="alert">
                     {{ Session::get('account_deactivated') }}
                 </div>
             @endif
             <div class="card-group">
-                <div class="card p-4">
+                <div class="card p-4 border-0 shadow-sm">
                     <div class="card-body">
                         <form method="post" action="{{ url('/login') }}">
                             @csrf
@@ -70,6 +75,7 @@
                         </form>
                     </div>
                 </div>
+                @if(Route::has('register'))
                 <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
                     <div class="card-body text-center">
                         <div>
@@ -79,6 +85,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
