@@ -64,7 +64,6 @@
                                 <tr>
                                     <th class="align-middle">Product</th>
                                     <th class="align-middle">Net Unit Price</th>
-                                    <th class="align-middle">Stock</th>
                                     <th class="align-middle">Quantity</th>
                                     <th class="align-middle">Discount</th>
                                     <th class="align-middle">Tax</th>
@@ -82,10 +81,6 @@
                                         </td>
 
                                         <td class="align-middle">{{ format_currency($item->unit_price) }}</td>
-
-                                        <td class="align-middle">
-                                            <span class="badge badge-info">{{ $item->product->product_quantity }}</span>
-                                        </td>
 
                                         <td class="align-middle">
                                             {{ $item->quantity }}

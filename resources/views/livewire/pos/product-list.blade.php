@@ -12,7 +12,7 @@
                     <div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-4 col-md-6" style="cursor: pointer;">
                         <div class="card border-0 shadow">
                             <div class="position-relative">
-                                <img height="140" src="{{ $product->getFirstMediaUrl('images') }}" class="card-img-top" alt="Product Image">
+                                <img src="{{ $product->getFirstMediaUrl('images') }}" class="card-img-top" alt="Product Image">
                                 <div class="badge badge-info mb-3 position-absolute" style="left:10px;top: 10px;">Stock: {{ $product->product_quantity }}</div>
                             </div>
                             <div class="card-body">

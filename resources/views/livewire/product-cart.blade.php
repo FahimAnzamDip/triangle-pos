@@ -44,7 +44,7 @@
                                 <td class="align-middle">{{ format_currency($cart_item->options->unit_price) }}</td>
 
                                 <td class="align-middle text-center">
-                                    <span class="badge badge-info">{{ $cart_item->options->stock }}</span>
+                                    <span class="badge badge-info">{{ $cart_item->options->stock . ' ' . $cart_item->options->unit }}</span>
                                 </td>
 
                                 <td class="align-middle">
@@ -64,9 +64,9 @@
                                 </td>
 
                                 <td class="align-middle text-center">
-                                    <button wire:click.prevent="removeItem('{{ $cart_item->rowId }}')" type="button" class="btn btn-danger">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                    <a href="#" wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
+                                        <i class="bi bi-x-circle font-2xl text-danger"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

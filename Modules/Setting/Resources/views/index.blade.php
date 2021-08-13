@@ -86,7 +86,97 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-check"></i> Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                @if (session()->has('settings_smtp_message'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <div class="alert-body">
+                            <span>{{ session('settings_smtp_message') }}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Mail Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('settings.smtp.update') }}" method="POST">
+                            @csrf
+                            @method('patch')
+                            <div class="form-row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="mail_mailer">MAIL_MAILER <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="mail_mailer" value="{{ env('MAIL_MAILER') }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="mail_host">MAIL_HOST <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="mail_host" value="{{ env('MAIL_HOST') }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="mail_port">MAIL_PORT <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="mail_port" value="{{ env('MAIL_PORT') }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="mail_mailer">MAIL_MAILER</label>
+                                        <input type="text" class="form-control" name="mail_mailer" value="{{ env('MAIL_MAILER') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="mail_username">MAIL_USERNAME</label>
+                                        <input type="text" class="form-control" name="mail_username" value="{{ env('MAIL_USERNAME') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="mail_password">MAIL_PASSWORD</label>
+                                        <input type="password" class="form-control" name="mail_password" value="{{ env('MAIL_PASSWORD') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <label for="mail_encryption">MAIL_ENCRYPTION</label>
+                                        <input type="text" class="form-control" name="mail_encryption" value="{{ env('MAIL_ENCRYPTION') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label for="mail_from_address">MAIL_FROM_ADDRESS</label>
+                                        <input type="email" class="form-control" name="mail_from_address" value="{{ env('MAIL_FROM_ADDRESS') }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label for="mail_from_name">MAIL_FROM_NAME <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="mail_from_name" value="{{ env('MAIL_FROM_NAME') }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-0">
                                 <button type="submit" class="btn btn-primary"><i class="bi bi-check"></i> Save Changes</button>
                             </div>
                         </form>

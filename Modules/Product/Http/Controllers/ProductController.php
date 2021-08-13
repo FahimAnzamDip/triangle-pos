@@ -35,7 +35,7 @@ class ProductController extends Controller
 
         if ($request->has('document')) {
             foreach ($request->input('document', []) as $file) {
-                $product->addMedia(storage_path('temp/dropzone/' . $file))->toMediaCollection('images');
+                $product->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
             }
         }
 
@@ -75,7 +75,7 @@ class ProductController extends Controller
 
             foreach ($request->input('document', []) as $file) {
                 if (count($media) === 0 || !in_array($file, $media)) {
-                    $product->addMedia(storage_path('temp/dropzone/' . $file))->toMediaCollection('images');
+                    $product->addMedia(Storage::path('temp/dropzone/' . $file))->toMediaCollection('images');
                 }
             }
         }

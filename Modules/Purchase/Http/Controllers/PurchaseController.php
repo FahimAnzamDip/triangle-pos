@@ -91,13 +91,15 @@ class PurchaseController extends Controller
 
             Cart::instance('purchase')->destroy();
 
-            PurchasePayment::create([
-                'date' => $request->date,
-                'reference' => 'INV/'.$purchase->reference,
-                'amount' => $purchase->paid_amount,
-                'purchase_id' => $purchase->id,
-                'payment_method' => $request->payment_method
-            ]);
+            if ($purchase->paid_amount > 0) {
+                PurchasePayment::create([
+                    'date' => $request->date,
+                    'reference' => 'INV/'.$purchase->reference,
+                    'amount' => $purchase->paid_amount,
+                    'purchase_id' => $purchase->id,
+                    'payment_method' => $request->payment_method
+                ]);
+            }
         });
 
         toast('Purchase Created!', 'success');

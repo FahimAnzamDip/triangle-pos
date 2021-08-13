@@ -90,6 +90,7 @@ class Checkout extends Component
                 'sub_total'             => $this->calculate($product)['sub_total'],
                 'code'                  => $product['product_code'],
                 'stock'                 => $product['product_quantity'],
+                'unit'                  => $product['product_unit'],
                 'product_tax'           => $this->calculate($product)['product_tax'],
                 'unit_price'            => $this->calculate($product)['unit_price']
             ]
@@ -130,6 +131,7 @@ class Checkout extends Component
                 'sub_total'             => $cart_item->price * $cart_item->qty,
                 'code'                  => $cart_item->options->code,
                 'stock'                 => $cart_item->options->stock,
+                'unit'                  => $cart_item->options->unit,
                 'product_tax'           => $cart_item->options->product_tax,
                 'unit_price'            => $cart_item->options->unit_price,
                 'product_discount'      => $cart_item->options->product_discount,
@@ -159,11 +161,11 @@ class Checkout extends Component
 
             $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
         } elseif ($this->discount_type[$product_id] == 'percentage') {
-            $discount_amount = $cart_item->price * ($this->item_discount[$product_id] / 100);
+            $discount_amount = ($cart_item->price + $cart_item->options->product_discount) * ($this->item_discount[$product_id] / 100);
 
             Cart::instance($this->cart_instance)
                 ->update($row_id, [
-                    'price' => ($cart_item->price + $cart_item->options->product_discount) - (($cart_item->price * $this->item_discount[$product_id] / 100))
+                    'price' => ($cart_item->price + $cart_item->options->product_discount) - $discount_amount
                 ]);
 
             $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
@@ -203,6 +205,7 @@ class Checkout extends Component
             'sub_total'             => $cart_item->price * $cart_item->qty,
             'code'                  => $cart_item->options->code,
             'stock'                 => $cart_item->options->stock,
+            'unit'                 => $cart_item->options->unit,
             'product_tax'           => $cart_item->options->product_tax,
             'unit_price'            => $cart_item->options->unit_price,
             'product_discount'      => $discount_amount,

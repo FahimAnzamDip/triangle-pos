@@ -97,13 +97,13 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_order_tax">Tax (%)</label>
                                         <input type="number" class="form-control" name="product_order_tax" value="{{ $product->product_order_tax }}" min="0" max="100">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="product_tax_type">Tax type</label>
                                         <select class="form-control" name="product_tax_type" id="product_tax_type">
@@ -113,6 +113,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="product_unit">Unit <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="This text will be placed after Product Quantity."></i> <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="product_unit" value="{{ old('product_unit') ?? $product->product_unit }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="product_note">Note</label>
+                                <textarea name="product_note" id="product_note" rows="4 " class="form-control">{{ $product->product_note }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -122,7 +132,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB"></i></label>
+                                <label for="image">Product Images <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
                                 <div class="dropzone d-flex flex-wrap align-items-center justify-content-center" id="document-dropzone">
                                     <div class="dz-message" data-dz-message>
                                         <i class="bi bi-cloud-arrow-up"></i>

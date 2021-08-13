@@ -92,13 +92,15 @@ class PurchasesReturnController extends Controller
 
             Cart::instance('purchase_return')->destroy();
 
-            PurchaseReturnPayment::create([
-                'date' => $request->date,
-                'reference' => 'INV/'.$purchase_return->reference,
-                'amount' => $purchase_return->paid_amount,
-                'purchase_return_id' => $purchase_return->id,
-                'payment_method' => $request->payment_method
-            ]);
+            if ($purchase_return->paid_amount > 0) {
+                PurchaseReturnPayment::create([
+                    'date'               => $request->date,
+                    'reference'          => 'INV/' . $purchase_return->reference,
+                    'amount'             => $purchase_return->paid_amount,
+                    'purchase_return_id' => $purchase_return->id,
+                    'payment_method'     => $request->payment_method
+                ]);
+            }
         });
 
         toast('Purchase Return Created!', 'success');

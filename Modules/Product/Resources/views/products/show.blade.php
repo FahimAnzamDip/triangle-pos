@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-9">
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="table-responsive">
@@ -49,7 +49,14 @@
                                 </tr>
                                 <tr>
                                     <th>Quantity</th>
-                                    <td>{{ $product->product_quantity }}</td>
+                                    <td>{{ $product->product_quantity . ' ' . $product->product_unit }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Stock Worth</th>
+                                    <td>
+                                        COST:: {{ format_currency($product->product_cost * $product->product_quantity) }} /
+                                        PRICE:: {{ format_currency($product->product_price * $product->product_quantity) }}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Alert Quantity</th>
@@ -71,13 +78,17 @@
                                         @endif
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>Note</th>
+                                    <td>{{ $product->product_note ?? 'N/A' }}</td>
+                                </tr>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="card h-100">
                     <div class="card-body">
                         @forelse($product->getMedia('images') as $media)

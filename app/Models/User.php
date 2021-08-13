@@ -52,7 +52,7 @@ class User extends Authenticatable implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatars')
-            ->useFallbackUrl('/images/fallback_profile_image.png');
+            ->useFallbackUrl('https://www.gravatar.com/avatar/' . md5($this->attributes['email']));
     }
 
     public function scopeIsActive(Builder $builder) {

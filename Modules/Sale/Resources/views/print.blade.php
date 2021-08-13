@@ -57,7 +57,6 @@
                             <tr>
                                 <th class="align-middle">Product</th>
                                 <th class="align-middle">Net Unit Price</th>
-                                <th class="align-middle">Stock</th>
                                 <th class="align-middle">Quantity</th>
                                 <th class="align-middle">Discount</th>
                                 <th class="align-middle">Tax</th>
@@ -75,10 +74,6 @@
                                     </td>
 
                                     <td class="align-middle">{{ format_currency($item->unit_price) }}</td>
-
-                                    <td class="align-middle">
-                                        <span class="badge badge-info">{{ $item->product->product_quantity }}</span>
-                                    </td>
 
                                     <td class="align-middle">
                                         {{ $item->quantity }}
@@ -126,7 +121,7 @@
                     </div>
                     <div class="row" style="margin-top: 25px;">
                         <div class="col-xs-12">
-                            <p style="font-style: italic;text-align: center">Computer generated invoice. {{ settings()->company_name }} &copy; {{ date('Y') }}.</p>
+                            <p style="font-style: italic;text-align: center">{{ settings()->company_name }} &copy; {{ date('Y') }}.</p>
                         </div>
                     </div>
                 </div>

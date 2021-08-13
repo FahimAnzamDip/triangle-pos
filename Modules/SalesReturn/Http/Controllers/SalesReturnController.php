@@ -92,13 +92,15 @@ class SalesReturnController extends Controller
 
             Cart::instance('sale_return')->destroy();
 
-            SaleReturnPayment::create([
-                'date' => $request->date,
-                'reference' => 'INV/'.$sale_return->reference,
-                'amount' => $sale_return->paid_amount,
-                'sale_return_id' => $sale_return->id,
-                'payment_method' => $request->payment_method
-            ]);
+            if ($sale_return->paid_amount > 0) {
+                SaleReturnPayment::create([
+                    'date' => $request->date,
+                    'reference' => 'INV/'.$sale_return->reference,
+                    'amount' => $sale_return->paid_amount,
+                    'sale_return_id' => $sale_return->id,
+                    'payment_method' => $request->payment_method
+                ]);
+            }
         });
 
         toast('Sale Return Created!', 'success');

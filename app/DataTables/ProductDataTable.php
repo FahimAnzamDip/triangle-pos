@@ -20,11 +20,14 @@ class ProductDataTable extends DataTable
                 return view('product::products.partials.actions', compact('data'));
             })
             ->addColumn('product_image', function ($data) {
-                $url = $data->getFirstMediaUrl('images');
+                $url = $data->getFirstMediaUrl('images', 'thumb');
                 return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
             })
             ->addColumn('product_price', function ($data) {
                 return format_currency($data->product_price);
+            })
+            ->addColumn('product_quantity', function ($data) {
+                return $data->product_quantity . ' ' . $data->product_unit;
             })
             ->rawColumns(['product_image']);
     }
@@ -75,7 +78,7 @@ class ProductDataTable extends DataTable
                 ->title('Price')
                 ->className('text-center align-middle'),
 
-            Column::make('product_quantity')
+            Column::computed('product_quantity')
                 ->title('Quantity')
                 ->className('text-center align-middle'),
 

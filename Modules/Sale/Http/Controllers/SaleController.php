@@ -92,13 +92,15 @@ class SaleController extends Controller
 
             Cart::instance('sale')->destroy();
 
-            SalePayment::create([
-                'date' => $request->date,
-                'reference' => 'INV/'.$sale->reference,
-                'amount' => $sale->paid_amount,
-                'sale_id' => $sale->id,
-                'payment_method' => $request->payment_method
-            ]);
+            if ($sale->paid_amount > 0) {
+                SalePayment::create([
+                    'date' => $request->date,
+                    'reference' => 'INV/'.$sale->reference,
+                    'amount' => $sale->paid_amount,
+                    'sale_id' => $sale->id,
+                    'payment_method' => $request->payment_method
+                ]);
+            }
         });
 
         toast('Sale Created!', 'success');

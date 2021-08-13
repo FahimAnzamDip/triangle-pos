@@ -18,6 +18,7 @@ class StoreProductRequest extends FormRequest
             'product_name' => ['required', 'string', 'max:255'],
             'product_code' => ['required', 'string', 'max:255', 'unique:products,product_code'],
             'product_barcode_symbology' => ['required', 'string', 'max:255'],
+            'product_unit' => ['required', 'string', 'max:255'],
             'product_quantity' => ['required', 'integer', 'min:1'],
             'product_cost' => ['required', 'numeric', 'max:2147483647'],
             'product_price' => ['required', 'numeric', 'max:2147483647'],

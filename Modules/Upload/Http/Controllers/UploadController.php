@@ -49,21 +49,21 @@ class UploadController extends Controller
 
 
     public function dropzoneUpload(Request $request) {
-        $path = storage_path('temp/dropzone');
-
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
-        }
-
         $file = $request->file('file');
 
-        $name = now()->timestamp . '.' . trim($file->getClientOriginalExtension());
+        $filename = now()->timestamp . '.' . trim($file->getClientOriginalExtension());
 
-        $file->move($path, $name);
+        Storage::putFileAs('temp/dropzone/', $file, $filename);
 
         return response()->json([
-            'name'          => $name,
+            'name'          => $filename,
             'original_name' => $file->getClientOriginalName(),
         ]);
+    }
+
+    public function dropzoneDelete(Request $request) {
+        Storage::delete('temp/dropzone/' . $request->file_name);
+
+        return response()->json($request->file_name, 200);
     }
 }
