@@ -169,6 +169,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
         /*
          * Application Service Providers...
          */

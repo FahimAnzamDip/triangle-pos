@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "646db8c9d7e97562bbf1eacf7731e23e",
+    "content-hash": "4bc556a435bf57dea6c0c00fdc2000cf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3621,6 +3621,70 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.10.8"
             },
             "time": "2021-04-10T16:23:39+00:00"
+        },
+        {
+            "name": "rachidlaasri/laravel-installer",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rashidlaasri/LaravelInstaller.git",
+                "reference": "b751b4c23dba893e9a4a12f881a6fd8fa921d228"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rashidlaasri/LaravelInstaller/zipball/b751b4c23dba893e9a4a12f881a6fd8fa921d228",
+                "reference": "b751b4c23dba893e9a4a12f881a6fd8fa921d228",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RachidLaasri\\LaravelInstaller\\Providers\\LaravelInstallerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RachidLaasri\\LaravelInstaller\\": "src/"
+                },
+                "files": [
+                    "src/Helpers/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rachid Laasri",
+                    "email": "rashidlaasri@gmail.com"
+                },
+                {
+                    "name": "Jeremy Kenedy",
+                    "email": "jeremykenedy@gmail.com"
+                }
+            ],
+            "description": "Laravel web installer",
+            "support": {
+                "issues": "https://github.com/rashidlaasri/LaravelInstaller/issues",
+                "source": "https://github.com/rashidlaasri/LaravelInstaller/tree/4.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://rachidlaasri.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://twitter.com/rashidlaasri",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-05-19T13:19:45+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Modules\Setting\Entities\Setting;
 use Modules\Setting\Http\Requests\StoreSettingsRequest;
+use Modules\Setting\Http\Requests\StoreSmtpSettingsRequest;
 
 class SettingController extends Controller
 {
@@ -43,7 +44,7 @@ class SettingController extends Controller
     }
 
 
-    public function updateSmtp(Request $request) {
+    public function updateSmtp(StoreSmtpSettingsRequest $request) {
         $toReplace = array(
             'MAIL_MAILER='.env('MAIL_HOST'),
             'MAIL_HOST="'.env('MAIL_HOST').'"',
