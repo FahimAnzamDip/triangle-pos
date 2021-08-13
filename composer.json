@@ -12,13 +12,12 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "h4cc/wkhtmltopdf-amd64": "^0.12.4",
-        "infyomlabs/laravel-ui-coreui": "^3.0",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.3",
         "livewire/livewire": "^2.5",
         "milon/barcode": "^8.0",
         "nwidart/laravel-modules": "^8.2",
-        "rachidlaasri/laravel-installer": "^4.1",
         "realrashid/sweet-alert": "^4.0",
         "spatie/laravel-medialibrary": "^9.0.0",
         "spatie/laravel-permission": "^4.2",
@@ -69,10 +68,7 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true,
-        "platform": {
-            "php": "7.4"
-        }
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true
