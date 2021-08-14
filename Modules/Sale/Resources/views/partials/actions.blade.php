@@ -3,6 +3,9 @@
         <i class="bi bi-three-dots-vertical"></i>
     </button>
     <div class="dropdown-menu">
+        <a target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}" class="dropdown-item">
+            <i class="bi bi-file-earmark-pdf mr-2 text-success" style="line-height: 1;"></i> POS Invoice
+        </a>
         @can('access_sale_payments')
             <a href="{{ route('sale-payments.index', $data->id) }}" class="dropdown-item">
                 <i class="bi bi-cash-coin mr-2 text-warning" style="line-height: 1;"></i> Show Payments
