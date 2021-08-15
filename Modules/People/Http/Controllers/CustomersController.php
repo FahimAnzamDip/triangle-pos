@@ -2,7 +2,7 @@
 
 namespace Modules\People\Http\Controllers;
 
-use App\DataTables\CustomersDataTable;
+use Modules\People\DataTables\CustomersDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

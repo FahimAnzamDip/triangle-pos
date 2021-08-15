@@ -2,10 +2,8 @@
 
 namespace Modules\SalesReturn\Http\Controllers;
 
-use App\DataTables\SaleReturnsDataTable;
+use Modules\SalesReturn\DataTables\SaleReturnsDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -50,7 +48,6 @@ class SalesReturnController extends Controller
 
             $sale_return = SaleReturn::create([
                 'date' => $request->date,
-                'reference' => $request->reference,
                 'customer_id' => $request->customer_id,
                 'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
                 'tax_percentage' => $request->tax_percentage,

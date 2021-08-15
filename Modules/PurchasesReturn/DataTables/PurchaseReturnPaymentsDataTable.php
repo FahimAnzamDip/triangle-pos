@@ -1,17 +1,16 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\PurchasesReturn\DataTables;
 
-use Modules\Sale\Entities\SalePayment;
+use Modules\PurchasesReturn\Entities\PurchaseReturnPayment;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SalePaymentsDataTable extends DataTable
+class PurchaseReturnPaymentsDataTable extends DataTable
 {
-
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
@@ -19,17 +18,17 @@ class SalePaymentsDataTable extends DataTable
                 return format_currency($data->amount);
             })
             ->addColumn('action', function ($data) {
-                return view('sale::payments.partials.actions', compact('data'));
+                return view('purchasesreturn::payments.partials.actions', compact('data'));
             });
     }
 
-    public function query(SalePayment $model) {
-        return $model->newQuery()->bySale()->with('sale');
+    public function query(PurchaseReturnPayment $model) {
+        return $model->newQuery()->byPurchaseReturn()->with('purchaseReturn');
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('sale-payments-table')
+            ->setTableId('purchase-payments-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
@@ -72,7 +71,8 @@ class SalePaymentsDataTable extends DataTable
         ];
     }
 
-    protected function filename() {
-        return 'SalePayments_' . date('YmdHis');
+    protected function filename()
+    {
+        return 'PurchaseReturnPayments_' . date('YmdHis');
     }
 }

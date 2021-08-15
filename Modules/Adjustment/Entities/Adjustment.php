@@ -20,8 +20,13 @@ class Adjustment extends Model
         return $this->hasMany(AdjustedProduct::class, 'adjustment_id', 'id');
     }
 
-    public function getReferenceAttribute($value) {
-        return strtoupper($value) . '_' . str_pad($this->attributes['id'], 6, '0', STR_PAD_LEFT );
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $number = Adjustment::max('id') + 1;
+            $model->reference = make_reference_id('ADJ', $number);
+        });
     }
 
 }

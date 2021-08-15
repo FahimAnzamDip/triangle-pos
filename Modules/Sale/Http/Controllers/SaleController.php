@@ -2,10 +2,8 @@
 
 namespace Modules\Sale\Http\Controllers;
 
-use App\DataTables\SalesDataTable;
+use Modules\Sale\DataTables\SalesDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -50,7 +48,6 @@ class SaleController extends Controller
 
             $sale = Sale::create([
                 'date' => $request->date,
-                'reference' => $request->reference,
                 'customer_id' => $request->customer_id,
                 'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
                 'tax_percentage' => $request->tax_percentage,

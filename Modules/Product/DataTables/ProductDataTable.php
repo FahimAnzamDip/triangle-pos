@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\Product\DataTables;
 
 use Modules\Product\Entities\Product;
 use Yajra\DataTables\Html\Button;

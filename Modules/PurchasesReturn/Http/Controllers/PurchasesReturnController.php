@@ -2,10 +2,8 @@
 
 namespace Modules\PurchasesReturn\Http\Controllers;
 
-use App\DataTables\PurchaseReturnsDataTable;
+use Modules\PurchasesReturn\DataTables\PurchaseReturnsDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -50,7 +48,6 @@ class PurchasesReturnController extends Controller
 
             $purchase_return = PurchaseReturn::create([
                 'date' => $request->date,
-                'reference' => $request->reference,
                 'supplier_id' => $request->supplier_id,
                 'supplier_name' => Supplier::findOrFail($request->supplier_id)->supplier_name,
                 'tax_percentage' => $request->tax_percentage,

@@ -1,52 +1,62 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\User\DataTables;
 
-use Modules\PurchasesReturn\Entities\PurchaseReturn;
+use App\Models\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PurchaseReturnsDataTable extends DataTable
+class UsersDataTable extends DataTable
 {
+
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
-            ->addColumn('total_amount', function ($data) {
-                return format_currency($data->total_amount);
-            })
-            ->addColumn('paid_amount', function ($data) {
-                return format_currency($data->paid_amount);
-            })
-            ->addColumn('due_amount', function ($data) {
-                return format_currency($data->due_amount);
-            })
-            ->addColumn('status', function ($data) {
-                return view('purchasesreturn::partials.status', compact('data'));
-            })
-            ->addColumn('payment_status', function ($data) {
-                return view('purchasesreturn::partials.payment-status', compact('data'));
+            ->addColumn('role', function ($data) {
+                return view('user::users.partials.roles', [
+                    'roles' => $data->getRoleNames()
+                ]);
             })
             ->addColumn('action', function ($data) {
-                return view('purchasesreturn::partials.actions', compact('data'));
-            });
+                return view('user::users.partials.actions', compact('data'));
+            })
+            ->addColumn('status', function ($data) {
+                if ($data->is_active == 1) {
+                    $html = '<span class="badge badge-success">Active</span>';
+                } else {
+                    $html = '<span class="badge badge-warning">Deactivated</span>';
+                }
+
+                return $html;
+            })
+            ->addColumn('image', function ($data) {
+                $url = $data->getFirstMediaUrl('avatars');
+
+                return '<img src="' . $url . '" style="width:50px;height:50px;" class="img-thumbnail rounded-circle"/>';
+            })
+            ->rawColumns(['image', 'status']);
     }
 
-    public function query(PurchaseReturn $model) {
-        return $model->newQuery();
+    public function query(User $model) {
+        return $model->newQuery()
+            ->with(['roles' => function ($query) {
+                $query->select('name')->get();
+            }])
+            ->where('id', '!=', auth()->id());
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('purchase-returns-table')
+            ->setTableId('users-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(8)
+            ->orderBy(6)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -61,26 +71,19 @@ class PurchaseReturnsDataTable extends DataTable
 
     protected function getColumns() {
         return [
-            Column::make('reference')
+            Column::computed('image')
                 ->className('text-center align-middle'),
 
-            Column::make('supplier_name')
-                ->title('Supplier')
+            Column::make('name')
+                ->className('text-center align-middle'),
+
+            Column::make('email')
+                ->className('text-center align-middle'),
+
+            Column::computed('role')
                 ->className('text-center align-middle'),
 
             Column::computed('status')
-                ->className('text-center align-middle'),
-
-            Column::computed('total_amount')
-                ->className('text-center align-middle'),
-
-            Column::computed('paid_amount')
-                ->className('text-center align-middle'),
-
-            Column::computed('due_amount')
-                ->className('text-center align-middle'),
-
-            Column::computed('payment_status')
                 ->className('text-center align-middle'),
 
             Column::computed('action')
@@ -92,8 +95,8 @@ class PurchaseReturnsDataTable extends DataTable
                 ->visible(false)
         ];
     }
-    protected function filename()
-    {
-        return 'PurchaseReturns_' . date('YmdHis');
+
+    protected function filename() {
+        return 'Users_' . date('YmdHis');
     }
 }

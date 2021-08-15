@@ -2,7 +2,7 @@
 
 namespace Modules\Expense\Http\Controllers;
 
-use App\DataTables\ExpenseCategoriesDataTable;
+use Modules\Expense\DataTables\ExpenseCategoriesDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

@@ -1,39 +1,38 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\Currency\DataTables;
 
-
-use Modules\People\Entities\Supplier;
+use Modules\Currency\Entities\Currency;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SuppliersDataTable extends DataTable
+class CurrencyDataTable extends DataTable
 {
 
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($data) {
-                return view('people::suppliers.partials.actions', compact('data'));
+                return view('currency::partials.actions', compact('data'));
             });
     }
 
-    public function query(Supplier $model) {
+    public function query(Currency $model) {
         return $model->newQuery();
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('suppliers-table')
+            ->setTableId('currency-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                         'tr' .
-                                <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(4)
+                                        <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
+            ->orderBy(6)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -48,13 +47,19 @@ class SuppliersDataTable extends DataTable
 
     protected function getColumns() {
         return [
-            Column::make('supplier_name')
+            Column::make('currency_name')
                 ->className('text-center align-middle'),
 
-            Column::make('supplier_email')
+            Column::make('code')
                 ->className('text-center align-middle'),
 
-            Column::make('supplier_phone')
+            Column::make('symbol')
+                ->className('text-center align-middle'),
+
+            Column::make('thousand_separator')
+                ->className('text-center align-middle'),
+
+            Column::make('decimal_separator')
                 ->className('text-center align-middle'),
 
             Column::computed('action')
@@ -68,6 +73,6 @@ class SuppliersDataTable extends DataTable
     }
 
     protected function filename() {
-        return 'Suppliers_' . date('YmdHis');
+        return 'Currency_' . date('YmdHis');
     }
 }

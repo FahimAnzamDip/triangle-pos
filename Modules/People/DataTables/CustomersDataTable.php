@@ -1,37 +1,38 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\People\DataTables;
 
-use Modules\Adjustment\Entities\Adjustment;
+
+use Modules\People\Entities\Customer;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AdjustmentsDataTable extends DataTable
+class CustomersDataTable extends DataTable
 {
 
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($data) {
-                return view('adjustment::partials.actions', compact('data'));
+                return view('people::customers.partials.actions', compact('data'));
             });
     }
 
-    public function query(Adjustment $model) {
-        return $model->newQuery()->withCount('adjustedProducts');
+    public function query(Customer $model) {
+        return $model->newQuery();
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('adjustments-table')
+            ->setTableId('customers-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
-                                        'tr' .
-                                        <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
+                                       'tr' .
+                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(4)
             ->buttons(
                 Button::make('excel')
@@ -47,14 +48,13 @@ class AdjustmentsDataTable extends DataTable
 
     protected function getColumns() {
         return [
-            Column::make('date')
+            Column::make('customer_name')
                 ->className('text-center align-middle'),
 
-            Column::make('reference')
+            Column::make('customer_email')
                 ->className('text-center align-middle'),
 
-            Column::make('adjusted_products_count')
-                ->title('Products')
+            Column::make('customer_phone')
                 ->className('text-center align-middle'),
 
             Column::computed('action')
@@ -68,6 +68,6 @@ class AdjustmentsDataTable extends DataTable
     }
 
     protected function filename() {
-        return 'Adjustments_' . date('YmdHis');
+        return 'Customers_' . date('YmdHis');
     }
 }

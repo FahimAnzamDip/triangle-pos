@@ -1,40 +1,38 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\Product\DataTables;
 
-use Modules\SalesReturn\Entities\SaleReturnPayment;
+use Modules\Product\Entities\Category;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SaleReturnPaymentsDataTable extends DataTable
+class ProductCategoriesDataTable extends DataTable
 {
+
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
-            ->addColumn('amount', function ($data) {
-                return format_currency($data->amount);
-            })
             ->addColumn('action', function ($data) {
-                return view('salesreturn::payments.partials.actions', compact('data'));
+                return view('product::categories.partials.actions', compact('data'));
             });
     }
 
-    public function query(SaleReturnPayment $model) {
-        return $model->newQuery()->bySaleReturn()->with('saleReturn');
+    public function query(Category $model) {
+        return $model->newQuery()->withCount('products');
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('sale-payments-table')
+            ->setTableId('product_categories-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(5)
+            ->orderBy(4)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -49,30 +47,26 @@ class SaleReturnPaymentsDataTable extends DataTable
 
     protected function getColumns() {
         return [
-            Column::make('date')
-                ->className('align-middle text-center'),
+            Column::make('category_code')
+                ->addClass('text-center'),
 
-            Column::make('reference')
-                ->className('align-middle text-center'),
+            Column::make('category_name')
+                ->addClass('text-center'),
 
-            Column::computed('amount')
-                ->className('align-middle text-center'),
-
-            Column::make('payment_method')
-                ->className('align-middle text-center'),
+            Column::make('products_count')
+                ->addClass('text-center'),
 
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->className('align-middle text-center'),
+                ->addClass('text-center'),
 
             Column::make('created_at')
-                ->visible(false),
+                ->visible(false)
         ];
     }
 
-    protected function filename()
-    {
-        return 'SaleReturnPayments_' . date('YmdHis');
+    protected function filename() {
+        return 'ProductCategories_' . date('YmdHis');
     }
 }

@@ -16,6 +16,15 @@ class Expense extends Model
         return $this->belongsTo(ExpenseCategory::class, 'category_id', 'id');
     }
 
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $number = Expense::max('id') + 1;
+            $model->reference = make_reference_id('EXP', $number);
+        });
+    }
+
     public function getDateAttribute($value) {
         return Carbon::parse($value)->format('d M, Y');
     }
@@ -26,9 +35,5 @@ class Expense extends Model
 
     public function getAmountAttribute($value) {
         return ($value / 100);
-    }
-
-    public function getReferenceAttribute($value) {
-        return strtoupper($value) . '_' . str_pad($this->attributes['id'], 6, '0', STR_PAD_LEFT );
     }
 }

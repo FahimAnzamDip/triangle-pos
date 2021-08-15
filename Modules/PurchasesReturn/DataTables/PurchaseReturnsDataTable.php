@@ -1,15 +1,15 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\PurchasesReturn\DataTables;
 
-use Modules\SalesReturn\Entities\SaleReturn;
+use Modules\PurchasesReturn\Entities\PurchaseReturn;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SaleReturnsDataTable extends DataTable
+class PurchaseReturnsDataTable extends DataTable
 {
     public function dataTable($query) {
         return datatables()
@@ -24,23 +24,23 @@ class SaleReturnsDataTable extends DataTable
                 return format_currency($data->due_amount);
             })
             ->addColumn('status', function ($data) {
-                return view('salesreturn::partials.status', compact('data'));
+                return view('purchasesreturn::partials.status', compact('data'));
             })
             ->addColumn('payment_status', function ($data) {
-                return view('salesreturn::partials.payment-status', compact('data'));
+                return view('purchasesreturn::partials.payment-status', compact('data'));
             })
             ->addColumn('action', function ($data) {
-                return view('salesreturn::partials.actions', compact('data'));
+                return view('purchasesreturn::partials.actions', compact('data'));
             });
     }
 
-    public function query(SaleReturn $model) {
+    public function query(PurchaseReturn $model) {
         return $model->newQuery();
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('sale-returns-table')
+            ->setTableId('purchase-returns-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
@@ -64,8 +64,8 @@ class SaleReturnsDataTable extends DataTable
             Column::make('reference')
                 ->className('text-center align-middle'),
 
-            Column::make('customer_name')
-                ->title('Customer')
+            Column::make('supplier_name')
+                ->title('Supplier')
                 ->className('text-center align-middle'),
 
             Column::computed('status')
@@ -92,9 +92,8 @@ class SaleReturnsDataTable extends DataTable
                 ->visible(false)
         ];
     }
-
     protected function filename()
     {
-        return 'SaleReturns_' . date('YmdHis');
+        return 'PurchaseReturns_' . date('YmdHis');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Modules\User\Http\Controllers;
 
-use App\DataTables\UsersDataTable;
+use Modules\User\DataTables\UsersDataTable;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;

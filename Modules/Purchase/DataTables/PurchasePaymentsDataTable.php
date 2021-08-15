@@ -1,38 +1,40 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\Purchase\DataTables;
 
-use Modules\Expense\Entities\ExpenseCategory;
+use Modules\Purchase\Entities\PurchasePayment;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ExpenseCategoriesDataTable extends DataTable
+class PurchasePaymentsDataTable extends DataTable
 {
-
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
+            ->addColumn('amount', function ($data) {
+                return format_currency($data->amount);
+            })
             ->addColumn('action', function ($data) {
-                return view('expense::categories.partials.actions', compact('data'));
+                return view('purchase::payments.partials.actions', compact('data'));
             });
     }
 
-    public function query(ExpenseCategory $model) {
-        return $model->newQuery()->withCount('expenses');
+    public function query(PurchasePayment $model) {
+        return $model->newQuery()->byPurchase()->with('purchase');
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('expensecategories-table')
+            ->setTableId('purchase-payments-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(4)
+            ->orderBy(5)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -47,26 +49,29 @@ class ExpenseCategoriesDataTable extends DataTable
 
     protected function getColumns() {
         return [
-            Column::make('category_name')
-                ->addClass('text-center'),
+            Column::make('date')
+                ->className('align-middle text-center'),
 
-            Column::make('category_description')
-                ->addClass('text-center'),
+            Column::make('reference')
+                ->className('align-middle text-center'),
 
-            Column::make('expenses_count')
-                ->addClass('text-center'),
+            Column::computed('amount')
+                ->className('align-middle text-center'),
+
+            Column::make('payment_method')
+                ->className('align-middle text-center'),
 
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->addClass('text-center'),
+                ->className('align-middle text-center'),
 
             Column::make('created_at')
-                ->visible(false)
+                ->visible(false),
         ];
     }
 
     protected function filename() {
-        return 'ExpenseCategories_' . date('YmdHis');
+        return 'PurchasePayments_' . date('YmdHis');
     }
 }

@@ -10,11 +10,13 @@ class SearchProduct extends Component
 {
 
     public $query;
-    public $searchResults;
+    public $search_results;
+    public $how_many;
 
     public function mount() {
         $this->query = '';
-        $this->searchResults = Collection::empty();
+        $this->how_many = 5;
+        $this->search_results = Collection::empty();
     }
 
     public function render() {
@@ -22,14 +24,20 @@ class SearchProduct extends Component
     }
 
     public function updatedQuery() {
-        $this->searchResults = Product::where('product_name', 'like', '%' . $this->query . '%')
+        $this->search_results = Product::where('product_name', 'like', '%' . $this->query . '%')
             ->orWhere('product_code', 'like', '%' . $this->query . '%')
-            ->take(6)->get();
+            ->take($this->how_many)->get();
+    }
+
+    public function loadMore() {
+        $this->how_many += 5;
+        $this->updatedQuery();
     }
 
     public function resetQuery() {
         $this->query = '';
-        $this->searchResults = Collection::empty();
+        $this->how_many = 5;
+        $this->search_results = Collection::empty();
     }
 
     public function selectProduct($product) {

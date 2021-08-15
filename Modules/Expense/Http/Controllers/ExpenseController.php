@@ -2,7 +2,7 @@
 
 namespace Modules\Expense\Http\Controllers;
 
-use App\DataTables\ExpensesDataTable;
+use Modules\Expense\DataTables\ExpensesDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -40,7 +40,6 @@ class ExpenseController extends Controller
 
         Expense::create([
             'date' => $request->date,
-            'reference' => $request->reference,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
             'details' => $request->details

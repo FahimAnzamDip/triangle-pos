@@ -1,53 +1,39 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\People\DataTables;
 
-use Modules\Purchase\Entities\Purchase;
+
+use Modules\People\Entities\Supplier;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PurchaseDataTable extends DataTable
+class SuppliersDataTable extends DataTable
 {
 
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
-            ->addColumn('total_amount', function ($data) {
-                return format_currency($data->total_amount);
-            })
-            ->addColumn('paid_amount', function ($data) {
-                return format_currency($data->paid_amount);
-            })
-            ->addColumn('due_amount', function ($data) {
-                return format_currency($data->due_amount);
-            })
-            ->addColumn('status', function ($data) {
-                return view('purchase::partials.status', compact('data'));
-            })
-            ->addColumn('payment_status', function ($data) {
-                return view('purchase::partials.payment-status', compact('data'));
-            })
             ->addColumn('action', function ($data) {
-                return view('purchase::partials.actions', compact('data'));
+                return view('people::suppliers.partials.actions', compact('data'));
             });
     }
 
-    public function query(Purchase $model) {
+    public function query(Supplier $model) {
         return $model->newQuery();
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('purchases-table')
+            ->setTableId('suppliers-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
-                                'tr' .
+                                        'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(8)
+            ->orderBy(4)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -62,26 +48,13 @@ class PurchaseDataTable extends DataTable
 
     protected function getColumns() {
         return [
-            Column::make('reference')
-                ->className('text-center align-middle'),
-
             Column::make('supplier_name')
-                ->title('Supplier')
                 ->className('text-center align-middle'),
 
-            Column::computed('status')
+            Column::make('supplier_email')
                 ->className('text-center align-middle'),
 
-            Column::computed('total_amount')
-                ->className('text-center align-middle'),
-
-            Column::computed('paid_amount')
-                ->className('text-center align-middle'),
-
-            Column::computed('due_amount')
-                ->className('text-center align-middle'),
-
-            Column::computed('payment_status')
+            Column::make('supplier_phone')
                 ->className('text-center align-middle'),
 
             Column::computed('action')
@@ -95,6 +68,6 @@ class PurchaseDataTable extends DataTable
     }
 
     protected function filename() {
-        return 'Purchase_' . date('YmdHis');
+        return 'Suppliers_' . date('YmdHis');
     }
 }

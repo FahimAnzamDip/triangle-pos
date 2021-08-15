@@ -1,15 +1,15 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\Purchase\DataTables;
 
-use Modules\Sale\Entities\Sale;
+use Modules\Purchase\Entities\Purchase;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SalesDataTable extends DataTable
+class PurchaseDataTable extends DataTable
 {
 
     public function dataTable($query) {
@@ -25,23 +25,23 @@ class SalesDataTable extends DataTable
                 return format_currency($data->due_amount);
             })
             ->addColumn('status', function ($data) {
-                return view('sale::partials.status', compact('data'));
+                return view('purchase::partials.status', compact('data'));
             })
             ->addColumn('payment_status', function ($data) {
-                return view('sale::partials.payment-status', compact('data'));
+                return view('purchase::partials.payment-status', compact('data'));
             })
             ->addColumn('action', function ($data) {
-                return view('sale::partials.actions', compact('data'));
+                return view('purchase::partials.actions', compact('data'));
             });
     }
 
-    public function query(Sale $model) {
+    public function query(Purchase $model) {
         return $model->newQuery();
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('sales-table')
+            ->setTableId('purchases-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
@@ -65,8 +65,8 @@ class SalesDataTable extends DataTable
             Column::make('reference')
                 ->className('text-center align-middle'),
 
-            Column::make('customer_name')
-                ->title('Customer')
+            Column::make('supplier_name')
+                ->title('Supplier')
                 ->className('text-center align-middle'),
 
             Column::computed('status')
@@ -95,6 +95,6 @@ class SalesDataTable extends DataTable
     }
 
     protected function filename() {
-        return 'Sales_' . date('YmdHis');
+        return 'Purchase_' . date('YmdHis');
     }
 }

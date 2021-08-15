@@ -2,10 +2,8 @@
 
 namespace Modules\Purchase\Http\Controllers;
 
-use App\DataTables\PurchaseDataTable;
+use Modules\Purchase\DataTables\PurchaseDataTable;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -49,7 +47,6 @@ class PurchaseController extends Controller
 
             $purchase = Purchase::create([
                 'date' => $request->date,
-                'reference' => $request->reference,
                 'supplier_id' => $request->supplier_id,
                 'supplier_name' => Supplier::findOrFail($request->supplier_id)->supplier_name,
                 'tax_percentage' => $request->tax_percentage,

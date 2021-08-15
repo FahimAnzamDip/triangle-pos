@@ -1,40 +1,38 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\Adjustment\DataTables;
 
-use Modules\Purchase\Entities\PurchasePayment;
+use Modules\Adjustment\Entities\Adjustment;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PurchasePaymentsDataTable extends DataTable
+class AdjustmentsDataTable extends DataTable
 {
+
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
-            ->addColumn('amount', function ($data) {
-                return format_currency($data->amount);
-            })
             ->addColumn('action', function ($data) {
-                return view('purchase::payments.partials.actions', compact('data'));
+                return view('adjustment::partials.actions', compact('data'));
             });
     }
 
-    public function query(PurchasePayment $model) {
-        return $model->newQuery()->byPurchase()->with('purchase');
+    public function query(Adjustment $model) {
+        return $model->newQuery()->withCount('adjustedProducts');
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('purchase-payments-table')
+            ->setTableId('adjustments-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
-                                'tr' .
-                                <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(5)
+                                        'tr' .
+                                        <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
+            ->orderBy(4)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -50,28 +48,26 @@ class PurchasePaymentsDataTable extends DataTable
     protected function getColumns() {
         return [
             Column::make('date')
-                ->className('align-middle text-center'),
+                ->className('text-center align-middle'),
 
             Column::make('reference')
-                ->className('align-middle text-center'),
+                ->className('text-center align-middle'),
 
-            Column::computed('amount')
-                ->className('align-middle text-center'),
-
-            Column::make('payment_method')
-                ->className('align-middle text-center'),
+            Column::make('adjusted_products_count')
+                ->title('Products')
+                ->className('text-center align-middle'),
 
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->className('align-middle text-center'),
+                ->className('text-center align-middle'),
 
             Column::make('created_at')
-                ->visible(false),
+                ->visible(false)
         ];
     }
 
     protected function filename() {
-        return 'PurchasePayments_' . date('YmdHis');
+        return 'Adjustments_' . date('YmdHis');
     }
 }

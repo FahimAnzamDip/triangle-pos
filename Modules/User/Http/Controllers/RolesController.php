@@ -2,7 +2,7 @@
 
 namespace Modules\User\Http\Controllers;
 
-use App\DataTables\RolesDataTable;
+use Modules\User\DataTables\RolesDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

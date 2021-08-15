@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Modules\Product\Entities\Category;
-use App\DataTables\ProductCategoriesDataTable;
+use Modules\Product\DataTables\ProductCategoriesDataTable;
 
 class CategoriesController extends Controller
 {

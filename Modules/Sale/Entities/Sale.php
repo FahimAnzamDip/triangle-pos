@@ -19,8 +19,13 @@ class Sale extends Model
         return $this->hasMany(SalePayment::class, 'sale_id', 'id');
     }
 
-    public function getReferenceAttribute($value) {
-        return strtoupper($value) . '_' . str_pad($this->attributes['id'], 6, '0', STR_PAD_LEFT);
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $number = Sale::max('id') + 1;
+            $model->reference = make_reference_id('SL', $number);
+        });
     }
 
     public function getShippingAmountAttribute($value) {

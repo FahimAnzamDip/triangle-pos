@@ -2,8 +2,7 @@
 
 namespace Modules\Purchase\Http\Controllers;
 
-use App\DataTables\PurchasePaymentsDataTable;
-use Illuminate\Contracts\Support\Renderable;
+use Modules\Purchase\DataTables\PurchasePaymentsDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;

@@ -2,7 +2,7 @@
 
 namespace Modules\Sale\Http\Controllers;
 
-use App\DataTables\SalePaymentsDataTable;
+use Modules\Sale\DataTables\SalePaymentsDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

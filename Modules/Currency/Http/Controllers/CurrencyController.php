@@ -2,8 +2,7 @@
 
 namespace Modules\Currency\Http\Controllers;
 
-use App\DataTables\CurrencyDataTable;
-use Illuminate\Contracts\Support\Renderable;
+use Modules\Currency\DataTables\CurrencyDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;

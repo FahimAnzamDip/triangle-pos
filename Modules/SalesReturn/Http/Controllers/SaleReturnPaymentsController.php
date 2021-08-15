@@ -2,8 +2,7 @@
 
 namespace Modules\SalesReturn\Http\Controllers;
 
-use App\DataTables\SaleReturnPaymentsDataTable;
-use Illuminate\Contracts\Support\Renderable;
+use Modules\SalesReturn\DataTables\SaleReturnPaymentsDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;

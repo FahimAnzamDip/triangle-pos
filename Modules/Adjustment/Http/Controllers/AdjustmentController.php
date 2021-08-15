@@ -2,7 +2,7 @@
 
 namespace Modules\Adjustment\Http\Controllers;
 
-use App\DataTables\AdjustmentsDataTable;
+use Modules\Adjustment\DataTables\AdjustmentsDataTable;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use Modules\Adjustment\Entities\AdjustedProduct;
 use Modules\Adjustment\Entities\Adjustment;
 use Modules\Product\Entities\Product;
+use Modules\Product\Notifications\NotifyQuantityAlert;
 
 class AdjustmentController extends Controller
 {
@@ -43,9 +44,8 @@ class AdjustmentController extends Controller
 
         DB::transaction(function () use ($request) {
             $adjustment = Adjustment::create([
-                'reference' => $request->reference,
-                'date'      => $request->date,
-                'note'      => $request->note
+                'date' => $request->date,
+                'note' => $request->note
             ]);
 
             foreach ($request->product_ids as $key => $id) {
@@ -128,15 +128,14 @@ class AdjustmentController extends Controller
             foreach ($request->product_ids as $key => $id) {
                 AdjustedProduct::create([
                     'adjustment_id' => $adjustment->id,
-                    'product_id' => $id,
+                    'product_id'    => $id,
                     'quantity'      => $request->quantities[$key],
                     'type'          => $request->types[$key]
                 ]);
 
                 $product = Product::findOrFail($id);
 
-                if ($request->types[$key] == 'add')
-                {
+                if ($request->types[$key] == 'add') {
                     $product->update([
                         'product_quantity' => $product->product_quantity + $request->quantities[$key]
                     ]);

@@ -1,40 +1,46 @@
 <?php
 
-namespace App\DataTables;
+namespace Modules\User\DataTables;
 
-use Modules\PurchasesReturn\Entities\PurchaseReturnPayment;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PurchaseReturnPaymentsDataTable extends DataTable
+class RolesDataTable extends DataTable
 {
+
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
-            ->addColumn('amount', function ($data) {
-                return format_currency($data->amount);
-            })
             ->addColumn('action', function ($data) {
-                return view('purchasesreturn::payments.partials.actions', compact('data'));
+                return view('user::roles.partials.actions', compact('data'));
+            })
+            ->addColumn('permissions', function ($data) {
+                return view('user::roles.partials.permissions', [
+                    'data' => $data
+                ]);
             });
+
     }
 
-    public function query(PurchaseReturnPayment $model) {
-        return $model->newQuery()->byPurchaseReturn()->with('purchaseReturn');
+    public function query(Role $model) {
+        return $model->newQuery()->with(['permissions' => function ($query) {
+            $query->select('name')->take(10)->get();
+        }])->where('name', '!=', 'Super Admin');
     }
 
     public function html() {
         return $this->builder()
-            ->setTableId('purchase-payments-table')
+            ->setTableId('roles-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-            ->orderBy(5)
+            ->orderBy(4)
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
@@ -49,30 +55,31 @@ class PurchaseReturnPaymentsDataTable extends DataTable
 
     protected function getColumns() {
         return [
-            Column::make('date')
-                ->className('align-middle text-center'),
+            Column::make('id')
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
-            Column::make('reference')
-                ->className('align-middle text-center'),
+            Column::make('name')
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
-            Column::computed('amount')
-                ->className('align-middle text-center'),
-
-            Column::make('payment_method')
-                ->className('align-middle text-center'),
+            Column::computed('permissions')
+                ->addClass('text-center')
+                ->addClass('align-middle')
+                ->width('700px'),
 
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->className('align-middle text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle'),
 
             Column::make('created_at')
-                ->visible(false),
+                ->visible(false)
         ];
     }
 
-    protected function filename()
-    {
-        return 'PurchaseReturnPayments_' . date('YmdHis');
+    protected function filename() {
+        return 'Roles_' . date('YmdHis');
     }
 }
