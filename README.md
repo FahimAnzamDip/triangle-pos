@@ -20,8 +20,8 @@
 > Email: admin@test.com || Password: 12345678
 
 ## Demo
-
-[Coming Soon] (https://soon.will.be.available)
+![Triangle POS](public/images/screenshot.jpg)
+[Live Link] (https://soon.will.be.available)
 
 ## Triangle POS Features
 
