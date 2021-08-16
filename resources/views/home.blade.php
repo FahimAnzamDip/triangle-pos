@@ -10,6 +10,7 @@
 
 @section('content')
     <div class="container-fluid">
+        @can('show_total_stats')
         <div class="row">
             <div class="col-md-6 col-lg-3">
                 <div class="card border-0">
@@ -67,8 +68,11 @@
                 </div>
             </div>
         </div>
+        @endcan
 
+        @can('show_weekly_sales_purchases|show_month_overview')
         <div class="row mb-4">
+            @can('show_weekly_sales_purchases')
             <div class="col-lg-7">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header">
@@ -79,6 +83,8 @@
                     </div>
                 </div>
             </div>
+            @endcan
+            @can('show_month_overview')
             <div class="col-lg-5">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header">
@@ -91,8 +97,11 @@
                     </div>
                 </div>
             </div>
+            @endcan
         </div>
+        @endcan
 
+        @can('show_monthly_cashflow')
         <div class="row">
             <div class="col-lg-12">
                 <div class="card border-0 shadow-sm">
@@ -105,6 +114,7 @@
                 </div>
             </div>
         </div>
+        @endcan
     </div>
 @endsection
 

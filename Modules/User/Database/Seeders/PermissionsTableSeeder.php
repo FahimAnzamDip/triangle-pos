@@ -18,7 +18,14 @@ class PermissionsTableSeeder extends Seeder
     {
         $permissions = [
             //User Mangement
+            'edit_own_profile',
             'access_user_management',
+            //Dashboard
+            'show_total_stats',
+            'show_month_overview',
+            'show_weekly_sales_purchases',
+            'show_monthly_cashflow',
+            'show_notifications',
             //Products
             'access_products',
             'create_products',
@@ -35,6 +42,16 @@ class PermissionsTableSeeder extends Seeder
             'show_adjustments',
             'edit_adjustments',
             'delete_adjustments',
+            //Quotaions
+            'access_quotations',
+            'create_quotations',
+            'show_quotations',
+            'edit_quotations',
+            'delete_quotations',
+            //Create Sale From Quotation
+            'create_quotation_sales',
+            //Send Quotation On Email
+            'send_quotation_mails',
             //Expenses
             'access_expenses',
             'create_expenses',

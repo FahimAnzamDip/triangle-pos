@@ -11,5 +11,6 @@
     "Purchase": true,
     "SaleReturn": true,
     "SalesReturn": true,
-    "PurchasesReturn": true
+    "PurchasesReturn": true,
+    "Quotation": true
 }
