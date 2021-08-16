@@ -3,7 +3,7 @@
 
 # Installation
 
-- [run `` https://github.com/FahimAnzamDip/triangle-pos.git ``]
+- run `` git clone https://github.com/FahimAnzamDip/triangle-pos.git ``
 - run ``composer install `` 
 - run `` npm install ``
 - run ``npm run dev``
@@ -13,10 +13,10 @@
 - run `` php artisan migrate --seed ``
 - run `` php artisan storage:link ``
 - run `` php artisan serve ``
-- then visit `` localhost:8000 or 127.0.0.1:8000 ``.
+- then visit `` http://localhost:8000 or http://127.0.0.1:8000 ``.
 
 
-#Admin Credentials
+# Admin Credentials
 > Email: admin@test.com || Password: 12345678
 
 ## Demo
