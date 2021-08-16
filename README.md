@@ -16,7 +16,7 @@
 - then visit `` http://localhost:8000 or http://127.0.0.1:8000 ``.
 
 
-#Admin Credentials
+# Admin Credentials
 > Email: admin@test.com || Password: 12345678
 
 ## Demo
