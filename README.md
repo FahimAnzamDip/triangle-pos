@@ -1,5 +1,5 @@
 ![Triangle POS](public/images/logo-dark.png)
->This Project is ready for Testing. (Only Reports are not available right now, But I am working on it).
+>This Project is ready for Testing & also for Production. (Only Reports are not available right now).
 
 # Installation
 
