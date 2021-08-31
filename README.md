@@ -1,10 +1,10 @@
 ![Triangle POS](public/images/logo-dark.png)
->This Project is ready for Testing. (Only Reports are not available right now, But I am working on it).
+>This Project is ready for Testing & also for Production. (Only Reports are not available right now).
 
 # Installation
 
 - run `` git clone https://github.com/FahimAnzamDip/triangle-pos.git ``
-- run ``composer install `` 
+- run ``composer update `` 
 - run `` npm install ``
 - run ``npm run dev``
 - copy .env.example to .env
