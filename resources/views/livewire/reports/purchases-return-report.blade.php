@@ -25,11 +25,11 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>Customer</label>
-                                    <select wire:model.defer="customer_id" class="form-control" name="customer_id">
-                                        <option value="">Select Customer</option>
-                                        @foreach($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
+                                    <label>Supplier</label>
+                                    <select wire:model.defer="supplier_id" class="form-control" name="supplier_id">
+                                        <option value="">Select Supplier</option>
+                                        @foreach($suppliers as $supplier)
+                                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -39,7 +39,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Status</label>
-                                    <select wire:model.defer="sale_status" class="form-control" name="sale_status">
+                                    <select wire:model.defer="purchase_return_status" class="form-control" name="purchase_return_status">
                                         <option value="">Select Status</option>
                                         <option value="Pending">Pending</option>
                                         <option value="Shipped">Shipped</option>
@@ -86,7 +86,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Reference</th>
-                            <th>Customer</th>
+                            <th>Supplier</th>
                             <th>Status</th>
                             <th>Total</th>
                             <th>Paid</th>
@@ -95,41 +95,41 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($sales as $sale)
+                        @forelse($purchase_returns as $purchase_return)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</td>
-                                <td>{{ $sale->reference }}</td>
-                                <td>{{ $sale->customer_name }}</td>
+                                <td>{{ \Carbon\Carbon::parse($purchase_return->date)->format('d M, Y') }}</td>
+                                <td>{{ $purchase_return->reference }}</td>
+                                <td>{{ $purchase_return->supplier_name }}</td>
                                 <td>
-                                    @if ($sale->status == 'Pending')
+                                    @if ($purchase_return->status == 'Pending')
                                         <span class="badge badge-info">
-                                    {{ $sale->status }}
-                                </span>
-                                    @elseif ($sale->status == 'Shipped')
-                                        <span class="badge badge-primary">
-                                    {{ $sale->status }}
-                                </span>
-                                    @else
-                                        <span class="badge badge-success">
-                                    {{ $sale->status }}
-                                </span>
+                                            {{ $purchase_return->status }}
+                                        </span>
+                                            @elseif ($purchase_return->status == 'Shipped')
+                                                <span class="badge badge-primary">
+                                            {{ $purchase_return->status }}
+                                        </span>
+                                            @else
+                                                <span class="badge badge-success">
+                                            {{ $purchase_return->status }}
+                                        </span>
                                     @endif
                                 </td>
-                                <td>{{ format_currency($sale->total_amount) }}</td>
-                                <td>{{ format_currency($sale->paid_amount) }}</td>
-                                <td>{{ format_currency($sale->due_amount) }}</td>
+                                <td>{{ format_currency($purchase_return->total_amount) }}</td>
+                                <td>{{ format_currency($purchase_return->paid_amount) }}</td>
+                                <td>{{ format_currency($purchase_return->due_amount) }}</td>
                                 <td>
-                                    @if ($sale->payment_status == 'Partial')
+                                    @if ($purchase_return->payment_status == 'Partial')
                                         <span class="badge badge-warning">
-                                    {{ $sale->payment_status }}
+                                    {{ $purchase_return->payment_status }}
                                 </span>
-                                    @elseif ($sale->payment_status == 'Paid')
+                                    @elseif ($purchase_return->payment_status == 'Paid')
                                         <span class="badge badge-success">
-                                    {{ $sale->payment_status }}
+                                    {{ $purchase_return->payment_status }}
                                 </span>
                                     @else
                                         <span class="badge badge-danger">
-                                    {{ $sale->payment_status }}
+                                    {{ $purchase_return->payment_status }}
                                 </span>
                                     @endif
 
@@ -138,14 +138,14 @@
                         @empty
                             <tr>
                                 <td colspan="8">
-                                    <span class="text-danger">No Sales Data Available!</span>
+                                    <span class="text-danger">No Purchase Return Data Available!</span>
                                 </td>
                             </tr>
                         @endforelse
                         </tbody>
                     </table>
-                    <div @class(['mt-3' => $sales->hasPages()])>
-                        {{ $sales->links() }}
+                    <div @class(['mt-3' => $purchase_returns->hasPages()])>
+                        {{ $purchase_returns->links() }}
                     </div>
                 </div>
             </div>
