@@ -10,9 +10,9 @@
                 </div>
                 @forelse($products as $product)
                     <div wire:click.prevent="selectProduct({{ $product }})" class="col-lg-4 col-md-6" style="cursor: pointer;">
-                        <div class="card border-0 shadow">
+                        <div class="card border-0 shadow h-100">
                             <div class="position-relative">
-                                <img src="{{ $product->getFirstMediaUrl('images') }}" class="card-img-top" alt="Product Image">
+                                <img height="200" src="{{ $product->getFirstMediaUrl('images') }}" class="card-img-top" alt="Product Image">
                                 <div class="badge badge-info mb-3 position-absolute" style="left:10px;top: 10px;">Stock: {{ $product->product_quantity }}</div>
                             </div>
                             <div class="card-body">
@@ -33,6 +33,9 @@
                         </div>
                     </div>
                 @endforelse
+            </div>
+            <div @class(['mt-3' => $products->hasPages()])>
+                {{ $products->links() }}
             </div>
         </div>
     </div>

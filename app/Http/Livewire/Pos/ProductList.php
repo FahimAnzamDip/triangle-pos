@@ -8,6 +8,9 @@ use Modules\Product\Entities\Product;
 
 class ProductList extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [
         'selectedCategory' => 'categoryChanged',
@@ -15,28 +18,31 @@ class ProductList extends Component
     ];
 
     public $categories;
-    public $products;
+    public $category_id;
     public $limit = 9;
 
     public function mount($categories) {
-        $this->products = Product::limit($this->limit)->get();
         $this->categories = $categories;
+        $this->category_id = '';
     }
 
     public function render() {
-        return view('livewire.pos.product-list');
+        return view('livewire.pos.product-list', [
+            'products' => Product::when($this->category_id, function ($query) {
+                return $query->where('category_id', $this->category_id);
+            })
+            ->paginate($this->limit)
+        ]);
     }
 
     public function categoryChanged($category_id) {
-        if ($category_id == '*') {
-            $this->products = Product::limit($this->limit)->get();
-        } else {
-            $this->products = Product::where('category_id', $category_id)->limit($this->limit)->get();
-        }
+        $this->category_id = $category_id;
+        $this->resetPage();
     }
 
     public function showCountChanged($value) {
         $this->limit = $value;
+        $this->resetPage();
     }
 
     public function selectProduct($product) {

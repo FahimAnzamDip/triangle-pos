@@ -4,7 +4,7 @@
             <div class="form-group">
                 <label>Product Category</label>
                 <select wire:model="category" class="form-control">
-                    <option value="*">All Products</option>
+                    <option value="">All Products</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                     @endforeach
@@ -19,7 +19,7 @@
                     <option value="15">15 Products</option>
                     <option value="21">21 Products</option>
                     <option value="30">30 Products</option>
-                    <option value="*">All Products</option>
+                    <option value="">All Products</option>
                 </select>
             </div>
         </div>
