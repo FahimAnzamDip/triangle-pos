@@ -85,7 +85,7 @@
 @endcan
 
 @can('access_purchases')
-    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('purchases*') || request()->routeIs('purchase-payments*') ? 'c-show' : '' }}">
+    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-bag" style="line-height: 1;"></i> Purchases
         </a>
@@ -233,8 +233,8 @@
     </li>
 @endcan
 
-@can('access_sales_report')
-    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('sales-report.index') ? 'c-show' : '' }}">
+@can('access_sales_report|access_purchases_report')
+    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('*-report.index') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-graph-up" style="line-height: 1;"></i> Reports
         </a>
@@ -243,6 +243,13 @@
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('sales-report.index') ? 'c-active' : '' }}" href="{{ route('sales-report.index') }}">
                         <i class="c-sidebar-nav-icon bi bi-clipboard-data" style="line-height: 1;"></i> Sales Report
+                    </a>
+                </li>
+            @endcan
+            @can('access_purchases_report')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->routeIs('purchases-report.index') ? 'c-active' : '' }}" href="{{ route('purchases-report.index') }}">
+                        <i class="c-sidebar-nav-icon bi bi-clipboard-data" style="line-height: 1;"></i> Purchases Report
                     </a>
                 </li>
             @endcan
