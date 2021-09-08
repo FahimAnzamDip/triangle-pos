@@ -10,7 +10,7 @@
                                     <label>Start Date <span class="text-danger">*</span></label>
                                     <input wire:model.defer="start_date" type="date" class="form-control" name="start_date">
                                     @error('start_date')
-                                    <span class="text-danger mb-1">{{ $message }}</span>
+                                    <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -19,7 +19,7 @@
                                     <label>End Date <span class="text-danger">*</span></label>
                                     <input wire:model.defer="end_date" type="date" class="form-control" name="end_date">
                                     @error('end_date')
-                                    <span class="text-danger mb-1">{{ $message }}</span>
+                                    <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>

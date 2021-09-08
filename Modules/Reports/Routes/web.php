@@ -12,6 +12,9 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
+    //Payments Report
+    Route::get('/payments-report', 'ReportsController@paymentsReport')
+        ->name('payments-report.index');
     //Sales Report
     Route::get('/sales-report', 'ReportsController@salesReport')
         ->name('sales-report.index');

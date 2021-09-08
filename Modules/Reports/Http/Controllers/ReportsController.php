@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Gate;
 class ReportsController extends Controller
 {
 
+    public function paymentsReport() {
+        abort_if(Gate::denies('access_payments_report'), 403);
+
+        return view('reports::payments.index');
+    }
+
     public function salesReport() {
         abort_if(Gate::denies('access_sales_report'), 403);
 
