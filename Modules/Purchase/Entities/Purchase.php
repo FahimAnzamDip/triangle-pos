@@ -28,6 +28,10 @@ class Purchase extends Model
         });
     }
 
+    public function scopeCompleted($query) {
+        return $query->where('status', 'Completed');
+    }
+
     public function getShippingAmountAttribute($value) {
         return $value / 100;
     }

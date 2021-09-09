@@ -20,12 +20,12 @@ class HomeController extends Controller
 {
 
     public function index() {
-        $sales = Sale::where('status', 'Completed')->sum('total_amount');
-        $sale_returns = SaleReturn::where('status', 'Completed')->sum('total_amount');
-        $purchase_returns = PurchaseReturn::where('status', 'Completed')->sum('total_amount');
+        $sales = Sale::completed()->sum('total_amount');
+        $sale_returns = SaleReturn::completed()->sum('total_amount');
+        $purchase_returns = PurchaseReturn::completed()->sum('total_amount');
         $product_costs = 0;
 
-        foreach (Sale::where('status', 'Completed')->with('saleDetails')->get() as $sale) {
+        foreach (Sale::completed()->with('saleDetails')->get() as $sale) {
             foreach ($sale->saleDetails as $saleDetail) {
                 $product_costs += $saleDetail->product->product_cost;
             }
