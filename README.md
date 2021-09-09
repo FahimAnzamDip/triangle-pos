@@ -1,7 +1,7 @@
 ![Triangle POS](public/images/logo-dark.png)
->This Project is ready for Testing & also for Production. (Only Reports are not available right now).
+> This Project is ready for Production. If you find any bug or have any suggestion please create an Issue.
 
-# Installation
+# Local Installation
 
 - run `` git clone https://github.com/FahimAnzamDip/triangle-pos.git ``
 - run ``composer update `` 
@@ -15,13 +15,14 @@
 - run `` php artisan serve ``
 - then visit `` http://localhost:8000 or http://127.0.0.1:8000 ``.
 
+> **Important Note:** "Triangle POS" uses Laravel Snappy Package for PDFs. If you are using Linux then no configuration is needed. But in other Operating Systems please refer to [Laravel Snappy Documentation](https://github.com/barryvdh/laravel-snappy).
 
 # Admin Credentials
 > Email: admin@test.com || Password: 12345678
 
 ## Demo
 ![Triangle POS](public/images/screenshot.jpg)
-[Live Link] (https://soon.will.be.available)
+**Live Demo:** https://soon.will.be.available
 
 ## Triangle POS Features
 
@@ -37,7 +38,7 @@
 - **Product Multiple Images**
 - **Multiple Currency Settings**
 - **System Settings**
-- **Various Reports (Upcoming)**
+- **Reports**
 
 # License
 **[Creative Commons Attribution 4.0	cc-by-4.0](https://creativecommons.org/licenses/by/4.0/)**

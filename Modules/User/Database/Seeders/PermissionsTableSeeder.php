@@ -105,6 +105,8 @@ class PermissionsTableSeeder extends Seeder
             'delete_purchase_returns',
             //Purchase Return Payments
             'access_purchase_return_payments',
+            //Reports
+            'access_reports',
             //Currencies
             'access_currencies',
             'create_currencies',
