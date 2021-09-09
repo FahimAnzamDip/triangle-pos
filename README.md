@@ -22,7 +22,7 @@
 
 ## Demo
 ![Triangle POS](public/images/screenshot.jpg)
-**Live Demo:** https://soon.will.be.available
+**Live Demo:** http://pos.fahimanzam.me
 
 ## Triangle POS Features
 
