@@ -20,7 +20,7 @@ class CreateUploadsTable extends Migration
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

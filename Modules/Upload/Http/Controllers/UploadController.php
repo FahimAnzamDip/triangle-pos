@@ -13,8 +13,6 @@ class UploadController extends Controller
 {
 
     public function filepondUpload(Request $request) {
-        abort_if(!request()->ajax(), 404);
-
         $request->validate([
             'image' => 'required|image|mimes:png,jpeg,jpg'
         ]);
@@ -41,8 +39,6 @@ class UploadController extends Controller
 
 
     public function filepondDelete(Request $request) {
-        abort_if(!request()->ajax(), 404);
-
         $upload = Upload::where('folder', $request->getContent())->first();
 
         Storage::deleteDirectory('temp/' . $upload->folder);
@@ -53,8 +49,6 @@ class UploadController extends Controller
 
 
     public function dropzoneUpload(Request $request) {
-        abort_if(!request()->ajax(), 404);
-
         $file = $request->file('file');
 
         $filename = now()->timestamp . '.' . trim($file->getClientOriginalExtension());
@@ -68,8 +62,6 @@ class UploadController extends Controller
     }
 
     public function dropzoneDelete(Request $request) {
-        abort_if(!request()->ajax(), 404);
-
         Storage::delete('temp/dropzone/' . $request->file_name);
 
         return response()->json($request->file_name, 200);
