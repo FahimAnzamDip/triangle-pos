@@ -35,7 +35,7 @@
             </div>
             @forelse($low_quantity_products as $product)
                 <a class="dropdown-item" href="{{ route('products.show', $product->id) }}">
-                    <i class="bi bi-hash mr-1 text-primary"></i> Product: "{{ $product->product_code }}" is low in qauntity!
+                    <i class="bi bi-hash mr-1 text-primary"></i> Product: "{{ $product->product_code }}" is low in quantity!
                 </a>
             @empty
                 <a class="dropdown-item" href="#">
