@@ -18,7 +18,7 @@ if (!function_exists('format_currency')) {
 
         $settings = settings();
         $position = $settings->default_currency_position;
-        $symbol = $settings->currency->symbol;
+        $symbol = 22;
         $decimal_separator = $settings->currency->decimal_separator;
         $thousand_separator = $settings->currency->thousand_separator;
 
