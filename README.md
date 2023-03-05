@@ -22,7 +22,7 @@
 
 ## Demo
 ![Triangle POS](public/images/screenshot.jpg)
-**Live Demo:** https://enigmatic-thicket-18156.herokuapp.com
+**Live Demo:** Work In Progress
 
 ## Triangle POS Features
 
