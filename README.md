@@ -4,7 +4,7 @@
 # Local Installation
 
 - run `` git clone https://github.com/FahimAnzamDip/triangle-pos.git ``
-- run ``composer update `` 
+- run ``composer install `` 
 - run `` npm install ``
 - run ``npm run dev``
 - copy .env.example to .env
