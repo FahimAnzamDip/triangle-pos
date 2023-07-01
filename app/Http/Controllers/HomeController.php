@@ -25,7 +25,9 @@ class HomeController extends Controller
 
         foreach (Sale::completed()->with('saleDetails')->get() as $sale) {
             foreach ($sale->saleDetails??[] as $saleDetail) {
-                $product_costs += $saleDetail->product->product_cost * $saleDetail->quantity;
+                if (!is_null($saleDetail->product())) {
+                    $product_costs += $saleDetail->product->product_cost * $saleDetail->quantity;
+                }
             }
         }
 
