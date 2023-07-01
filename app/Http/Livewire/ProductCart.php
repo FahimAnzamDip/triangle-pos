@@ -175,26 +175,30 @@ class ProductCart extends Component
     }
 
     public function calculate($product) {
+        $product_price = $product['product_price'];
+        if ($this->cart_instance == 'purchase' || $this->cart_instance == 'purchase_return') {
+            $product_price = $product['product_cost'];
+        }
         $price = 0;
         $unit_price = 0;
         $product_tax = 0;
         $sub_total = 0;
 
         if ($product['product_tax_type'] == 1) {
-            $price = $product['product_price'] + ($product['product_price'] * ($product['product_order_tax'] / 100));
-            $unit_price = $product['product_price'];
-            $product_tax = $product['product_price'] * ($product['product_order_tax'] / 100);
-            $sub_total = $product['product_price'] + ($product['product_price'] * ($product['product_order_tax'] / 100));
+            $price = $product_price + ($product_price * ($product['product_order_tax'] / 100));
+            $unit_price = $product_price;
+            $product_tax = $product_price * ($product['product_order_tax'] / 100);
+            $sub_total = $product_price + ($product_price * ($product['product_order_tax'] / 100));
         } elseif ($product['product_tax_type'] == 2) {
-            $price = $product['product_price'];
-            $unit_price = $product['product_price'] - ($product['product_price'] * ($product['product_order_tax'] / 100));
-            $product_tax = $product['product_price'] * ($product['product_order_tax'] / 100);
-            $sub_total = $product['product_price'];
+            $price = $product_price;
+            $unit_price = $product_price - ($product_price * ($product['product_order_tax'] / 100));
+            $product_tax = $product_price * ($product['product_order_tax'] / 100);
+            $sub_total = $product_price;
         } else {
-            $price = $product['product_price'];
-            $unit_price = $product['product_price'];
+            $price = $product_price;
+            $unit_price = $product_price;
             $product_tax = 0.00;
-            $sub_total = $product['product_price'];
+            $sub_total = $product_price;
         }
 
         return ['price' => $price, 'unit_price' => $unit_price, 'product_tax' => $product_tax, 'sub_total' => $sub_total];

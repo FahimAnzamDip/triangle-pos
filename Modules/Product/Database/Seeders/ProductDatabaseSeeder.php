@@ -4,6 +4,8 @@ namespace Modules\Product\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Product\Entities\Category;
+use Modules\Setting\Entities\Unit;
 
 class ProductDatabaseSeeder extends Seeder
 {
@@ -16,6 +18,16 @@ class ProductDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        Category::create([
+            'category_code' => 'CA_01',
+            'category_name' => 'Random'
+        ]);
+
+        Unit::create([
+            'name' => 'Piece',
+            'short_name' => 'PC',
+            'operator' => '*',
+            'operation_value' => 1
+        ]);
     }
 }

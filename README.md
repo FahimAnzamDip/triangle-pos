@@ -22,7 +22,7 @@
 
 ## Demo
 ![Triangle POS](public/images/screenshot.jpg)
-**Live Demo:** Work In Progress
+**Live Demo:** will update soon
 
 ## Triangle POS Features
 
@@ -37,6 +37,7 @@
 - **User Management (Roles & Permissions)**
 - **Product Multiple Images**
 - **Multiple Currency Settings**
+- **Unit Settings**
 - **System Settings**
 - **Reports**
 

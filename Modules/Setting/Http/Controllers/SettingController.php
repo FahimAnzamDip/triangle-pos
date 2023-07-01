@@ -33,7 +33,6 @@ class SettingController extends Controller
             'company_address' => $request->company_address,
             'default_currency_id' => $request->default_currency_id,
             'default_currency_position' => $request->default_currency_position,
-            'footer_text' => $request->footer_text
         ]);
 
         cache()->forget('settings');

@@ -115,8 +115,13 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="product_unit">Unit <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="This text will be placed after Product Quantity."></i> <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="product_unit" value="{{ old('product_unit') ?? $product->product_unit }}" required>
+                                        <label for="product_unit">Unit <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip" data-placement="top" title="This short text will be placed after Product Quantity."></i> <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="product_unit" id="product_unit" required>
+                                            <option value="" selected >Select Unit</option>
+                                            @foreach(\Modules\Setting\Entities\Unit::all() as $unit)
+                                                <option {{ $product->product_unit == $unit->short_name ? 'selected' : '' }} value="{{ $unit->short_name }}">{{ $unit->name . ' | ' . $unit->short_name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>

@@ -72,16 +72,10 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="company_address">Company Address <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="company_address" value="{{ $settings->company_address }}">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="footer_text">Footer Text <span class="text-danger">*</span></label>
-                                        <textarea rows="1" name="footer_text" class="form-control">{!! $settings->footer_text !!}</textarea>
                                     </div>
                                 </div>
                             </div>

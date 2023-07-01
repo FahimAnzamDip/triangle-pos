@@ -71,8 +71,8 @@ class CategoriesController extends Controller
 
         $category = Category::findOrFail($id);
 
-        if ($category->products()->isNotEmpty()) {
-            return back()->withErrors('Can\'t delete beacuse there are products associated with this category.');
+        if ($category->products()->exists()) {
+            return back()->withErrors('Can\'t delete because there are products associated with this category.');
         }
 
         $category->delete();
