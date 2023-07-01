@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Gate;
 use Modules\Adjustment\Entities\AdjustedProduct;
 use Modules\Adjustment\Entities\Adjustment;
 use Modules\Product\Entities\Product;
-use Modules\Product\Notifications\NotifyQuantityAlert;
 
 class AdjustmentController extends Controller
 {

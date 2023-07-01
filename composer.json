@@ -17,7 +17,7 @@
         "laravel/ui": "^3.3",
         "livewire/livewire": "^2.5",
         "milon/barcode": "^8.0",
-        "nwidart/laravel-modules": "^8.2",
+        "nwidart/laravel-modules": "8.2",
         "realrashid/sweet-alert": "^4.0",
         "spatie/laravel-medialibrary": "^9.0.0",
         "spatie/laravel-permission": "^4.2",
