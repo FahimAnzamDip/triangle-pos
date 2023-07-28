@@ -11,6 +11,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class SaleReturnsDataTable extends DataTable
 {
+
     public function dataTable($query) {
         return datatables()
             ->eloquent($query)
@@ -93,8 +94,7 @@ class SaleReturnsDataTable extends DataTable
         ];
     }
 
-    protected function filename()
-    {
+    protected function filename(): string {
         return 'SaleReturns_' . date('YmdHis');
     }
 }

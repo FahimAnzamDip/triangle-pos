@@ -96,7 +96,7 @@ class UsersDataTable extends DataTable
         ];
     }
 
-    protected function filename() {
+    protected function filename(): string {
         return 'Users_' . date('YmdHis');
     }
 }
