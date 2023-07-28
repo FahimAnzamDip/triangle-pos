@@ -79,7 +79,7 @@ class RolesDataTable extends DataTable
         ];
     }
 
-    protected function filename() {
+    protected function filename(): string {
         return 'Roles_' . date('YmdHis');
     }
 }
