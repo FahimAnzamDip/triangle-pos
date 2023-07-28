@@ -125,5 +125,5 @@
 @endsection
 
 @push('page_scripts')
-    <script src="{{ mix('js/chart-config.js') }}"></script>
+    @vite('resources/js/chart-config.js')
 @endpush
