@@ -1,5 +1,5 @@
 ![Triangle POS](public/images/logo-dark.png)
-> **Important Note:** This is the dev branch where changes will be pushed first please use code from the main branch for production.
+> **Important Note:** This Project is ready for Production. But use code from main branch only. If you find any bug or have any suggestion please create an Issue.
 
 # Local Installation
 
