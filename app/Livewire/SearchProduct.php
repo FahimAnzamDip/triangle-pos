@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -41,6 +41,6 @@ class SearchProduct extends Component
     }
 
     public function selectProduct($product) {
-        $this->emit('productSelected', $product);
+        $this->dispatch('productSelected', $product);
     }
 }

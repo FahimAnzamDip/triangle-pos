@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Barcode;
+namespace App\Livewire\Barcode;
 
 use Livewire\Component;
 use Milon\Barcode\Facades\DNS1DFacade;

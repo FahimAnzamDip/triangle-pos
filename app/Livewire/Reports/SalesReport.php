@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Livewire\Reports;
+namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Modules\PurchasesReturn\Entities\PurchaseReturn;
+use Modules\Sale\Entities\Sale;
 
-class PurchasesReturnReport extends Component
+class SalesReport extends Component
 {
-
 
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
 
-    public $suppliers;
+    public $customers;
     public $start_date;
     public $end_date;
-    public $supplier_id;
-    public $purchase_return_status;
+    public $customer_id;
+    public $sale_status;
     public $payment_status;
 
     protected $rules = [
@@ -26,31 +25,31 @@ class PurchasesReturnReport extends Component
         'end_date'   => 'required|date|after:start_date',
     ];
 
-    public function mount($suppliers) {
-        $this->suppliers = $suppliers;
+    public function mount($customers) {
+        $this->customers = $customers;
         $this->start_date = today()->subDays(30)->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
-        $this->supplier_id = '';
-        $this->purchase_return_status = '';
+        $this->customer_id = '';
+        $this->sale_status = '';
         $this->payment_status = '';
     }
 
     public function render() {
-        $purchase_returns = PurchaseReturn::whereDate('date', '>=', $this->start_date)
+        $sales = Sale::whereDate('date', '>=', $this->start_date)
             ->whereDate('date', '<=', $this->end_date)
-            ->when($this->supplier_id, function ($query) {
-                return $query->where('supplier_id', $this->supplier_id);
+            ->when($this->customer_id, function ($query) {
+                return $query->where('customer_id', $this->customer_id);
             })
-            ->when($this->purchase_return_status, function ($query) {
-                return $query->where('status', $this->purchase_return_status);
+            ->when($this->sale_status, function ($query) {
+                return $query->where('status', $this->sale_status);
             })
             ->when($this->payment_status, function ($query) {
                 return $query->where('payment_status', $this->payment_status);
             })
             ->orderBy('date', 'desc')->paginate(10);
 
-        return view('livewire.reports.purchases-return-report', [
-            'purchase_returns' => $purchase_returns
+        return view('livewire.reports.sales-report', [
+            'sales' => $sales
         ]);
     }
 

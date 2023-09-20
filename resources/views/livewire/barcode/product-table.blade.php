@@ -28,7 +28,7 @@
                             <td class="align-middle">{{ $product->product_name }}</td>
                             <td class="align-middle">{{ $product->product_code }}</td>
                             <td class="align-middle text-center" style="width: 200px;">
-                                <input wire:model="quantity" class="form-control" type="number" min="1" max="100" value="{{ $quantity }}">
+                                <input wire:model.live="quantity" class="form-control" type="number" min="1" max="100" value="{{ $quantity }}">
                             </td>
                         @else
                             <td colspan="3" class="text-center">

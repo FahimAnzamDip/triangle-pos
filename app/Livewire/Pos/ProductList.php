@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pos;
+namespace App\Livewire\Pos;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -46,6 +46,6 @@ class ProductList extends Component
     }
 
     public function selectProduct($product) {
-        $this->emit('productSelected', $product);
+        $this->dispatch('productSelected', $product);
     }
 }
