@@ -18,7 +18,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form wire:submit.prevent="setProductDiscount('{{ $cart_item->rowId }}', '{{ $cart_item->id }}')" method="POST">
+            <form wire:submit="setProductDiscount('{{ $cart_item->rowId }}', '{{ $cart_item->id }}')" method="POST">
                 <div class="modal-body">
                     @if (session()->has('discount_message' . $cart_item->id))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -32,7 +32,7 @@
                     @endif
                     <div class="form-group">
                         <label>Discount Type <span class="text-danger">*</span></label>
-                        <select wire:model="discount_type.{{ $cart_item->id }}" class="form-control" required>
+                        <select wire:model.live="discount_type.{{ $cart_item->id }}" class="form-control" required>
                             <option value="fixed">Fixed</option>
                             <option value="percentage">Percentage</option>
                         </select>
@@ -40,10 +40,10 @@
                     <div class="form-group">
                         @if($discount_type[$cart_item->id] == 'percentage')
                             <label>Discount(%) <span class="text-danger">*</span></label>
-                            <input wire:model.defer="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}" min="0" max="100">
+                            <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}" min="0" max="100">
                         @elseif($discount_type[$cart_item->id] == 'fixed')
                             <label>Discount <span class="text-danger">*</span></label>
-                            <input wire:model.defer="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}">
+                            <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}">
                         @endif
                     </div>
                 </div>

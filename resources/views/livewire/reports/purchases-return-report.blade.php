@@ -3,12 +3,12 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <form wire:submit.prevent="generateReport">
+                    <form wire:submit="generateReport">
                         <div class="form-row">
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>Start Date <span class="text-danger">*</span></label>
-                                    <input wire:model.defer="start_date" type="date" class="form-control" name="start_date">
+                                    <input wire:model="start_date" type="date" class="form-control" name="start_date">
                                     @error('start_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
@@ -17,7 +17,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>End Date <span class="text-danger">*</span></label>
-                                    <input wire:model.defer="end_date" type="date" class="form-control" name="end_date">
+                                    <input wire:model="end_date" type="date" class="form-control" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
@@ -26,7 +26,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>Supplier</label>
-                                    <select wire:model.defer="supplier_id" class="form-control" name="supplier_id">
+                                    <select wire:model="supplier_id" class="form-control" name="supplier_id">
                                         <option value="">Select Supplier</option>
                                         @foreach($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
@@ -39,7 +39,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Status</label>
-                                    <select wire:model.defer="purchase_return_status" class="form-control" name="purchase_return_status">
+                                    <select wire:model="purchase_return_status" class="form-control" name="purchase_return_status">
                                         <option value="">Select Status</option>
                                         <option value="Pending">Pending</option>
                                         <option value="Shipped">Shipped</option>
@@ -50,7 +50,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Payment Status</label>
-                                    <select wire:model.defer="payment_status" class="form-control" name="payment_status">
+                                    <select wire:model="payment_status" class="form-control" name="payment_status">
                                         <option value="">Select Payment Status</option>
                                         <option value="Paid">Paid</option>
                                         <option value="Unpaid">Unpaid</option>

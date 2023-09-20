@@ -26,6 +26,9 @@ class ProductDataTable extends DataTable
             ->addColumn('product_price', function ($data) {
                 return format_currency($data->product_price);
             })
+            ->addColumn('product_cost', function ($data) {
+                return format_currency($data->product_cost);
+            })
             ->addColumn('product_quantity', function ($data) {
                 return $data->product_quantity . ' ' . $data->product_unit;
             })
@@ -66,12 +69,20 @@ class ProductDataTable extends DataTable
                 ->title('Image')
                 ->className('text-center align-middle'),
 
-            Column::make('product_name')
-                ->title('Name')
+            Column::make('category.category_name')
+                ->title('Category')
                 ->className('text-center align-middle'),
 
             Column::make('product_code')
                 ->title('Code')
+                ->className('text-center align-middle'),
+
+            Column::make('product_name')
+                ->title('Name')
+                ->className('text-center align-middle'),
+
+            Column::computed('product_cost')
+                ->title('Cost')
                 ->className('text-center align-middle'),
 
             Column::computed('product_price')
@@ -80,10 +91,6 @@ class ProductDataTable extends DataTable
 
             Column::computed('product_quantity')
                 ->title('Quantity')
-                ->className('text-center align-middle'),
-
-            Column::make('category.category_name')
-                ->title('Category')
                 ->className('text-center align-middle'),
 
             Column::computed('action')

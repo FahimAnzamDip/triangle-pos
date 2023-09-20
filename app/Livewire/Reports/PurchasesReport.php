@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Reports;
+namespace App\Livewire\Reports;
 
 use Livewire\Component;
 use Livewire\WithPagination;

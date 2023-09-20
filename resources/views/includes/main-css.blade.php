@@ -8,8 +8,6 @@
 
 @yield('third_party_stylesheets')
 
-@livewireStyles
-
 @stack('page_css')
 
 <style>

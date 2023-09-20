@@ -13,7 +13,7 @@
         "laravel/framework": "^10.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.0",
-        "livewire/livewire": "^2.5",
+        "livewire/livewire": "^3.0",
         "milon/barcode": "^10.0",
         "nwidart/laravel-modules": "^10.0",
         "realrashid/sweet-alert": "^6.0",

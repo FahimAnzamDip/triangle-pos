@@ -3,12 +3,12 @@
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <form wire:submit.prevent="generateReport">
+                    <form wire:submit="generateReport">
                         <div class="form-row">
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Start Date <span class="text-danger">*</span></label>
-                                    <input wire:model.defer="start_date" type="date" class="form-control" name="start_date">
+                                    <input wire:model="start_date" type="date" class="form-control" name="start_date">
                                     @error('start_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
@@ -17,7 +17,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>End Date <span class="text-danger">*</span></label>
-                                    <input wire:model.defer="end_date" type="date" class="form-control" name="end_date">
+                                    <input wire:model="end_date" type="date" class="form-control" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror

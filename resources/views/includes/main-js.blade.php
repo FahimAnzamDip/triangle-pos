@@ -10,6 +10,4 @@
 
 @yield('third_party_scripts')
 
-@livewireScripts
-
 @stack('page_scripts')

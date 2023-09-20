@@ -121,19 +121,19 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label for="tax_percentage">Tax (%)</label>
-                <input wire:model.lazy="global_tax" type="number" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
+                <input wire:model.blur="global_tax" type="number" class="form-control" name="tax_percentage" min="0" max="100" value="{{ $global_tax }}" required>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
                 <label for="discount_percentage">Discount (%)</label>
-                <input wire:model.lazy="global_discount" type="number" class="form-control" name="discount_percentage" min="0" max="100" value="{{ $global_discount }}" required>
+                <input wire:model.blur="global_discount" type="number" class="form-control" name="discount_percentage" min="0" max="100" value="{{ $global_discount }}" required>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
                 <label for="shipping_amount">Shipping</label>
-                <input wire:model.lazy="shipping" type="number" class="form-control" name="shipping_amount" min="0" value="0" required step="0.01">
+                <input wire:model.blur="shipping" type="number" class="form-control" name="shipping_amount" min="0" value="0" required step="0.01">
             </div>
         </div>
     </div>

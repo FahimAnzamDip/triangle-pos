@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pos;
+namespace App\Livewire\Pos;
 
 use Livewire\Component;
 
@@ -19,10 +19,10 @@ class Filter extends Component
     }
 
     public function updatedCategory() {
-        $this->emitUp('selectedCategory', $this->category);
+        $this->dispatch('selectedCategory', $this->category);
     }
 
     public function updatedShowCount() {
-        $this->emitUp('showCount', $this->category);
+        $this->dispatch('showCount', $this->category);
     }
 }
