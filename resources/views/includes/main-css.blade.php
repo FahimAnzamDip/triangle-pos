@@ -10,6 +10,8 @@
 
 @stack('page_css')
 
+@livewireStyles
+
 <style>
     div.dataTables_wrapper div.dataTables_length select {
         width: 65px;
