@@ -20,13 +20,13 @@
                 <thead class="thead-dark">
                 <tr>
                     <th class="align-middle">Product</th>
-                    <th class="align-middle">Net Unit Price</th>
-                    <th class="align-middle">Stock</th>
-                    <th class="align-middle">Quantity</th>
-                    <th class="align-middle">Discount</th>
-                    <th class="align-middle">Tax</th>
-                    <th class="align-middle">Sub Total</th>
-                    <th class="align-middle">Action</th>
+                    <th class="align-middle text-center">Net Unit Price</th>
+                    <th class="align-middle text-center">Stock</th>
+                    <th class="align-middle text-center">Quantity</th>
+                    <th class="align-middle text-center">Discount</th>
+                    <th class="align-middle text-center">Tax</th>
+                    <th class="align-middle text-center">Sub Total</th>
+                    <th class="align-middle text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,25 +41,31 @@
                                     @include('livewire.includes.product-cart-modal')
                                 </td>
 
-                                <td class="align-middle">{{ format_currency($cart_item->options->unit_price) }}</td>
+                                <td x-data="{ open{{ $cart_item->id }}: false }" class="align-middle text-center">
+                                    <span x-show="!open{{ $cart_item->id }}" @click="open{{ $cart_item->id }} = !open{{ $cart_item->id }}">{{ format_currency($cart_item->price) }}</span>
 
-                                <td class="align-middle text-center">
+                                    <div x-show="open{{ $cart_item->id }}">
+                                        @include('livewire.includes.product-cart-price')
+                                    </div>
+                                </td>
+
+                                <td class="align-middle text-center text-center">
                                     <span class="badge badge-info">{{ $cart_item->options->stock . ' ' . $cart_item->options->unit }}</span>
                                 </td>
 
-                                <td class="align-middle">
+                                <td class="align-middle text-center">
                                     @include('livewire.includes.product-cart-quantity')
                                 </td>
 
-                                <td class="align-middle">
+                                <td class="align-middle text-center">
                                     {{ format_currency($cart_item->options->product_discount) }}
                                 </td>
 
-                                <td class="align-middle">
+                                <td class="align-middle text-center">
                                     {{ format_currency($cart_item->options->product_tax) }}
                                 </td>
 
-                                <td class="align-middle">
+                                <td class="align-middle text-center">
                                     {{ format_currency($cart_item->options->sub_total) }}
                                 </td>
 

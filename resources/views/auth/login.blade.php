@@ -23,76 +23,100 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="{{ Route::has('register') ? 'col-md-8' : 'col-md-5' }}">
+        <div class="col-md-5">
             @if(Session::has('account_deactivated'))
                 <div class="alert alert-danger" role="alert">
                     {{ Session::get('account_deactivated') }}
                 </div>
             @endif
-            <div class="card-group">
-                <div class="card p-4 border-0 shadow-sm">
-                    <div class="card-body">
-                        <form method="post" action="{{ url('/login') }}">
-                            @csrf
-                            <h1>Login</h1>
-                            <p class="text-muted">Sign In to your account</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
+            <div class="card p-4 border-0 shadow-sm">
+                <div class="card-body">
+                    <form id="login" method="post" action="{{ url('/login') }}">
+                        @csrf
+                        <h1>Login</h1>
+                        <p class="text-muted">Sign In to your account</p>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
                                     <span class="input-group-text">
                                       <i class="bi bi-person"></i>
                                     </span>
-                                </div>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                       name="email" value="{{ old('email') }}"
-                                       placeholder="Email">
-                                @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
-                            <div class="input-group mb-4">
-                                <div class="input-group-prepend">
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                   name="email" value="{{ old('email') }}"
+                                   placeholder="Email">
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
                                     <span class="input-group-text">
                                       <i class="bi bi-lock"></i>
                                     </span>
-                                </div>
-                                <input type="password"
-                                       class="form-control @error('password') is-invalid @enderror"
-                                       placeholder="Password" name="password">
-                                @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <button class="btn btn-primary px-4" type="submit">Login</button>
-                                </div>
-                                <div class="col-8 text-right">
-                                    <a class="btn btn-link px-0" href="{{ route('password.request') }}">
-                                        Forgot password?
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                @if(Route::has('register'))
-                <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
-                    <div class="card-body text-center">
-                        <div>
-                            <h2>Sign up</h2>
-                            <p>Sign in to start your session</p>
-                            <a class="btn btn-lg btn-outline-light mt-3" href="{{ route('register') }}">Register Now!</a>
+                            <input id="password" type="password"
+                                   class="form-control @error('password') is-invalid @enderror"
+                                   placeholder="Password" name="password">
+                            @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <button id="submit" class="btn btn-primary px-4 d-flex align-items-center"
+                                        type="submit">
+                                    Login
+                                    <div id="spinner" class="spinner-border text-info" role="status"
+                                         style="height: 20px;width: 20px;margin-left: 5px;display: none;">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-8 text-right">
+                                <a class="btn btn-link px-0" href="{{ route('password.request') }}">
+                                    Forgot password?
+                                </a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                @endif
             </div>
+
+            <p class="text-center mt-5 lead">
+                Developed By
+                <a href="https://fahimanzam.netlify.app" class="font-weight-bold text-primary">Fahim Anzam Dip</a>
+            </p>
         </div>
     </div>
 </div>
 
 <!-- CoreUI -->
 <script src="{{ mix('js/app.js') }}" defer></script>
+<script>
+    let login = document.getElementById('login');
+    let submit = document.getElementById('submit');
+    let email = document.getElementById('email');
+    let password = document.getElementById('password');
+    let spinner = document.getElementById('spinner')
+
+    login.addEventListener('submit', (e) => {
+        submit.disabled = true;
+        email.readonly = true;
+        password.readonly = true;
+
+        spinner.style.display = 'block';
+
+        login.submit();
+    });
+
+    setTimeout(() => {
+        submit.disabled = false;
+        email.readonly = false;
+        password.readonly = false;
+
+        spinner.style.display = 'none';
+    }, 3000);
+</script>
 
 </body>
 </html>
