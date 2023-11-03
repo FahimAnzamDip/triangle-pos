@@ -1,0 +1,16 @@
+name: Generate repo visualization
+
+on:
+  push:
+    branches:
+      - main  # Set this to your default branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: githubocto/repo-visualizer@main
+        with:
+          # Customize the behavior below
+          root_path: "."  # Set this to the directory you want to visualize
