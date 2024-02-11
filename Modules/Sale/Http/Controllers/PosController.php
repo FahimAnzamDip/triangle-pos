@@ -58,7 +58,7 @@ class PosController extends Controller
                 'tax_amount' => Cart::instance('sale')->tax() * 100,
                 'discount_amount' => Cart::instance('sale')->discount() * 100,
             ]);
-
+            
             foreach (Cart::instance('sale')->content() as $cart_item) {
                 SaleDetails::create([
                     'sale_id' => $sale->id,

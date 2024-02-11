@@ -12,14 +12,15 @@
     <!-- CoreUI CSS -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}" crossorigin="anonymous">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"> -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
 </head>
 
 <body class="c-app flex-row align-items-center">
 <div class="container">
     <div class="row mb-3">
         <div class="col-12 d-flex justify-content-center">
-            <img width="200" src="{{ asset('images/logo-dark.png') }}" alt="Logo">
+            <img width="200" src="{{ asset('images/mrhebrews.png') }}" alt="Logo">
         </div>
     </div>
     <div class="row justify-content-center">
@@ -84,7 +85,7 @@
 
             <p class="text-center mt-5 lead">
                 Developed By
-                <a href="https://fahimanzam.netlify.app" class="font-weight-bold text-primary">Fahim Anzam Dip</a>
+                <a href="https://www.facebook.com/lopez.anthonymark" class="font-weight-bold text-primary">Anthony Mark Lopez</a>
             </p>
         </div>
     </div>

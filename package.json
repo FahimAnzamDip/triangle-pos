@@ -16,7 +16,9 @@
         "vite": "^4.4.7"
     },
     "dependencies": {
-        "autoprefixer": "^10.3.1"
+        "autoprefixer": "^10.3.1",
+        "bootstrap-icons": "^1.11.3",
+        "jquery": "^3.7.1"
     },
     "type": "module"
 }

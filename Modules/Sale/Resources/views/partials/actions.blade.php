@@ -4,7 +4,7 @@
     </button>
     <div class="dropdown-menu">
         <a target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}" class="dropdown-item">
-            <i class="bi bi-file-earmark-pdf mr-2 text-success" style="line-height: 1;"></i> POS Invoice
+            <i class="bi bi-file-earmark-pdf mr-2 text-success" style="line-height: 1;"></i> Print Receipt
         </a>
         @can('access_sale_payments')
             <a href="{{ route('sale-payments.index', $data->id) }}" class="dropdown-item">

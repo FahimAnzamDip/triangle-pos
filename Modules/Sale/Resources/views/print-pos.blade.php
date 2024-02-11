@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>Mr. Hebrews Cafe | Invoice #{{ $sale->reference }}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('images/mrhebrews.png') }}">
     <style>
         * {
             font-size: 12px;
@@ -24,7 +25,7 @@
         tr {border-bottom: 1px dashed #ddd;}
         td,th {padding: 7px 0;width: 50%;}
 
-        table {width: 100%;}
+        table {width: 100%; height: auto;}
         tfoot tr th:first-child {text-align: left;}
 
         .centered {
@@ -45,8 +46,8 @@
             tbody::after {
                 content: '';
                 display: block;
-                page-break-after: always;
-                page-break-inside: auto;
+                page-break-after: avoid;
+                page-break-inside: avoid;
                 page-break-before: avoid;
             }
         }
@@ -57,6 +58,7 @@
 <div style="max-width:400px;margin:0 auto">
     <div id="receipt-data">
         <div class="centered">
+            <img src="{{ $logo }}" class="img-fluid img-thumbnail mb-2" width="50px" height="50px" />
             <h2 style="margin-bottom: 5px">{{ settings()->company_name }}</h2>
 
             <p style="font-size: 11px;line-height: 15px;margin-top: 0">

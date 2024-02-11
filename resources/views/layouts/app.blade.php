@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title') || {{ config('app.name') }}</title>
-    <meta content="Fahim Anzam Dip" name="author">
+    <title>@yield('title') | {{ config('app.name') }}</title>
+    <meta content="Anthony Mark Lopez" name="author">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('images/favicon.png') }}">
+    <link rel="icon" href="{{ asset('images/mrhebrews.png') }}">
 
     @include('includes.main-css')
 </head>
