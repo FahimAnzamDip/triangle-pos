@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     ports:
-      - "9000:8000"
+      - "8000:8000"
     volumes:
       - .:/var/www/html
     depends_on:
