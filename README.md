@@ -22,6 +22,14 @@
 
 > **Important Note:** "Triangle POS" uses Laravel Snappy Package for PDFs. If you are using Linux then no configuration is needed. But in other Operating Systems please refer to [Laravel Snappy Documentation](https://github.com/barryvdh/laravel-snappy).
 
+# Docker Installation
+
+This will start the application along with the mysql database using docker compose. Note that the `DB_HOST` variable must be the mysql docker container name, in this case `db`.
+
+- run `` docker build -t triangle-pos . `` 
+- run `` docker compose up ``
+- then visit `` http://localhost:8000 or http://127.0.0.1:8000 ``.
+
 # Admin Credentials
 > Email: super.admin@test.com || Password: 12345678
 
