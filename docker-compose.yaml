@@ -14,7 +14,7 @@ services:
 
   db:
     platform: "linux/amd64"
-    image: mysql:5.7
+    image: mysql:latest
     env_file:
       - .env
     environment:
@@ -29,4 +29,5 @@ services:
 
 volumes:
   dbdata:
+
 
