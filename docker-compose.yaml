@@ -13,7 +13,6 @@ services:
       - db
 
   db:
-    platform: "linux/amd64"
     image: mysql:latest
     env_file:
       - .env

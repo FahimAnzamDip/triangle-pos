@@ -2,10 +2,22 @@ FROM php:8.1
 
 WORKDIR /app
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
   libzip-dev \
   zip \
-  git 
+  git \
+  wget \
+  xfonts-75dpi \
+  xfonts-base \
+  libxrender1 \
+  libxext6 \
+  fontconfig
+
+# Install wkhtmltopdf
+RUN wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb && \
+  dpkg -i wkhtmltox_0.12.6-1.buster_amd64.deb && \
+  rm wkhtmltox_0.12.6-1.buster_amd64.deb
 
 # Install php extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
