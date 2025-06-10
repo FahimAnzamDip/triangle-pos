@@ -36,33 +36,41 @@ class SalePaymentsDataTable extends DataTable
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(5)
+            ->language([
+                'url' => asset('js/i18n/' . app()->getLocale() . '.json')
+            ])
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
                 Button::make('print')
-                    ->text('<i class="bi bi-printer-fill"></i> Print'),
+                    ->text('<i class="bi bi-printer-fill"></i> ' . __('sale::messages.print')),
                 Button::make('reset')
-                    ->text('<i class="bi bi-x-circle"></i> Reset'),
+                    ->text('<i class="bi bi-x-circle"></i> ' . __('sale::messages.reset')),
                 Button::make('reload')
-                    ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+                    ->text('<i class="bi bi-arrow-repeat"></i> ' . __('sale::messages.reload'))
             );
     }
 
     protected function getColumns() {
         return [
             Column::make('date')
+                ->title(__('sale::messages.date'))
                 ->className('align-middle text-center'),
 
             Column::make('reference')
+                ->title(__('sale::messages.reference'))
                 ->className('align-middle text-center'),
 
             Column::computed('amount')
+                ->title(__('sale::messages.amount'))
                 ->className('align-middle text-center'),
 
             Column::make('payment_method')
+                ->title(__('sale::messages.payment_method'))
                 ->className('align-middle text-center'),
 
             Column::computed('action')
+                ->title(__('sale::messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('align-middle text-center'),

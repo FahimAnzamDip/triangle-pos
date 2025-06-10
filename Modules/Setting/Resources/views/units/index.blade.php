@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Units')
+@section('title', __('setting::messages.units'))
 
 @section('third_party_stylesheets')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
@@ -9,8 +9,8 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Units</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('setting::messages.units') }}</li>
     </ol>
 @endsection
 
@@ -21,7 +21,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <a href="{{ route('units.create') }}" class="btn btn-primary">
-                            Add Unit <i class="bi bi-plus"></i>
+                            {{ __('setting::messages.add_unit') }} <i class="bi bi-plus"></i>
                         </a>
 
                         <hr>
@@ -30,12 +30,12 @@
                             <table class="table table-bordered mb-0 text-center" id="data-table">
                                 <thead>
                                 <tr>
-                                    <th class="align-middle">No.</th>
-                                    <th class="align-middle">Name</th>
-                                    <th class="align-middle">Short Name</th>
-                                    <th class="align-middle">Operator</th>
-                                    <th class="align-middle">Operation Value</th>
-                                    <th class="align-middle">Action</th>
+                                    <th class="align-middle">{{ __('setting::messages.no') }}</th>
+                                    <th class="align-middle">{{ __('setting::messages.name') }}</th>
+                                    <th class="align-middle">{{ __('setting::messages.short_name') }}</th>
+                                    <th class="align-middle">{{ __('setting::messages.operator') }}</th>
+                                    <th class="align-middle">{{ __('setting::messages.operation_value') }}</th>
+                                    <th class="align-middle">{{ __('setting::messages.action') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -52,7 +52,7 @@
                                             </a>
                                             <button id="delete" class="btn btn-danger btn-sm delete-confirm" onclick="
                                                 event.preventDefault();
-                                                if (confirm('Are you sure? It will delete the data permanently!')) {
+                                                if (confirm('{{ __('setting::messages.confirm_delete') }}')) {
                                                 document.getElementById('destroy{{ $unit->id }}').submit()
                                                 }
                                                 ">
@@ -86,8 +86,8 @@
                 {extend: 'excel',text: '<i class="bi bi-file-earmark-excel-fill"></i> Excel'},
                 {extend: 'csv',text: '<i class="bi bi-file-earmark-excel-fill"></i> CSV'},
                 {extend: 'print',
-                    text: '<i class="bi bi-printer-fill"></i> Print',
-                    title: "Units",
+                    text: '<i class="bi bi-printer-fill"></i> {{ __('setting::messages.print') }}',
+                    title: "{{ __('setting::messages.units') }}",
                     exportOptions: {
                         columns: [ 0, 1, 2, 3, 4 ]
                     },
@@ -100,6 +100,9 @@
                 },
             ],
             ordering: false,
+            language: {
+                url: "{{ asset('js/i18n/' . app()->getLocale() . '.json') }}"
+            }
         });
     </script>
 @endpush

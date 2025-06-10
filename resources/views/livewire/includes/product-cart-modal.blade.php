@@ -15,7 +15,7 @@
                         {{ $cart_item->options->code }}
                     </span>
                     </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('product::messages.close') }}">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -24,32 +24,32 @@
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <div class="alert-body">
                                 <span>{{ session('discount_message' . $cart_item->id) }}</span>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="{{ __('product::messages.close') }}">
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
                         </div>
                     @endif
                     <div class="form-group">
-                        <label>Discount Type <span class="text-danger">*</span></label>
+                        <label>{{ __('product::messages.discount_type') }} <span class="text-danger">*</span></label>
                         <select wire:model.live="discount_type.{{ $cart_item->id }}" class="form-control" required>
-                            <option value="fixed">Fixed</option>
-                            <option value="percentage">Percentage</option>
+                            <option value="fixed">{{ __('product::messages.fixed') }}</option>
+                            <option value="percentage">{{ __('product::messages.percentage') }}</option>
                         </select>
                     </div>
                     <div class="form-group">
                         @if($discount_type[$cart_item->id] == 'percentage')
-                            <label>Discount(%) <span class="text-danger">*</span></label>
+                            <label>{{ __('product::messages.discount') }} (%)<span class="text-danger">*</span></label>
                             <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}" min="0" max="100">
                         @elseif($discount_type[$cart_item->id] == 'fixed')
-                            <label>Discount <span class="text-danger">*</span></label>
+                            <label>{{ __('product::messages.discount') }} <span class="text-danger">*</span></label>
                             <input wire:model="item_discount.{{ $cart_item->id }}" type="number" class="form-control" value="{{ $item_discount[$cart_item->id] }}">
                         @endif
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button wire:click="setProductDiscount('{{ $cart_item->rowId }}', {{ $cart_item->id }})" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('product::messages.close') }}</button>
+                    <button wire:click="setProductDiscount('{{ $cart_item->rowId }}', {{ $cart_item->id }})" type="button" class="btn btn-primary">{{ __('product::messages.save_changes') }}</button>
                 </div>
             </div>
         </div>

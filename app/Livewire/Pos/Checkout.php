@@ -52,7 +52,7 @@ class Checkout extends Component
         if ($this->customer_id != null) {
             $this->dispatch('showCheckoutModal');
         } else {
-            session()->flash('message', 'Please Select Customer!');
+            session()->flash('message', __('controller_messages.please_select_customer'));
         }
     }
 
@@ -72,7 +72,7 @@ class Checkout extends Component
         });
 
         if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Product exists in the cart!');
+            session()->flash('message', __('controller_messages.product_exists_in_cart'));
 
             return;
         }
@@ -116,7 +116,7 @@ class Checkout extends Component
 
     public function updateQuantity($row_id, $product_id) {
         if ($this->check_quantity[$product_id] < $this->quantity[$product_id]) {
-            session()->flash('message', 'The requested quantity is not available in stock.');
+            session()->flash('message', __('controller_messages.requested_quantity_not_available'));
 
             return;
         }
@@ -170,7 +170,7 @@ class Checkout extends Component
             $this->updateCartOptions($row_id, $product_id, $cart_item, $discount_amount);
         }
 
-        session()->flash('discount_message' . $product_id, 'Discount added to the product!');
+        session()->flash('discount_message' . $product_id, __('controller_messages.discount_added_to_product'));
     }
 
     public function calculate($product) {

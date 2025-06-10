@@ -33,36 +33,45 @@ class CurrencyDataTable extends DataTable
                                         'tr' .
                                         <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(6)
+            ->language([
+                'url' => asset('js/i18n/' . app()->getLocale() . '.json')
+            ])
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
                 Button::make('print')
-                    ->text('<i class="bi bi-printer-fill"></i> Print'),
+                    ->text('<i class="bi bi-printer-fill"></i> ' . __('currency::messages.print')),
                 Button::make('reset')
-                    ->text('<i class="bi bi-x-circle"></i> Reset'),
+                    ->text('<i class="bi bi-x-circle"></i> ' . __('currency::messages.reset')),
                 Button::make('reload')
-                    ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+                    ->text('<i class="bi bi-arrow-repeat"></i> ' . __('currency::messages.reload'))
             );
     }
 
     protected function getColumns() {
         return [
             Column::make('currency_name')
+                ->title(__('currency::messages.currency_name'))
                 ->className('text-center align-middle'),
 
             Column::make('code')
+                ->title(__('currency::messages.code'))
                 ->className('text-center align-middle'),
 
             Column::make('symbol')
+                ->title(__('currency::messages.symbol'))
                 ->className('text-center align-middle'),
 
             Column::make('thousand_separator')
+                ->title(__('currency::messages.thousand_separator'))
                 ->className('text-center align-middle'),
 
             Column::make('decimal_separator')
+                ->title(__('currency::messages.decimal_separator'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title(__('currency::messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

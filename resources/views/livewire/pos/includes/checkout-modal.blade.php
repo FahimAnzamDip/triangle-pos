@@ -3,9 +3,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="checkoutModalLabel">
-                    <i class="bi bi-cart-check text-primary"></i> Confirm Sale
+                    <i class="bi bi-cart-check text-primary"></i> {{ __('sale::messages.confirm_sale') }}
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('sale::messages.close') }}">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -16,7 +16,7 @@
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <div class="alert-body">
                                 <span>{{ session('checkout_message') }}</span>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="{{ __('sale::messages.close') }}">
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
@@ -31,29 +31,29 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="total_amount">Total Amount <span class="text-danger">*</span></label>
+                                        <label for="total_amount">{{ __('sale::messages.total_amount') }} <span class="text-danger">*</span></label>
                                         <input id="total_amount" type="text" class="form-control" name="total_amount" value="{{ $total_amount }}" readonly required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="paid_amount">Received Amount <span class="text-danger">*</span></label>
+                                        <label for="paid_amount">{{ __('sale::messages.received_amount') }} <span class="text-danger">*</span></label>
                                         <input id="paid_amount" type="text" class="form-control" name="paid_amount" value="{{ $total_amount }}" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
+                                <label for="payment_method">{{ __('sale::messages.payment_method') }} <span class="text-danger">*</span></label>
                                 <select class="form-control" name="payment_method" id="payment_method" required>
-                                    <option value="Cash">Cash</option>
-                                    <option value="Credit Card">Credit Card</option>
-                                    <option value="Bank Transfer">Bank Transfer</option>
-                                    <option value="Cheque">Cheque</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Cash">{{ __('sale::messages.cash') }}</option>
+                                    <option value="Credit Card">{{ __('sale::messages.credit_card') }}</option>
+                                    <option value="Bank Transfer">{{ __('sale::messages.bank_transfer') }}</option>
+                                    <option value="Cheque">{{ __('sale::messages.cheque') }}</option>
+                                    <option value="Other">{{ __('sale::messages.other') }}</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="note">Note (If Needed)</label>
+                                <label for="note">{{ __('sale::messages.note_optional') }}</label>
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <th>Total Products</th>
+                                        <th>{{ __('sale::messages.total_products') }}</th>
                                         <td>
                                                 <span class="badge badge-success">
                                                     {{ Cart::instance($cart_instance)->count() }}
@@ -69,20 +69,20 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Order Tax ({{ $global_tax }}%)</th>
+                                        <th>{{ __('sale::messages.order_tax') }} ({{ $global_tax }}%)</th>
                                         <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Discount ({{ $global_discount }}%)</th>
+                                        <th>{{ __('sale::messages.discount') }} ({{ $global_discount }}%)</th>
                                         <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Shipping</th>
+                                        <th>{{ __('sale::messages.shipping') }}</th>
                                         <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
                                         <td>(+) {{ format_currency($shipping) }}</td>
                                     </tr>
                                     <tr class="text-primary">
-                                        <th>Grand Total</th>
+                                        <th>{{ __('sale::messages.grand_total') }}</th>
                                         @php
                                             $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
                                         @endphp
@@ -97,8 +97,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('sale::messages.close') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('sale::messages.submit') }}</button>
                 </div>
             </form>
         </div>

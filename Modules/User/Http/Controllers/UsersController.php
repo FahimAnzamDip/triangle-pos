@@ -57,7 +57,7 @@ class UsersController extends Controller
             }
         }
 
-        toast("User Created & Assigned '$request->role' Role!", 'success');
+        toast(__('controller_messages.user_created_assigned_role', ['role' => $request->role]), 'success');
 
         return redirect()->route('users.index');
     }
@@ -101,7 +101,7 @@ class UsersController extends Controller
             }
         }
 
-        toast("User Updated & Assigned '$request->role' Role!", 'info');
+        toast(__('controller_messages.user_updated_assigned_role', ['role' => $request->role]), 'info');
 
         return redirect()->route('users.index');
     }
@@ -112,7 +112,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        toast('User Deleted!', 'warning');
+        toast(__('controller_messages.user_deleted'), 'warning');
 
         return redirect()->route('users.index');
     }

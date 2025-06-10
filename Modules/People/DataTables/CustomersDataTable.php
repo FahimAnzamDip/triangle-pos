@@ -34,30 +34,37 @@ class CustomersDataTable extends DataTable
                                        'tr' .
                                  <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(4)
+            ->language([
+                'url' => asset('js/i18n/' . app()->getLocale() . '.json')
+            ])
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
                 Button::make('print')
-                    ->text('<i class="bi bi-printer-fill"></i> Print'),
+                    ->text('<i class="bi bi-printer-fill"></i> ' . __('people::messages.print')),
                 Button::make('reset')
-                    ->text('<i class="bi bi-x-circle"></i> Reset'),
+                    ->text('<i class="bi bi-x-circle"></i> ' . __('people::messages.reset')),
                 Button::make('reload')
-                    ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+                    ->text('<i class="bi bi-arrow-repeat"></i> ' . __('people::messages.reload'))
             );
     }
 
     protected function getColumns() {
         return [
             Column::make('customer_name')
+                ->title(__('people::messages.customer_name'))
                 ->className('text-center align-middle'),
 
             Column::make('customer_email')
+                ->title(__('people::messages.customer_email'))
                 ->className('text-center align-middle'),
 
             Column::make('customer_phone')
+                ->title(__('people::messages.customer_phone'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title(__('people::messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

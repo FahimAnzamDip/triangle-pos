@@ -6,8 +6,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="categoryCreateModalLabel">Create Category</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="categoryCreateModalLabel">{{ __('product::messages.create_category') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('product::messages.close') }}">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -15,16 +15,16 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="category_code">Category Code <span class="text-danger">*</span></label>
+                        <label for="category_code">{{ __('product::messages.category_code') }} <span class="text-danger">*</span></label>
                         <input class="form-control" type="text" name="category_code" required value="{{ $category_code }}">
                     </div>
                     <div class="form-group">
-                        <label for="category_name">Category Name <span class="text-danger">*</span></label>
+                        <label for="category_name">{{ __('product::messages.category_name') }} <span class="text-danger">*</span></label>
                         <input class="form-control" type="text" name="category_name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Create <i class="bi bi-check"></i></button>
+                    <button type="submit" class="btn btn-primary">{{ __('product::messages.create') }} <i class="bi bi-check"></i></button>
                 </div>
             </form>
         </div>

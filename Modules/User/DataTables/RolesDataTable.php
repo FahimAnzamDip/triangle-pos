@@ -41,34 +41,41 @@ class RolesDataTable extends DataTable
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(4)
+            ->language([
+                'url' => asset('js/i18n/' . app()->getLocale() . '.json')
+            ])
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
                 Button::make('print')
-                    ->text('<i class="bi bi-printer-fill"></i> Print'),
+                    ->text('<i class="bi bi-printer-fill"></i> ' . __('user::messages.print')),
                 Button::make('reset')
-                    ->text('<i class="bi bi-x-circle"></i> Reset'),
+                    ->text('<i class="bi bi-x-circle"></i> ' . __('user::messages.reset')),
                 Button::make('reload')
-                    ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+                    ->text('<i class="bi bi-arrow-repeat"></i> ' . __('user::messages.reload'))
             );
     }
 
     protected function getColumns() {
         return [
             Column::make('id')
+                ->title(__('user::messages.id'))
                 ->addClass('text-center')
                 ->addClass('align-middle'),
 
             Column::make('name')
+                ->title(__('user::messages.name'))
                 ->addClass('text-center')
                 ->addClass('align-middle'),
 
             Column::computed('permissions')
+                ->title(__('user::messages.permissions'))
                 ->addClass('text-center')
                 ->addClass('align-middle')
                 ->width('700px'),
 
             Column::computed('action')
+                ->title(__('user::messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center')

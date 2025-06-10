@@ -11,7 +11,7 @@
 @can('delete_adjustments')
     <button id="delete" class="btn btn-danger btn-sm" onclick="
         event.preventDefault();
-        if (confirm('Are you sure? It will delete the data permanently!')) {
+        if (confirm('{{ __('adjustment::messages.delete_confirmation') }}')) {
         document.getElementById('destroy{{ $data->id }}').submit()
         }
         ">

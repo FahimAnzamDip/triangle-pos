@@ -6,7 +6,7 @@
 @can('access_sale_return_payments')
     <button id="delete" class="btn btn-danger btn-sm" onclick="
         event.preventDefault();
-        if (confirm('Are you sure? It will delete the data permanently!')) {
+        if (confirm('{{ __('salesreturn::messages.confirm_delete') }}')) {
         document.getElementById('destroy{{ $data->id }}').submit()
         }
         ">

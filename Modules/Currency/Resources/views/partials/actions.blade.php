@@ -6,7 +6,7 @@
 @can('delete_currencies')
     <button id="delete" class="btn btn-danger btn-sm" onclick="
         event.preventDefault();
-        if (confirm('Are you sure? It will delete the data permanently!')) {
+        if (confirm('{{ __('currency::messages.confirm_delete') }}')) {
         document.getElementById('destroy{{ $data->id }}').submit()
         }
         ">

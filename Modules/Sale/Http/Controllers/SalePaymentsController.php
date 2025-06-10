@@ -73,7 +73,7 @@ class SalePaymentsController extends Controller
             ]);
         });
 
-        toast('Sale Payment Created!', 'success');
+        toast(__('controller_messages.sale_payment_created'), 'success');
 
         return redirect()->route('sales.index');
     }
@@ -129,7 +129,7 @@ class SalePaymentsController extends Controller
             ]);
         });
 
-        toast('Sale Payment Updated!', 'info');
+        toast(__('controller_messages.sale_payment_updated'), 'info');
 
         return redirect()->route('sales.index');
     }
@@ -140,7 +140,7 @@ class SalePaymentsController extends Controller
 
         $salePayment->delete();
 
-        toast('Sale Payment Deleted!', 'warning');
+        toast(__('controller_messages.sale_payment_deleted'), 'warning');
 
         return redirect()->route('sales.index');
     }

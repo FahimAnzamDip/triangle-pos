@@ -36,37 +36,45 @@ class ExpensesDataTable extends DataTable
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(6)
+            ->language([
+                'url' => asset('js/i18n/' . app()->getLocale() . '.json')
+            ])
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
                 Button::make('print')
-                    ->text('<i class="bi bi-printer-fill"></i> Print'),
+                    ->text('<i class="bi bi-printer-fill"></i> ' . __('expense::messages.print')),
                 Button::make('reset')
-                    ->text('<i class="bi bi-x-circle"></i> Reset'),
+                    ->text('<i class="bi bi-x-circle"></i> ' . __('expense::messages.reset')),
                 Button::make('reload')
-                    ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+                    ->text('<i class="bi bi-arrow-repeat"></i> ' . __('expense::messages.reload'))
             );
     }
 
     protected function getColumns() {
         return [
             Column::make('date')
+                ->title(__('expense::messages.date'))
                 ->className('text-center align-middle'),
 
             Column::make('reference')
+                ->title(__('expense::messages.reference'))
                 ->className('text-center align-middle'),
 
             Column::make('category.category_name')
-                ->title('Category')
+                ->title(__('expense::messages.category'))
                 ->className('text-center align-middle'),
 
             Column::computed('amount')
+                ->title(__('expense::messages.amount'))
                 ->className('text-center align-middle'),
 
             Column::make('details')
+                ->title(__('expense::messages.details'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title(__('expense::messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

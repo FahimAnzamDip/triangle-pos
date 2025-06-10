@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sale Details</title>
+    <title>{{ __('sale::messages.sale_details') }}</title>
     <link rel="stylesheet" href="{{ public_path('b3/bootstrap.min.css') }}">
 </head>
 <body>
@@ -15,37 +15,37 @@
             <div style="text-align: center;margin-bottom: 25px;">
                 <img width="180" src="{{ public_path('images/logo-dark.png') }}" alt="Logo">
                 <h4 style="margin-bottom: 20px;">
-                    <span>Reference::</span> <strong>{{ $sale->reference }}</strong>
+                    <span>{{ __('sale::messages.reference') }}:</span> <strong>{{ $sale->reference }}</strong>
                 </h4>
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-xs-4 mb-3 mb-md-0">
-                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">Company Info:</h4>
+                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">{{ __('sale::messages.company_info') }}:</h4>
                             <div><strong>{{ settings()->company_name }}</strong></div>
                             <div>{{ settings()->company_address }}</div>
-                            <div>Email: {{ settings()->company_email }}</div>
-                            <div>Phone: {{ settings()->company_phone }}</div>
+                            <div>{{ __('sale::messages.email') }}: {{ settings()->company_email }}</div>
+                            <div>{{ __('sale::messages.phone') }}: {{ settings()->company_phone }}</div>
                         </div>
 
                         <div class="col-xs-4 mb-3 mb-md-0">
-                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">Customer Info:</h4>
+                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">{{ __('sale::messages.customer_info') }}:</h4>
                             <div><strong>{{ $customer->customer_name }}</strong></div>
                             <div>{{ $customer->address }}</div>
-                            <div>Email: {{ $customer->customer_email }}</div>
-                            <div>Phone: {{ $customer->customer_phone }}</div>
+                            <div>{{ __('sale::messages.email') }}: {{ $customer->customer_email }}</div>
+                            <div>{{ __('sale::messages.phone') }}: {{ $customer->customer_phone }}</div>
                         </div>
 
                         <div class="col-xs-4 mb-3 mb-md-0">
-                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">Invoice Info:</h4>
-                            <div>Invoice: <strong>INV/{{ $sale->reference }}</strong></div>
-                            <div>Date: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</div>
+                            <h4 class="mb-2" style="border-bottom: 1px solid #dddddd;padding-bottom: 10px;">{{ __('sale::messages.invoice_info') }}:</h4>
+                            <div>{{ __('sale::messages.invoice') }}: <strong>INV/{{ $sale->reference }}</strong></div>
+                            <div>{{ __('sale::messages.date') }}: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</div>
                             <div>
-                                Status: <strong>{{ $sale->status }}</strong>
+                                {{ __('sale::messages.status') }}: <strong>{{ $sale->status }}</strong>
                             </div>
                             <div>
-                                Payment Status: <strong>{{ $sale->payment_status }}</strong>
+                                {{ __('sale::messages.payment_status') }}: <strong>{{ $sale->payment_status }}</strong>
                             </div>
                         </div>
 
@@ -55,12 +55,12 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th class="align-middle">Product</th>
-                                <th class="align-middle">Net Unit Price</th>
-                                <th class="align-middle">Quantity</th>
-                                <th class="align-middle">Discount</th>
-                                <th class="align-middle">Tax</th>
-                                <th class="align-middle">Sub Total</th>
+                                <th class="align-middle">{{ __('sale::messages.product') }}</th>
+                                <th class="align-middle">{{ __('sale::messages.net_unit_price') }}</th>
+                                <th class="align-middle">{{ __('sale::messages.quantity') }}</th>
+                                <th class="align-middle">{{ __('sale::messages.discount') }}</th>
+                                <th class="align-middle">{{ __('sale::messages.tax') }}</th>
+                                <th class="align-middle">{{ __('sale::messages.sub_total') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -100,19 +100,19 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <td class="left"><strong>Discount ({{ $sale->discount_percentage }}%)</strong></td>
+                                    <td class="left"><strong>{{ __('sale::messages.discount') }} ({{ $sale->discount_percentage }}%)</strong></td>
                                     <td class="right">{{ format_currency($sale->discount_amount) }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="left"><strong>Tax ({{ $sale->tax_percentage }}%)</strong></td>
+                                    <td class="left"><strong>{{ __('sale::messages.tax') }} ({{ $sale->tax_percentage }}%)</strong></td>
                                     <td class="right">{{ format_currency($sale->tax_amount) }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="left"><strong>Shipping</strong></td>
+                                    <td class="left"><strong>{{ __('sale::messages.shipping') }}</strong></td>
                                     <td class="right">{{ format_currency($sale->shipping_amount) }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="left"><strong>Grand Total</strong></td>
+                                    <td class="left"><strong>{{ __('sale::messages.grand_total') }}</strong></td>
                                     <td class="right"><strong>{{ format_currency($sale->total_amount) }}</strong></td>
                                 </tr>
                                 </tbody>

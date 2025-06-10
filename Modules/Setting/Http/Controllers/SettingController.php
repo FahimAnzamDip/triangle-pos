@@ -37,7 +37,7 @@ class SettingController extends Controller
 
         cache()->forget('settings');
 
-        toast('Settings Updated!', 'info');
+        toast(__('controller_messages.settings_updated'), 'info');
 
         return redirect()->route('settings.index');
     }
@@ -69,10 +69,10 @@ class SettingController extends Controller
             file_put_contents(base_path('.env'), str_replace($toReplace, $replaceWith, file_get_contents(base_path('.env'))));
             Artisan::call('cache:clear');
 
-            toast('Mail Settings Updated!', 'info');
+            toast(__('controller_messages.mail_settings_updated'), 'info');
         } catch (\Exception $exception) {
             Log::error($exception);
-            session()->flash('settings_smtp_message', 'Something Went Wrong!');
+            session()->flash('settings_smtp_message', __('controller_messages.something_went_wrong'));
         }
 
         return redirect()->route('settings.index');

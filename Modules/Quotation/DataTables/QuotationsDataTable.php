@@ -39,37 +39,45 @@ class QuotationsDataTable extends DataTable
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(6)
+            ->language([
+                'url' => asset('js/i18n/' . app()->getLocale() . '.json')
+            ])
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
                 Button::make('print')
-                    ->text('<i class="bi bi-printer-fill"></i> Print'),
+                    ->text('<i class="bi bi-printer-fill"></i> ' . __('quotation::messages.print')),
                 Button::make('reset')
-                    ->text('<i class="bi bi-x-circle"></i> Reset'),
+                    ->text('<i class="bi bi-x-circle"></i> ' . __('quotation::messages.reset')),
                 Button::make('reload')
-                    ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+                    ->text('<i class="bi bi-arrow-repeat"></i> ' . __('quotation::messages.reload'))
             );
     }
 
     protected function getColumns() {
         return [
             Column::make('date')
+                ->title(__('quotation::messages.date'))
                 ->className('text-center align-middle'),
 
             Column::make('reference')
+                ->title(__('quotation::messages.reference'))
                 ->className('text-center align-middle'),
 
             Column::make('customer_name')
-                ->title('Customer')
+                ->title(__('quotation::messages.customer'))
                 ->className('text-center align-middle'),
 
             Column::computed('status')
+                ->title(__('quotation::messages.status'))
                 ->className('text-center align-middle'),
 
             Column::computed('total_amount')
+                ->title(__('quotation::messages.total_amount'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title(__('quotation::messages.actions'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

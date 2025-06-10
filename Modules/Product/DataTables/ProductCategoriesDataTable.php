@@ -33,30 +33,37 @@ class ProductCategoriesDataTable extends DataTable
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
             ->orderBy(4)
+            ->language([
+                'url' => asset('js/i18n/' . app()->getLocale() . '.json')
+            ])
             ->buttons(
                 Button::make('excel')
                     ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
                 Button::make('print')
-                    ->text('<i class="bi bi-printer-fill"></i> Print'),
+                    ->text('<i class="bi bi-printer-fill"></i> '.__('product::messages.print')),
                 Button::make('reset')
-                    ->text('<i class="bi bi-x-circle"></i> Reset'),
+                    ->text('<i class="bi bi-x-circle"></i> '.__('product::messages.reset')),
                 Button::make('reload')
-                    ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+                    ->text('<i class="bi bi-arrow-repeat"></i> '.__('product::messages.reload'))
             );
     }
 
     protected function getColumns() {
         return [
             Column::make('category_code')
+                ->title(__('product::messages.category_code'))
                 ->addClass('text-center'),
 
             Column::make('category_name')
+                ->title(__('product::messages.category_name'))
                 ->addClass('text-center'),
 
             Column::make('products_count')
+                // ->title(__('product::messages.products_count'))
                 ->addClass('text-center'),
 
             Column::computed('action')
+                ->title(__('product::messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),

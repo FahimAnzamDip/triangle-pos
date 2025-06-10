@@ -50,15 +50,18 @@ class ProductDataTable extends DataTable
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
                     ->orderBy(7)
+                    ->language([
+                        'url' => asset('js/i18n/' . app()->getLocale() . '.json')
+                    ])
                     ->buttons(
                         Button::make('excel')
                             ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
                         Button::make('print')
-                            ->text('<i class="bi bi-printer-fill"></i> Print'),
+                            ->text('<i class="bi bi-printer-fill"></i> '.__('product::messages.print')),
                         Button::make('reset')
-                            ->text('<i class="bi bi-x-circle"></i> Reset'),
+                            ->text('<i class="bi bi-x-circle"></i> '.__('product::messages.reset')),
                         Button::make('reload')
-                            ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+                            ->text('<i class="bi bi-arrow-repeat"></i> '.__('product::messages.reload'))
                     );
     }
 
@@ -66,31 +69,31 @@ class ProductDataTable extends DataTable
     {
         return [
             Column::computed('product_image')
-                ->title('Image')
+                ->title(__('product::messages.image'))
                 ->className('text-center align-middle'),
 
             Column::make('category.category_name')
-                ->title('Category')
+                ->title(__('product::messages.category'))
                 ->className('text-center align-middle'),
 
             Column::make('product_code')
-                ->title('Code')
+                ->title(__('product::messages.code'))
                 ->className('text-center align-middle'),
 
             Column::make('product_name')
-                ->title('Name')
+                ->title(__('product::messages.name'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_cost')
-                ->title('Cost')
+                ->title(__('product::messages.cost'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_price')
-                ->title('Price')
+                ->title(__('product::messages.price'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_quantity')
-                ->title('Quantity')
+                ->title(__('product::messages.quantity'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')

@@ -4,37 +4,37 @@
     </button>
     <div class="dropdown-menu">
         <a target="_blank" href="{{ route('sales.pos.pdf', $data->id) }}" class="dropdown-item">
-            <i class="bi bi-file-earmark-pdf mr-2 text-success" style="line-height: 1;"></i> POS Invoice
+            <i class="bi bi-file-earmark-pdf mr-2 text-success" style="line-height: 1;"></i> {{ __('sale::messages.pos_invoice') }}
         </a>
         @can('access_sale_payments')
             <a href="{{ route('sale-payments.index', $data->id) }}" class="dropdown-item">
-                <i class="bi bi-cash-coin mr-2 text-warning" style="line-height: 1;"></i> Show Payments
+                <i class="bi bi-cash-coin mr-2 text-warning" style="line-height: 1;"></i>{{ __('sale::messages.show_payments') }}
             </a>
         @endcan
         @can('access_sale_payments')
             @if($data->due_amount > 0)
             <a href="{{ route('sale-payments.create', $data->id) }}" class="dropdown-item">
-                <i class="bi bi-plus-circle-dotted mr-2 text-success" style="line-height: 1;"></i> Add Payment
+                <i class="bi bi-plus-circle-dotted mr-2 text-success" style="line-height: 1;"></i> {{ __('sale::messages.add_payment') }}
             </a>
             @endif
         @endcan
         @can('edit_sales')
             <a href="{{ route('sales.edit', $data->id) }}" class="dropdown-item">
-                <i class="bi bi-pencil mr-2 text-primary" style="line-height: 1;"></i> Edit
+                <i class="bi bi-pencil mr-2 text-primary" style="line-height: 1;"></i> {{ __('sale::messages.edit') }}
             </a>
         @endcan
         @can('show_sales')
             <a href="{{ route('sales.show', $data->id) }}" class="dropdown-item">
-                <i class="bi bi-eye mr-2 text-info" style="line-height: 1;"></i> Details
+                <i class="bi bi-eye mr-2 text-info" style="line-height: 1;"></i> {{ __('sale::messages.details') }}
             </a>
         @endcan
         @can('delete_sales')
             <button id="delete" class="dropdown-item" onclick="
                 event.preventDefault();
-                if (confirm('Are you sure? It will delete the data permanently!')) {
+                if (confirm('{{ __('sale::messages.confirm_delete') }}')) {
                 document.getElementById('destroy{{ $data->id }}').submit()
                 }">
-                <i class="bi bi-trash mr-2 text-danger" style="line-height: 1;"></i> Delete
+                <i class="bi bi-trash mr-2 text-danger" style="line-height: 1;"></i> {{ __('sale::messages.delete') }}
                 <form id="destroy{{ $data->id }}" class="d-none" action="{{ route('sales.destroy', $data->id) }}" method="POST">
                     @csrf
                     @method('delete')

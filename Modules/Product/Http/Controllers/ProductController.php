@@ -39,7 +39,7 @@ class ProductController extends Controller
             }
         }
 
-        toast('Product Created!', 'success');
+        toast(__('controller_messages.product_created'), 'success');
 
         return redirect()->route('products.index');
     }
@@ -80,7 +80,7 @@ class ProductController extends Controller
             }
         }
 
-        toast('Product Updated!', 'info');
+        toast(__('controller_messages.product_updated'), 'info');
 
         return redirect()->route('products.index');
     }
@@ -91,7 +91,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        toast('Product Deleted!', 'warning');
+        toast(__('controller_messages.product_deleted'), 'warning');
 
         return redirect()->route('products.index');
     }
