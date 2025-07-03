@@ -1,0 +1,7 @@
+# Database Configuration
+DB_DATABASE=triangle_pos
+DB_USERNAME=triangle_user
+DB_PASSWORD=triangle_password
+
+# MySQL Root Password
+MYSQL_ROOT_PASSWORD=root

@@ -3,6 +3,7 @@ services:
     image: triangle-pos:latest
     build:
       context: .
+    platform: linux/amd64
     env_file:
       - .env
     ports:
