@@ -1,6 +1,6 @@
 FROM php:8.1
 
-WORKDIR /app
+WORKDIR /var/www/html 
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -24,12 +24,12 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN curl -sS https://getcomposer.org/installer | php -- \
   --install-dir=/usr/bin --filename=composer
 
-COPY . /app
+COPY . /var/www/html 
 
 RUN composer install --ignore-platform-reqs
 
 # Give execute permission to startup script
-RUN chmod +x /app/docker-startup.sh
+RUN chmod +x /var/www/html/docker-startup.sh
 
-ENTRYPOINT [ "/app/docker-startup.sh" ]
+ENTRYPOINT [ "/var/www/html/docker-startup.sh" ]
 

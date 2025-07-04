@@ -1,0 +1,371 @@
+---
+alwaysApply: true
+---
+
+
+## **Triangle POS: Architectural Patterns & Developer Guide**
+
+### **Core Architecture Overview**
+
+This is a **modular Laravel POS system** built using several key patterns:
+
+#### **1. Modular Architecture (Laravel Modules)**
+- Uses `nwidart/laravel-modules` package
+- Each business domain is a separate module (Product, Sale, Purchase, etc.)
+- Modules are self-contained with their own MVC structure
+
+#### **2. Reactive UI with Livewire**
+- Real-time cart management
+- Interactive product search and filtering
+- Live data updates without page refreshes
+
+#### **3. Event-Driven Component Communication**
+- Components communicate via Livewire events (`dispatch`, `listeners`)
+- Decoupled architecture for better maintainability
+
+#### **4. Service Provider Pattern**
+- Each module registers its own services, routes, and configurations
+- Auto-discovery through Laravel's service container
+
+---
+
+## **Key Patterns in Detail**
+
+### **1. Module Structure Pattern**
+Every module follows this consistent structure:
+```
+Modules/[ModuleName]/
+├── Config/           # Module configuration
+├── Database/         # Migrations, seeders, factories
+├── DataTables/       # Data table definitions
+├── Entities/         # Eloquent models
+├── Http/
+│   ├── Controllers/  # HTTP controllers
+│   ├── Requests/     # Form validation
+│   └── Middleware/   # Module-specific middleware
+├── Providers/        # Service providers
+├── Resources/        # Views and assets
+├── Routes/           # Web and API routes
+└── Tests/            # Module-specific tests
+```
+
+### **2. Shopping Cart Pattern**
+Uses cart instances for different transaction types:
+- `sale` - Customer purchases
+- `purchase` - Supplier purchases
+- `purchase_return` - Return to supplier
+- Different pricing logic per instance type
+
+### **3. Livewire Component Communication**
+```php
+// Event dispatch
+$this->dispatch('productSelected', $product);
+
+// Event listening
+protected $listeners = ['productSelected'];
+```
+
+### **4. DataTable Integration**
+Centralized data management with export capabilities:
+```php
+public function dataTable($query) {
+    return datatables()
+        ->eloquent($query)
+        ->addColumn('action', function ($data) {
+            return view('module::partials.actions', compact('data'));
+        });
+}
+```
+
+---
+
+## **Simplified Example: Creating a "Inventory" Module**
+
+Here's a step-by-step example for a new engineer to create an Inventory module:
+
+### **Step 1: Generate Module**
+```bash
+php artisan module:make Inventory
+```
+
+### **Step 2: Create Basic Entity**
+```php:Modules/Inventory/Entities/InventoryItem.php
+<?php
+
+namespace Modules\Inventory\Entities;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Product\Entities\Product;
+
+class InventoryItem extends Model
+{
+    use HasFactory;
+
+    protected $guarded = [];
+
+    // Relationship to Product module
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+    // Price formatting (follows app pattern)
+    public function setQuantityAttribute($value) {
+        $this->attributes['quantity'] = $value;
+    }
+}
+```
+
+### **Step 3: Create Migration**
+```php:Modules/Inventory/Database/Migrations/2024_01_01_000000_create_inventory_items_table.php
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateInventoryItemsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('inventory_items', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->integer('quantity');
+            $table->string('location')->nullable();
+            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('inventory_items');
+    }
+}
+```
+
+### **Step 4: Create Controller**
+```php:Modules/Inventory/Http/Controllers/InventoryController.php
+<?php
+
+namespace Modules\Inventory\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Gate;
+use Modules\Inventory\DataTables\InventoryDataTable;
+use Modules\Inventory\Entities\InventoryItem;
+
+class InventoryController extends Controller
+{
+    public function index(InventoryDataTable $dataTable) {
+        abort_if(Gate::denies('access_inventory'), 403);
+        return $dataTable->render('inventory::index');
+    }
+
+    public function store(Request $request) {
+        abort_if(Gate::denies('create_inventory'), 403);
+        
+        InventoryItem::create($request->validated());
+        
+        toast('Inventory Item Created!', 'success');
+        return redirect()->route('inventory.index');
+    }
+
+    // ... other CRUD methods following same pattern
+}
+```
+
+### **Step 5: Create DataTable**
+```php:Modules/Inventory/DataTables/InventoryDataTable.php
+<?php
+
+namespace Modules\Inventory\DataTables;
+
+use Modules\Inventory\Entities\InventoryItem;
+use Yajra\DataTables\Services\DataTable;
+
+class InventoryDataTable extends DataTable
+{
+    public function dataTable($query)
+    {
+        return datatables()
+            ->eloquent($query)
+            ->addColumn('action', function ($data) {
+                return view('inventory::partials.actions', compact('data'));
+            })
+            ->addColumn('product_name', function ($data) {
+                return $data->product->product_name;
+            });
+    }
+
+    public function query(InventoryItem $model)
+    {
+        return $model->newQuery()->with('product');
+    }
+
+    // ... rest of DataTable configuration
+}
+```
+
+### **Step 6: Create Livewire Component**
+```php:app/Livewire/Inventory/InventorySearch.php
+<?php
+
+namespace App\Livewire\Inventory;
+
+use Livewire\Component;
+use Modules\Inventory\Entities\InventoryItem;
+
+class InventorySearch extends Component
+{
+    public $search = '';
+    public $results;
+
+    protected $listeners = ['refreshInventory' => '$refresh'];
+
+    public function mount() {
+        $this->results = collect();
+    }
+
+    public function render() {
+        return view('livewire.inventory.inventory-search');
+    }
+
+    public function updatedSearch() {
+        $this->results = InventoryItem::with('product')
+            ->whereHas('product', function($query) {
+                $query->where('product_name', 'like', '%' . $this->search . '%');
+            })
+            ->take(10)
+            ->get();
+    }
+
+    public function selectItem($itemId) {
+        $item = InventoryItem::find($itemId);
+        $this->dispatch('inventoryItemSelected', $item);
+    }
+}
+```
+
+### **Step 7: Add Routes**
+```php:Modules/Inventory/Routes/web.php
+<?php
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('inventory', 'InventoryController');
+    Route::get('inventory/search', 'InventoryController@search')->name('inventory.search');
+});
+```
+
+---
+
+## **Steps to Add/Modify Functionality**
+
+### **Adding New Features:**
+
+#### **1. New Module Creation**
+```bash
+# Generate module
+php artisan module:make ModuleName
+
+# Generate specific components
+php artisan module:make-controller ControllerName ModuleName
+php artisan module:make-model ModelName ModuleName
+php artisan module:make-migration migration_name ModuleName
+```
+
+#### **2. Adding Livewire Components**
+```bash
+# Create Livewire component in app/Livewire
+php artisan make:livewire ComponentName
+
+# Follow event-driven communication pattern
+protected $listeners = ['eventName' => 'methodName'];
+$this->dispatch('eventName', $data);
+```
+
+#### **3. Extending Cart Functionality**
+```php
+// Add new cart instance type
+Cart::instance('new_transaction_type');
+
+// Extend ProductCart component for new behavior
+public function mount($cartInstance, $data = null) {
+    $this->cart_instance = $cartInstance;
+    // Add custom logic for new transaction type
+}
+```
+
+#### **4. Adding New Entity Relationships**
+```php
+// In Entity model
+public function newRelation() {
+    return $this->belongsTo(RelatedModel::class);
+}
+
+// In migration
+$table->foreign('related_id')->references('id')->on('related_table');
+```
+
+#### **5. Creating Custom DataTables**
+```bash
+php artisan module:make-datatable DataTableName ModuleName
+```
+
+### **Modifying Existing Features:**
+
+#### **1. Extending Controllers**
+- Follow existing authorization pattern with `Gate::denies()`
+- Use consistent flash messaging with `toast()`
+- Maintain CRUD operation patterns
+
+#### **2. Database Changes**
+```bash
+# Create migration in specific module
+php artisan module:make-migration update_table_name ModuleName
+
+# Run module-specific migrations
+php artisan module:migrate ModuleName
+```
+
+#### **3. Adding Permissions**
+- Add new permissions to `AuthServiceProvider`
+- Use in controllers: `abort_if(Gate::denies('permission_name'), 403);`
+
+### **Development Workflow:**
+
+#### **1. Planning**
+- Identify which module the feature belongs to
+- Check for cross-module dependencies
+- Plan Livewire component interactions
+
+#### **2. Implementation**
+- Follow existing naming conventions
+- Use consistent file organization
+- Implement proper error handling
+
+#### **3. Testing**
+- Test module isolation
+- Verify Livewire events work correctly
+- Check DataTable functionality
+- Test cart interactions if applicable
+
+#### **4. Integration**
+- Ensure service providers are registered
+- Check route conflicts
+- Verify database relationships work
+
+---
+
+## **Best Practices for This Architecture**
+
+1. **Module Independence**: Keep modules loosely coupled
+2. **Event Communication**: Use Livewire events for component interaction
+3. **Consistent Patterns**: Follow established conventions
+4. **Authorization**: Always check permissions in controllers
+5. **Data Formatting**: Use accessors/mutators for consistent data handling
+6. **Error Handling**: Use flash messages for user feedback
+7. **Database Design**: Maintain referential integrity with foreign keys
+

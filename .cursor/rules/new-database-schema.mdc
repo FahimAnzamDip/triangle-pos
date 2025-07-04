@@ -1,0 +1,431 @@
+---
+description: This is the new schema for jewelry specific POS systems.
+alwaysApply: false
+---
+### Database Schema for Jewelry & Gold POS System
+
+This schema is divided into several logical groups: Core Masters, Users & Security, Inventory, Transactions, and Logging/History.
+
+-----
+
+### 1\. Core Masters & System Settings
+
+These tables store the foundational data required for the system to operate, as defined in the **Data Master** section of the PRD.
+
+[cite\_start]**`groups`** - Stores main item categories like Gold, Platinum[cite: 21].
+
+```sql
+CREATE TABLE groups (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    group_code VARCHAR(20) UNIQUE NOT NULL,
+    group_name VARCHAR(100) NOT NULL,
+    [cite_start]group_type ENUM('TUA', 'MUDA', 'OTHER') NOT NULL, -- As seen in Master Group [cite: 27]
+    [cite_start]base_price DECIMAL(15, 2) NOT NULL, -- Price for 100% purity [cite: 21]
+    [cite_start]cost_price DECIMAL(15, 2) NOT NULL, -- Modal/cost price [cite: 29]
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+-----
+
+[cite\_start]**`item_types`** - Stores specific types of items like Rings, Necklaces[cite: 33].
+
+```sql
+CREATE TABLE item_types (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    type_code VARCHAR(20) UNIQUE NOT NULL,
+    type_name VARCHAR(100) NOT NULL,
+    group_id INT NOT NULL,
+    FOREIGN KEY (group_id) REFERENCES groups(id)
+);
+```
+
+-----
+
+[cite\_start]**`warehouses`** - Stores physical or logical item locations like the main store or a repair area[cite: 41].
+
+```sql
+CREATE TABLE warehouses (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    warehouse_code VARCHAR(20) UNIQUE NOT NULL,
+    warehouse_name VARCHAR(100) NOT NULL
+);
+```
+
+-----
+
+[cite\_start]**`trays`** - Stores display/storage trays and their properties, crucial for stock-taking[cite: 48].
+
+```sql
+CREATE TABLE trays (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tray_code VARCHAR(20) UNIQUE NOT NULL,
+    tray_name VARCHAR(100) NOT NULL,
+    warehouse_id INT NOT NULL,
+    [cite_start]tray_weight DECIMAL(10, 3) NOT NULL, -- Weight of the empty tray [cite: 50]
+    [cite_start]tag_weight DECIMAL(10, 3) NOT NULL, -- Default weight of a single item tag [cite: 50]
+    FOREIGN KEY (warehouse_id) REFERENCES warehouses(id)
+);
+```
+
+-----
+
+[cite\_start]**`buyback_conditions`** - Defines rules for deductions on customer buybacks[cite: 83].
+
+```sql
+CREATE TABLE buyback_conditions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    condition_name VARCHAR(100) NOT NULL,
+    price_deduction DECIMAL(15, 2) DEFAULT 0,
+    percentage_deduction DECIMAL(5, 2) DEFAULT 0 -- Stored as percentage, e.g., 5.00 for 5%
+);
+```
+
+-----
+
+**`customers`** - Stores customer information.
+
+```sql
+CREATE TABLE customers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    [cite_start]customer_code VARCHAR(50) UNIQUE, -- For members [cite: 197]
+    name VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20),
+    address TEXT,
+    [cite_start]type ENUM('REGULER', 'MEMBER') NOT NULL DEFAULT 'REGULER' [cite: 196]
+);
+```
+
+-----
+
+[cite\_start]**`system_settings`** - A single-row table for global system configurations[cite: 582].
+
+```sql
+CREATE TABLE system_settings (
+    id INT PRIMARY KEY DEFAULT 1,
+    point_type ENUM('GRAM', 'RP') NOT NULL,
+    point_cashback_value DECIMAL(15, 2) NOT NULL,
+    sales_tolerance_percentage DECIMAL(5, 2) NOT NULL
+);
+```
+
+-----
+
+[cite\_start]**`banks`** and **`bank_accounts`** - Manages the store's banking information[cite: 89, 95].
+
+```sql
+CREATE TABLE banks (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    bank_code VARCHAR(20) UNIQUE NOT NULL,
+    bank_name VARCHAR(100) NOT NULL,
+    [cite_start]account_number_coa VARCHAR(50) -- For accounting integration [cite: 93]
+);
+
+CREATE TABLE bank_accounts (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    account_number VARCHAR(50) UNIQUE NOT NULL,
+    account_name VARCHAR(100) NOT NULL,
+    bank_id INT NOT NULL,
+    FOREIGN KEY (bank_id) REFERENCES banks(id)
+);
+```
+
+-----
+
+### 2\. Users & Security
+
+Tables for managing user accounts, roles, and permissions.
+
+**`roles`** - Defines user roles like Owner, Manager, Sales.
+
+```sql
+CREATE TABLE roles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) UNIQUE NOT NULL -- e.g., 'owner', 'manager', 'sales'
+);
+```
+
+-----
+
+[cite\_start]**`users`** - Stores login credentials and links to roles[cite: 575].
+
+```sql
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
+    role_id INT NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+```
+
+-----
+
+[cite\_start]**`salespersons`** - Manages sales staff for tracking performance[cite: 61, 62]. This can be linked to a user.
+
+```sql
+CREATE TABLE salespersons (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    sales_code VARCHAR(20) UNIQUE NOT NULL,
+    user_id INT UNIQUE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+
+-----
+
+### 3\. Inventory Management
+
+The core tables for tracking every piece of jewelry.
+
+**`items`** - The central table for all inventory items.
+
+```sql
+CREATE TABLE items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    barcode VARCHAR(100) UNIQUE NOT NULL, -- System-generated unique barcode
+    [cite_start]internal_code VARCHAR(100), -- Store's internal code [cite: 131]
+    item_name VARCHAR(255) NOT NULL,
+    item_type_id INT NOT NULL,
+    tray_id INT NOT NULL,
+    photo_url VARCHAR(255),
+    [cite_start]exact_weight DECIMAL(10, 3) NOT NULL, -- Asli [cite: 135]
+    [cite_start]billing_weight DECIMAL(10, 3) NOT NULL, -- Pembulatan [cite: 136]
+    [cite_start]purity_display VARCHAR(20), -- e.g., '18K', '700' [cite: 137]
+    [cite_start]attribute_name VARCHAR(100), -- e.g., diamond name [cite: 138]
+    [cite_start]attribute_weight DECIMAL(10, 3), -- [cite: 139]
+    [cite_start]attribute_price DECIMAL(15, 2), -- [cite: 140]
+    [cite_start]packaging_weight DECIMAL(10, 3), -- [cite: 141]
+    current_price DECIMAL(15, 2) NOT NULL, -- Automatically updated from groups table
+    current_cost_price DECIMAL(15, 2) NOT NULL,
+    status ENUM('IN_STOCK', 'SOLD', 'IN_LAYAWAY', 'PAWNED', 'WRITTEN_OFF') NOT NULL DEFAULT 'IN_STOCK',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (item_type_id) REFERENCES item_types(id),
+    FOREIGN KEY (tray_id) REFERENCES trays(id)
+);
+```
+
+-----
+
+### 4\. Transactions
+
+These tables record all financial and stock-movement activities. [cite\_start]A key feature is the `status` column in each main transaction table to support the **Validation** workflow[cite: 224, 262, 346].
+
+**`sales`** - The header table for a sales transaction.
+
+```sql
+CREATE TABLE sales (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    invoice_number VARCHAR(100) UNIQUE NOT NULL,
+    customer_id INT NOT NULL,
+    salesperson_id INT NOT NULL,
+    transaction_date DATETIME NOT NULL,
+    total_amount DECIMAL(15, 2) NOT NULL,
+    status ENUM('pending_validation', 'validated', 'cancelled') NOT NULL DEFAULT 'pending_validation',
+    validated_by_user_id INT,
+    validated_at DATETIME,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (salesperson_id) REFERENCES salespersons(id),
+    FOREIGN KEY (validated_by_user_id) REFERENCES users(id)
+);
+```
+
+-----
+
+**`sale_items`** - The line items for each sale.
+
+```sql
+CREATE TABLE sale_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    sale_id INT NOT NULL,
+    item_id INT NOT NULL,
+    sold_weight DECIMAL(10, 3) NOT NULL,
+    sold_price DECIMAL(15, 2) NOT NULL, -- The final price for this item
+    cost_at_sale DECIMAL(15, 2) NOT NULL, -- Item's cost price at the moment of sale for margin calculation
+    ongkos DECIMAL(15, 2) DEFAULT 0, -- Additional fees
+    FOREIGN KEY (sale_id) REFERENCES sales(id),
+    FOREIGN KEY (item_id) REFERENCES items(id)
+);
+```
+
+-----
+
+**`payments`** - A polymorphic table to handle payments for sales, services, etc.
+
+```sql
+CREATE TABLE payments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    payable_id INT NOT NULL, -- e.g., sale_id, service_id
+    payable_type VARCHAR(50) NOT NULL, -- e.g., 'Sale', 'Service', 'Pawn'
+    payment_method ENUM('CASH', 'DEBIT', 'TRANSFER', 'CREDIT_CARD', 'TRADE_IN') NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    [cite_start]bank_account_id INT, -- Nullable, for non-cash [cite: 210]
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (bank_account_id) REFERENCES bank_accounts(id)
+);
+```
+
+-----
+
+[cite\_start]**`buybacks`** and **`buyback_items`** - Tables for buyback (pembelian) transactions[cite: 253].
+
+```sql
+CREATE TABLE buybacks (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    invoice_number VARCHAR(100) UNIQUE NOT NULL,
+    customer_id INT NOT NULL,
+    salesperson_id INT NOT NULL,
+    transaction_date DATETIME NOT NULL,
+    total_amount DECIMAL(15, 2) NOT NULL,
+    status ENUM('pending_validation', 'validated', 'cancelled') NOT NULL,
+    validated_by_user_id INT,
+    validated_at DATETIME,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (salesperson_id) REFERENCES salespersons(id)
+);
+
+CREATE TABLE buyback_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    buyback_id INT NOT NULL,
+    item_description TEXT NOT NULL, -- Description of the item being bought
+    item_type_id INT, -- The type it will be classified as
+    weight DECIMAL(10, 3) NOT NULL,
+    buyback_condition_id INT NOT NULL,
+    buyback_price DECIMAL(15, 2) NOT NULL, -- Final price paid to customer
+    generates_item_id INT, -- The new item ID created in the items table after validation
+    FOREIGN KEY (buyback_id) REFERENCES buybacks(id),
+    FOREIGN KEY (buyback_condition_id) REFERENCES buyback_conditions(id),
+    FOREIGN KEY (generates_item_id) REFERENCES items(id)
+);
+```
+
+-----
+
+[cite\_start]**`custom_orders`** and **`custom_order_items`** - For custom orders (pesanan)[cite: 275].
+
+```sql
+CREATE TABLE custom_orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    order_number VARCHAR(100) UNIQUE NOT NULL,
+    customer_id INT NOT NULL,
+    salesperson_id INT NOT NULL,
+    status ENUM('PENDING', 'READY_FOR_PICKUP', 'COMPLETED', 'CANCELLED') NOT NULL,
+    order_date DATETIME NOT NULL,
+    estimated_completion_date DATE,
+    down_payment DECIMAL(15, 2) DEFAULT 0,
+    final_sale_id INT, -- Links to the sale when the item is picked up
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (salesperson_id) REFERENCES salespersons(id),
+    FOREIGN KEY (final_sale_id) REFERENCES sales(id)
+);
+
+CREATE TABLE custom_order_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    item_name VARCHAR(255) NOT NULL,
+    photo_url VARCHAR(255),
+    estimated_weight DECIMAL(10, 3) NOT NULL,
+    ongkos DECIMAL(15, 2) NOT NULL,
+    description TEXT,
+    fulfilled_item_id INT, -- Links to the actual item created
+    FOREIGN KEY (order_id) REFERENCES custom_orders(id),
+    FOREIGN KEY (fulfilled_item_id) REFERENCES items(id)
+);
+```
+
+-----
+
+[cite\_start]**`pawn_transactions`** and **`pawn_items`** - Tables for pawning (hutang)[cite: 335].
+
+```sql
+CREATE TABLE pawn_transactions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    pawn_number VARCHAR(100) UNIQUE NOT NULL,
+    customer_id INT NOT NULL,
+    salesperson_id INT NOT NULL,
+    status ENUM('ACTIVE', 'PAID_OFF', 'RENEWED', 'CANCELLED', 'pending_validation') NOT NULL,
+    loan_date DATE NOT NULL,
+    due_date DATE NOT NULL,
+    loan_amount DECIMAL(15, 2) NOT NULL,
+    interest_rate_monthly DECIMAL(5, 2) NOT NULL,
+    validated_by_user_id INT,
+    validated_at DATETIME,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (salesperson_id) REFERENCES salespersons(id)
+);
+
+CREATE TABLE pawn_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    pawn_transaction_id INT NOT NULL,
+    item_name VARCHAR(255) NOT NULL,
+    weight DECIMAL(10, 3) NOT NULL,
+    purity_display VARCHAR(20),
+    photo_url VARCHAR(255),
+    generates_item_id INT, -- The ID if the item defaults and becomes store stock
+    FOREIGN KEY (pawn_transaction_id) REFERENCES pawn_transactions(id),
+    FOREIGN KEY (generates_item_id) REFERENCES items(id)
+);
+```
+
+-----
+
+### 5\. Logging and History
+
+Tables for auditing, reporting, and tracking changes.
+
+[cite\_start]**`item_movements`** - Logs the movement of items between trays[cite: 163, 169].
+
+```sql
+CREATE TABLE item_movements (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    item_id INT NOT NULL,
+    from_tray_id INT NOT NULL,
+    to_tray_id INT NOT NULL,
+    moved_by_user_id INT NOT NULL,
+    moved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (item_id) REFERENCES items(id),
+    FOREIGN KEY (from_tray_id) REFERENCES trays(id),
+    FOREIGN KEY (to_tray_id) REFERENCES trays(id),
+    FOREIGN KEY (moved_by_user_id) REFERENCES users(id)
+);
+```
+
+-----
+
+[cite\_start]**`authorizations`** - A log of all approvals for sensitive actions[cite: 158].
+
+```sql
+CREATE TABLE authorizations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    transaction_type VARCHAR(100) NOT NULL, -- e.g., 'SALE_DISCOUNT', 'ITEM_WRITEOFF'
+    transaction_id INT NOT NULL, -- The ID of the sale, write-off, etc.
+    reason TEXT,
+    authorized_by_user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (authorized_by_user_id) REFERENCES users(id)
+);
+```
+
+-----
+
+[cite\_start]**`gold_price_history`** - Tracks changes to gold prices for reporting[cite: 110].
+
+```sql
+CREATE TABLE gold_price_history (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    group_id INT NOT NULL,
+    old_price DECIMAL(15, 2) NOT NULL,
+    new_price DECIMAL(15, 2) NOT NULL,
+    old_cost_price DECIMAL(15, 2) NOT NULL,
+    new_cost_price DECIMAL(15, 2) NOT NULL,
+    changed_by_user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (group_id) REFERENCES groups(id),
+    FOREIGN KEY (changed_by_user_id) REFERENCES users(id)
+);
+```
