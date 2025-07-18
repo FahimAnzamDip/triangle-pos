@@ -269,6 +269,11 @@
                     <i class="c-sidebar-nav-icon bi bi-clipboard-data" style="line-height: 1;"></i> Purchases Return Report
                 </a>
             </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link {{ request()->routeIs('tax-report.index') ? 'c-active' : '' }}" href="{{ route('tax-report.index') }}">
+                    <i class="c-sidebar-nav-icon bi bi-file-earmark-code" style="line-height: 1;"></i> Tax Report (XML)
+                </a>
+            </li>
         </ul>
     </li>
 @endcan

@@ -30,4 +30,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Purchases Return Report
     Route::get('/purchases-return-report', 'ReportsController@purchasesReturnReport')
         ->name('purchases-return-report.index');
+    //Tax Report
+    Route::get('/tax-report', 'TaxReportController@index')
+        ->name('tax-report.index');
+    Route::post('/tax-report/export', 'TaxReportController@export')
+        ->name('tax-report.export');
 });
