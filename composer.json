@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.0",
         "livewire/livewire": "^3.0",
+        "maatwebsite/excel": "^3.1",
         "milon/barcode": "^10.0",
         "nwidart/laravel-modules": "^10.0",
         "realrashid/sweet-alert": "^6.0",
@@ -23,12 +24,13 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
-        "spatie/laravel-ignition": "^2.0",
+        "barryvdh/laravel-ide-helper": "*",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {

@@ -5,7 +5,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
   libzip-dev \
   zip \
-  git 
+  git
+
+
 
 # Install php extensions
 RUN docker-php-ext-install mysqli pdo pdo_mysql
