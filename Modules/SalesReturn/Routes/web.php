@@ -14,6 +14,7 @@
 Route::group(['middleware' => 'auth'], function () {
     //Generate PDF
     Route::get('/sale-returns/pdf/{id}', function ($id) {
+        abort_if(\Illuminate\Support\Facades\Gate::denies('show_sale_returns'), 403);
         $saleReturn = \Modules\SalesReturn\Entities\SaleReturn::findOrFail($id);
         $customer = \Modules\People\Entities\Customer::findOrFail($saleReturn->customer_id);
 

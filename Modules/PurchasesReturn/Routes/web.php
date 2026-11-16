@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     //Generate PDF
     Route::get('/purchase-returns/pdf/{id}', function ($id) {
+        abort_if(\Illuminate\Support\Facades\Gate::denies('show_purchase_returns'), 403);
         $purchaseReturn = \Modules\PurchasesReturn\Entities\PurchaseReturn::findOrFail($id);
         $supplier = \Modules\People\Entities\Supplier::findOrFail($purchaseReturn->supplier_id);
 
