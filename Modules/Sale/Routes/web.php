@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Generate PDF
     Route::get('/sales/pdf/{id}', function ($id) {
+        abort_if(\Illuminate\Support\Facades\Gate::denies('show_sales'), 403);
         $sale = \Modules\Sale\Entities\Sale::findOrFail($id);
         $customer = \Modules\People\Entities\Customer::findOrFail($sale->customer_id);
 
@@ -31,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('sales.pdf');
 
     Route::get('/sales/pos/pdf/{id}', function ($id) {
+        abort_if(\Illuminate\Support\Facades\Gate::denies('show_sales'), 403);
         $sale = \Modules\Sale\Entities\Sale::findOrFail($id);
 
         $pdf = \PDF::loadView('sale::print-pos', [

@@ -14,6 +14,7 @@
 Route::group(['middleware' => 'auth'], function () {
     //Generate PDF
     Route::get('/quotations/pdf/{id}', function ($id) {
+        abort_if(\Illuminate\Support\Facades\Gate::denies('show_quotations'), 403);
         $quotation = \Modules\Quotation\Entities\Quotation::findOrFail($id);
         $customer = \Modules\People\Entities\Customer::findOrFail($quotation->customer_id);
 
